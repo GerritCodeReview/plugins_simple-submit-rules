@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "806795fc_7a85dcef",
+        "filename": ".gitignore",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c04b9240_ab257939",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 7
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c07f30f_4d77c002",
         "filename": ".gitignore",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "43b30d98_778b8a30",
+        "filename": ".gitignore",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c07f30f_4d77c002",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 37
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3dbaeeee_4fece7bc",
         "filename": ".gitignore",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2018-03-27T01:40:56Z",
       "side": 1,
       "message": "not needed, there is no buck build",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 9
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b7d6bac_b345b19a",
+        "filename": ".gitignore",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dbaeeee_4fece7bc",
       "range": {
         "startLine": 6,
         "startChar": 0,
@@ -142,6 +214,24 @@
     },
     {
       "key": {
+        "uuid": "12f9edd8_09d99e81",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "The objective of this plugin is to provide simple submit rules, not complex ones.\nThis might seem subjective, but anything that is hard to describe (or if there is no need for it) should not be in this plugin.\nThe implementation itself might be complex, relying on several classes... but what the user sees and uses must be simple enough.\n\nThe name was discussed internally, and contains \"simple\" on purpose to restrict what it does.\nIn this sense, I feel like \"submit-rules\" is too vague and tries to implement all the possible rules.\n\nThis plugin will likely evolve quickly in the near future, so if a better name surfaces, we can use it.\n\nFor the record, I would classify rules like this:\n\nA simple rule\n- Should I allow submission if there are unresolved comments?\n\nYes/no question, does not depend on Gerrit\u0027s internals (it\u0027s easy to guess what a resolved comment is, I think).\n\n--\n\nA complex rule\n- Do I want to use MaxWithBlock for the Verified label?\n\nStill a yes/no question, but implies that you know what MaxWithBlock does (and doesn\u0027t do).\n\nSimpler rules:\n- Do I require a maximum value (+2) vote for the label Verified?\n- Should I allow submission if the minimum value (-2) is voted?\n\nTwo yes/no questions, which when combined can determine whether to use MaxWthBlock, AnyWithBlock... \n\n--\n\nReally complex rules:\n- Write prolog code\n\nRequires coding skills in Prolog, using Git to commit the rules.pl file, switching to a refs/meta/config branch... and the documentation is a really long page.\nSo complex! (but also very powerful)\n\n- Create your own submit plugin\n\nWorks well, except it requires Java coding skills AND admin access to the server...\n\n\n- Use an OWNERS file\n\nQuite simple, but not simple enough: requires following a specific format, creating a file named OWNERS in the Git repository...",
+      "parentUuid": "42926db6_2fc9568a",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "672951f6_f3a0dc20",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/Constants.java",
         "patchSetId": 1
@@ -162,6 +252,30 @@
       "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06132c70_5d10aa5a",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/Constants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done, Indeed",
+      "parentUuid": "672951f6_f3a0dc20",
+      "range": {
+        "startLine": 18,
+        "startChar": 44,
+        "endLine": 18,
+        "endChar": 57
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -188,6 +302,30 @@
     },
     {
       "key": {
+        "uuid": "5d4c485a_41130e9a",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/EasyPreSubmitModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ab5de38_ddc3f947",
+      "range": {
+        "startLine": 35,
+        "startChar": 13,
+        "endLine": 35,
+        "endChar": 26
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7037f74_e26dbcd3",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/EasyPreSubmitModule.java",
         "patchSetId": 1
@@ -211,6 +349,30 @@
     },
     {
       "key": {
+        "uuid": "9d02104a_d40fb02b",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/EasyPreSubmitModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done (I think it is better to call something API_ENDPOINT, I don\u0027t know exactly if this will change or not)",
+      "parentUuid": "d7037f74_e26dbcd3",
+      "range": {
+        "startLine": 51,
+        "startChar": 47,
+        "endLine": 51,
+        "endChar": 67
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7845faa_ad1236d6",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/EasyPreSubmitModule.java",
         "patchSetId": 1
@@ -228,6 +390,24 @@
     },
     {
       "key": {
+        "uuid": "f41133d6_44890327",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/EasyPreSubmitModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "This bindings are required to generate the GWT plugin configuration page. I will remove them (once the PolyGerrit UI is done), but for now I thought it might be good to have them.",
+      "parentUuid": "d7845faa_ad1236d6",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e41844c_6fe83170",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/EasyPreSubmitModule.java",
         "patchSetId": 1
@@ -239,6 +419,30 @@
       "writtenOn": "2018-03-27T01:40:56Z",
       "side": 1,
       "message": "use logger",
+      "range": {
+        "startLine": 84,
+        "startChar": 6,
+        "endLine": 84,
+        "endChar": 26
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d841b11_a20191ef",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/EasyPreSubmitModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e41844c_6fe83170",
       "range": {
         "startLine": 84,
         "startChar": 6,
@@ -291,6 +495,48 @@
     },
     {
       "key": {
+        "uuid": "74b631c5_29a104ae",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigServlet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done, Nice!",
+      "parentUuid": "7be9a186_ddb9dd56",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e55e5e5_8aab92db",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigServlet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb7a7cc2_780cf8c2",
+      "range": {
+        "startLine": 58,
+        "startChar": 54,
+        "endLine": 58,
+        "endChar": 60
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "440d030d_2c0ca76b",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigServlet.java",
         "patchSetId": 1
@@ -305,6 +551,24 @@
       "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e94e80ed_1d1c0114",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigServlet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "440d030d_2c0ca76b",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -331,6 +595,30 @@
     },
     {
       "key": {
+        "uuid": "9f965b31_bcae2ece",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigServlet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08ad1d64_82257bb2",
+      "range": {
+        "startLine": 65,
+        "startChar": 48,
+        "endLine": 65,
+        "endChar": 62
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddb918f2_c96edb76",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigServlet.java",
         "patchSetId": 1
@@ -345,6 +633,24 @@
       "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30862b14_d11887fd",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigServlet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddb918f2_c96edb76",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -371,6 +677,30 @@
     },
     {
       "key": {
+        "uuid": "4d1904e2_23f2b59c",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigTranslator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "It has to be public because of \"bind(ConfigTranslator.class);\"\nI can try to make it not public, but would it be worth it?",
+      "parentUuid": "b938c894_61c55baf",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 6
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb8e701e_85593f36",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigTranslator.java",
         "patchSetId": 1
@@ -385,6 +715,24 @@
       "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "854bf20b_be8f1b65",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigTranslator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb8e701e_85593f36",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -411,6 +759,30 @@
     },
     {
       "key": {
+        "uuid": "352af559_bc8442c4",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigTranslator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done. Makes perfect sense as it should contain distinct elements",
+      "parentUuid": "1d77bdd9_8bdade99",
+      "range": {
+        "startLine": 84,
+        "startChar": 32,
+        "endLine": 84,
+        "endChar": 36
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95d609c7_72213f82",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigTranslator.java",
         "patchSetId": 1
@@ -434,6 +806,30 @@
     },
     {
       "key": {
+        "uuid": "b3baecd8_5b2c97cb",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigTranslator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done, neat thanks!",
+      "parentUuid": "95d609c7_72213f82",
+      "range": {
+        "startLine": 109,
+        "startChar": 18,
+        "endLine": 109,
+        "endChar": 47
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfb4cec5_41bf742c",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/SubmitConfig.java",
         "patchSetId": 1
@@ -448,6 +844,24 @@
       "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f072e182_63cb6c46",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/SubmitConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done - removed (will probably add it back later)",
+      "parentUuid": "bfb4cec5_41bf742c",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -474,6 +888,30 @@
     },
     {
       "key": {
+        "uuid": "12596945_f532f809",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/SubmitConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9827e26b_9c610db8",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 7
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "892d2e2e_d0c00c00",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/rules/NoUnresolvedCommentsRule.java",
         "patchSetId": 1
@@ -488,6 +926,24 @@
       "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "033fbc01_ff1a51f9",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/rules/NoUnresolvedCommentsRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "892d2e2e_d0c00c00",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -508,6 +964,24 @@
     },
     {
       "key": {
+        "uuid": "47bec274_c12fc67d",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/rules/NoUnresolvedCommentsRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34ebf42f_51bd1e26",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6546c3fd_10383a98",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/rules/RequireNonAuthorApprovalRule.java",
         "patchSetId": 1
@@ -525,6 +999,24 @@
     },
     {
       "key": {
+        "uuid": "53bec1fc_643d9ef2",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/rules/RequireNonAuthorApprovalRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done (will see a bit later for the constructors, I wonder if there\u0027s a way to make a nice API)",
+      "parentUuid": "6546c3fd_10383a98",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a40073ec_1e36e919",
         "filename": "src/main/resources/Documentation/about.md",
         "patchSetId": 1
@@ -536,6 +1028,24 @@
       "writtenOn": "2018-03-27T01:40:56Z",
       "side": 1,
       "message": "remove trailing spaces",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fea7e989_b1b671f3",
+        "filename": "src/main/resources/Documentation/about.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a40073ec_1e36e919",
       "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
@@ -559,6 +1069,24 @@
     },
     {
       "key": {
+        "uuid": "e6263966_65542b5a",
+        "filename": "src/main/resources/Documentation/about.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done.\nThe permissions changed between the two patchset. I think it might be useful to give both links, but I will try to make it clearer.",
+      "parentUuid": "439cebf1_27e3fbad",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac554d5c_898539d2",
         "filename": "src/main/resources/Documentation/about.md",
         "patchSetId": 1
@@ -573,6 +1101,24 @@
       "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f70ebc_2ffe76b7",
+        "filename": "src/main/resources/Documentation/about.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Yes! I didn\u0027t notice the RestModify could handle both POST and PUT.",
+      "parentUuid": "ac554d5c_898539d2",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
@@ -596,6 +1142,30 @@
       "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2cef210_0d28969b",
+        "filename": "src/main/resources/Documentation/about.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-03-27T13:21:48Z",
+      "side": 1,
+      "message": "Done. This paragraph is now gone, but config should indeed only be written if it is valid. I don\u0027t know exactly *for now* how to enforce this (Gson magic fills the fields), but the config is only committed if no errors occurred. Should be good enough, right?",
+      "parentUuid": "938fcf16_5081e1be",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 49
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     },
     {
       "key": {
