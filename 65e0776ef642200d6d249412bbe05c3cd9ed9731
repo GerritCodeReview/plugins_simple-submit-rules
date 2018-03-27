@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f7464c42_65aafb8f",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T12:54:18Z",
+      "side": 1,
+      "message": "\u003e In general, I do not think is a good idea to have adjective in plugin names(simple, complex, dumb, smart, ...) as they do not add much more precision.\n\nI agree with you.\n\n\u003e I would have called it \"submit-rules\".\n\nCertainly a viable option, but we thought that this would encourage people to add whatever submit rule they like to this plugin - including obscure ones, which we wanted to avoid (that is why there is a plugin endpoint in the end).",
+      "parentUuid": "88a485c8_7aee830e",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "672951f6_f3a0dc20",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/Constants.java",
         "patchSetId": 1
