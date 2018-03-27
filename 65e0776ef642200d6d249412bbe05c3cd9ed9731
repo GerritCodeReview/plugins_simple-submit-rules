@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c04b9240_ab257939",
+        "filename": ".gitignore",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1012987
+      },
+      "writtenOn": "2018-03-27T01:40:56Z",
+      "side": 1,
+      "message": "not needed, there is no maven build",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 7
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c07f30f_4d77c002",
+        "filename": ".gitignore",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1012987
+      },
+      "writtenOn": "2018-03-27T01:40:56Z",
+      "side": 1,
+      "message": "exclude the entire .settings folder?\n\n/.settings",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 37
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3dbaeeee_4fece7bc",
+        "filename": ".gitignore",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1012987
+      },
+      "writtenOn": "2018-03-27T01:40:56Z",
+      "side": 1,
+      "message": "not needed, there is no buck build",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 9
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42926db6_2fc9568a",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012987
+      },
+      "writtenOn": "2018-03-27T01:40:56Z",
+      "side": 1,
+      "message": "I have a question regarding the plan for this plugin:\n\nWhat if we want to implement more complex submit rule one day? We rename this plugin to just \"submit-rules\" or keep it as is and instead create another plugin called \"complex-submit-rule\"?\n\nMaybe you guys discussed the name internally already or maybe it was discussed on the mailing list and I missed it. I just think \"submit-rules\" would have been a better name.",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e41844c_6fe83170",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/EasyPreSubmitModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1012987
+      },
+      "writtenOn": "2018-03-27T01:40:56Z",
+      "side": 1,
+      "message": "use logger",
+      "range": {
+        "startLine": 84,
+        "startChar": 6,
+        "endLine": 84,
+        "endChar": 26
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a40073ec_1e36e919",
+        "filename": "src/main/resources/Documentation/about.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012987
+      },
+      "writtenOn": "2018-03-27T01:40:56Z",
+      "side": 1,
+      "message": "remove trailing spaces",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
