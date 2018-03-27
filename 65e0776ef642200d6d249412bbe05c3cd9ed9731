@@ -88,6 +88,110 @@
     },
     {
       "key": {
+        "uuid": "4d6f7607_e68fcc96",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "I\u0027d be for \"keep it as is and implement complex-submit-rules\" :)\n\nIn the end, this is why we didn\u0027t put this in Core, but created a plugin endpoint.\n\nThe nice thing about the way that Settings work in PolyGerrit is that complex-submit-rules\u0027s settings can live right under simple-submit-rule\u0027s settings, so they could just be an extension to what is provided here.\n\nWhat do you think?",
+      "parentUuid": "42926db6_2fc9568a",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "672951f6_f3a0dc20",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/Constants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "simple-submit-rules to be consistent with the repo name?",
+      "range": {
+        "startLine": 18,
+        "startChar": 44,
+        "endLine": 18,
+        "endChar": 57
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ab5de38_ddc3f947",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/EasyPreSubmitModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "SimpleSubmitRulesModule to be consistent",
+      "range": {
+        "startLine": 35,
+        "startChar": 13,
+        "endLine": 35,
+        "endChar": 26
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7037f74_e26dbcd3",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/EasyPreSubmitModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "PLUGIN_NAME ?",
+      "range": {
+        "startLine": 51,
+        "startChar": 47,
+        "endLine": 51,
+        "endChar": 67
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7845faa_ad1236d6",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/EasyPreSubmitModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "Are these bindings required?\n\nIIRC PluginConfig should provide all the functionality you need",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e41844c_6fe83170",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/EasyPreSubmitModule.java",
         "patchSetId": 1
@@ -111,6 +215,280 @@
     },
     {
       "key": {
+        "uuid": "7be9a186_ddb9dd56",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigServlet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "just use resource.getUser()",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb7a7cc2_780cf8c2",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigServlet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "this should be READ_CONFIG as you are exposing some of the project\u0027s configs to a user.",
+      "range": {
+        "startLine": 58,
+        "startChar": 54,
+        "endLine": 58,
+        "endChar": 60
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "440d030d_2c0ca76b",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigServlet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "I think it would be worth checking if the provided users can READ the project and fail in case one of them can\u0027t.",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08ad1d64_82257bb2",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigServlet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "this can be removed. ACCESS is a very weak permission and WRITE_CONFIG is much more powerful",
+      "range": {
+        "startLine": 65,
+        "startChar": 48,
+        "endLine": 65,
+        "endChar": 62
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb918f2_c96edb76",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigServlet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "please inline this instead of having it in a method.",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b938c894_61c55baf",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigTranslator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "nit: doesn\u0027t need to be public",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 6
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb8e701e_85593f36",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigTranslator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "nit: (package-private) static before (package-private) non-static",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d77bdd9_8bdade99",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigTranslator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "a Set would be better given that you call #contains often",
+      "range": {
+        "startLine": 84,
+        "startChar": 32,
+        "endLine": 84,
+        "endChar": 36
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95d609c7_72213f82",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigTranslator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "Please throw a RestApiException instead so that the user gets a nicer error message. UOE results in HTTP500\n\nBadRequestException could be a good choice",
+      "range": {
+        "startLine": 109,
+        "startChar": 18,
+        "endLine": 109,
+        "endChar": 47
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb4cec5_41bf742c",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/SubmitConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "you might want to use AccountInfo so that the UI can show the full name + an avatar\n\nWhen using this as input there should also be helper methods to get an account ID from AccountInfo (e.g. when only email is populated)",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9827e26b_9c610db8",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/SubmitConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "static class",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 7
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "892d2e2e_d0c00c00",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/rules/NoUnresolvedCommentsRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "It would be good to return Collections.singletonList(RULE_ERROR) in addition to the log.",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ebf42f_51bd1e26",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/rules/NoUnresolvedCommentsRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be better to return an OK record? That would make it so that the result gets written to NoteDb when the change is submitted.",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6546c3fd_10383a98",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/rules/RequireNonAuthorApprovalRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "nit: for readability I think it would be better to have this narrow-scoped: Don\u0027t initialize it here, but only where needed and close to the return statement.\n\nYou can make your life easier if you add a constructor to SubmitRecord that takes a message and a status",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a40073ec_1e36e919",
         "filename": "src/main/resources/Documentation/about.md",
         "patchSetId": 1
@@ -125,6 +503,80 @@
       "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "439cebf1_27e3fbad",
+        "filename": "src/main/resources/Documentation/about.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "That doesn\u0027t work given the permission you check (only authenticated users pass these)",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac554d5c_898539d2",
+        "filename": "src/main/resources/Documentation/about.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "Should we make it a PUT then? :)",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "938fcf16_5081e1be",
+        "filename": "src/main/resources/Documentation/about.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "we should perform input validation so that we only start writing configs in case the new input is valid and can be written to disk",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 49
+      },
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35514510_f6842914",
+        "filename": "src/main/resources/Documentation/about.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-27T08:40:46Z",
+      "side": 1,
+      "message": "Could you add a section on how the plugin deals with inheritance?",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
