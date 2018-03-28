@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3379fd6_71adaf6c",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigTranslator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-28T08:52:28Z",
+      "side": 1,
+      "message": "nit: can be a single string",
+      "range": {
+        "startLine": 112,
+        "startChar": 53,
+        "endLine": 112,
+        "endChar": 58
+      },
+      "revId": "ca1f345530f1fa073edd8767ce1758ee8ab65632",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788267f5_003300e6",
+        "filename": "src/main/resources/Documentation/about.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-28T08:52:28Z",
+      "side": 1,
+      "message": "READ_CONFIG",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 11
+      },
+      "revId": "ca1f345530f1fa073edd8767ce1758ee8ab65632",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c064c925_d8b8c4de",
+        "filename": "src/main/resources/Documentation/about.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-28T08:52:28Z",
+      "side": 1,
+      "message": "optional: make this a link",
+      "range": {
+        "startLine": 66,
+        "startChar": 17,
+        "endLine": 66,
+        "endChar": 30
+      },
+      "revId": "ca1f345530f1fa073edd8767ce1758ee8ab65632",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
