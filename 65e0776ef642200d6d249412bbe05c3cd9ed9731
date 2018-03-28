@@ -426,6 +426,24 @@
     },
     {
       "key": {
+        "uuid": "3648074f_557cb8de",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/EasyPreSubmitModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-28T08:52:28Z",
+      "side": 1,
+      "message": "In case you remove them now, they just won\u0027t show up in GWT, right?\n\nSince you don\u0027t support GWT at all, that might not be too bad :)",
+      "parentUuid": "f41133d6_44890327",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e41844c_6fe83170",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/EasyPreSubmitModule.java",
         "patchSetId": 1
@@ -1032,6 +1050,24 @@
       "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca5bd52a_d0676506",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/rules/RequireNonAuthorApprovalRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-03-28T08:52:28Z",
+      "side": 1,
+      "message": "You could add a builder (not AutoValue, because of GWT).",
+      "parentUuid": "53bec1fc_643d9ef2",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     },
     {
       "key": {
