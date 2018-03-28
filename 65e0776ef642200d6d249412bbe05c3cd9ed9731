@@ -232,6 +232,24 @@
     },
     {
       "key": {
+        "uuid": "3d078fb7_72655d5b",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012987
+      },
+      "writtenOn": "2018-03-28T00:01:08Z",
+      "side": 1,
+      "message": "Fair enough, I now understand why you called it simple-submit-rules and I have no better suggestion so let\u0027s keep that name. Thanks for taking the time to explain.",
+      "parentUuid": "12f9edd8_09d99e81",
+      "revId": "65e0776ef642200d6d249412bbe05c3cd9ed9731",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "672951f6_f3a0dc20",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/Constants.java",
         "patchSetId": 1
