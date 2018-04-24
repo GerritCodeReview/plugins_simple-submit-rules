@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "607170f5_b973c7f3",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/SubmitConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-04-24T09:26:19Z",
+      "side": 1,
+      "message": "Are the default values needed here?",
+      "range": {
+        "startLine": 39,
+        "startChar": 33,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "e1b3c48d16ffe492281669258c1e67fbce1f0f2f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58261ad_3af54529",
+        "filename": "src/main/resources/Documentation/about.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-04-24T09:26:19Z",
+      "side": 1,
+      "message": "child",
+      "range": {
+        "startLine": 11,
+        "startChar": 27,
+        "endLine": 11,
+        "endChar": 35
+      },
+      "revId": "e1b3c48d16ffe492281669258c1e67fbce1f0f2f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a3c8539_6f1d1dba",
+        "filename": "src/test/java/com/googlesource/gerrit/plugins/simplesubmitrules/AbstractDaemonTestWithPlugin.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-04-24T09:26:19Z",
+      "side": 1,
+      "message": "nit: AbstractSimpleSubmitRulesIT",
+      "range": {
+        "startLine": 32,
+        "startChar": 22,
+        "endLine": 32,
+        "endChar": 50
+      },
+      "revId": "e1b3c48d16ffe492281669258c1e67fbce1f0f2f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c8fd85_dcc52a12",
+        "filename": "src/test/java/com/googlesource/gerrit/plugins/simplesubmitrules/rules/RequireNonAuthorApprovalRuleIT.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-04-24T09:26:19Z",
+      "side": 1,
+      "message": "blocksWhenAutorIsApprover?",
+      "range": {
+        "startLine": 42,
+        "startChar": 14,
+        "endLine": 42,
+        "endChar": 42
+      },
+      "revId": "e1b3c48d16ffe492281669258c1e67fbce1f0f2f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
