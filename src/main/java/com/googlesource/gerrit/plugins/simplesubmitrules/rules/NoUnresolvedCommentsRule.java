@@ -16,16 +16,17 @@ package com.googlesource.gerrit.plugins.simplesubmitrules.rules;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gerrit.common.data.SubmitRecord;
-import com.google.gerrit.common.data.SubmitRecord.Status;
 import com.google.gerrit.common.data.SubmitRequirement;
+import com.google.gerrit.extensions.annotations.PluginName;
 import com.google.gerrit.server.config.PluginConfig;
+import com.google.gerrit.server.config.PluginConfigFactory;
+import com.google.gerrit.server.project.NoSuchProjectException;
 import com.google.gerrit.server.project.SubmitRuleOptions;
 import com.google.gerrit.server.query.change.ChangeData;
 import com.google.gerrit.server.rules.SubmitRule;
 import com.google.gwtorm.server.OrmException;
 import com.google.inject.Inject;
 import com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesConfig;
-import com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesModule;
 import java.util.Collection;
 import java.util.Collections;
 import org.slf4j.Logger;
@@ -39,20 +40,31 @@ public class NoUnresolvedCommentsRule implements SubmitRule {
           .setType("unresolved_comments")
           .setFallbackText("Resolve all comments")
           .build();
-  private final SimpleSubmitRulesModule plugin;
+  private final PluginConfigFactory pluginConfigFactory;
+  private final String pluginName;
 
   @Inject
-  public NoUnresolvedCommentsRule(SimpleSubmitRulesModule plugin) {
-    this.plugin = plugin;
+  public NoUnresolvedCommentsRule(
+      PluginConfigFactory pluginConfigFactory, @PluginName String pluginName) {
+    this.pluginConfigFactory = pluginConfigFactory;
+    this.pluginName = pluginName;
   }
 
   @Override
   public Collection<SubmitRecord> evaluate(ChangeData cd, SubmitRuleOptions options) {
-    PluginConfig config = plugin.getConfig(cd);
-    boolean blockIfUnresolvedComments =
+    PluginConfig config;
+    try {
+      config = pluginConfigFactory.getFromProjectConfig(cd.project(), pluginName);
+    } catch (NoSuchProjectException e) {
+      log.error("Error when fetching config of change {}'s project", cd.getId(), e);
+
+      return error("Error when fetching configuration");
+    }
+
+    boolean ruleEnabled =
         config.getBoolean(SimpleSubmitRulesConfig.KEY_BLOCK_IF_UNRESOLVED_COMMENTS, false);
 
-    if (!blockIfUnresolvedComments) {
+    if (!ruleEnabled) {
       return Collections.emptyList();
     }
 
@@ -62,20 +74,23 @@ public class NoUnresolvedCommentsRule implements SubmitRule {
     } catch (OrmException e) {
       log.error("Error when counting unresolved comments for change {}", cd.getId(), e);
 
-      SubmitRecord sr = new SubmitRecord();
-      sr.status = Status.RULE_ERROR;
-      sr.errorMessage = "Error when counting unresolved comments";
-      return ImmutableList.of(sr);
+      return error("Error when counting unresolved comments");
     }
 
     SubmitRecord sr = new SubmitRecord();
     sr.requirements = Collections.singletonList(REQUIREMENT);
-    if (unresolvedComments == null || unresolvedComments > 0) {
-      sr.status = Status.NOT_READY;
-    } else {
-      sr.status = Status.OK;
-    }
+    sr.status =
+        unresolvedComments == null || unresolvedComments > 0
+            ? SubmitRecord.Status.NOT_READY
+            : SubmitRecord.Status.OK;
 
+    return ImmutableList.of(sr);
+  }
+
+  private static Collection<SubmitRecord> error(String errorMessage) {
+    SubmitRecord sr = new SubmitRecord();
+    sr.status = SubmitRecord.Status.RULE_ERROR;
+    sr.errorMessage = errorMessage;
     return ImmutableList.of(sr);
   }
 }

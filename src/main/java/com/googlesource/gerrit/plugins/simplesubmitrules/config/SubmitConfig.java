@@ -22,8 +22,8 @@ import java.util.Optional;
 import java.util.Set;
 
 public class SubmitConfig {
-  public Map<String, LabelDefinition> labels = new HashMap<>();
-  public CommentsRules comments = new CommentsRules();
+  public Map<String, SubmitConfig.LabelDefinition> labels = new HashMap<>();
+  public SubmitConfig.CommentsRules comments = new SubmitConfig.CommentsRules();
 
   @Override
   public String toString() {
@@ -53,7 +53,7 @@ public class SubmitConfig {
   }
 
   static class CommentsRules {
-    boolean blockIfUnresolvedComments = false;
+    boolean blockIfUnresolvedComments;
 
     @Override
     public String toString() {

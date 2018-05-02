@@ -14,42 +14,19 @@
 
 package com.googlesource.gerrit.plugins.simplesubmitrules;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.gerrit.extensions.annotations.PluginName;
 import com.google.gerrit.extensions.registration.DynamicSet;
 import com.google.gerrit.extensions.restapi.RestApiModule;
-import com.google.gerrit.server.config.PluginConfig;
-import com.google.gerrit.server.config.PluginConfigFactory;
-import com.google.gerrit.server.project.NoSuchProjectException;
 import com.google.gerrit.server.project.ProjectResource;
-import com.google.gerrit.server.query.change.ChangeData;
 import com.google.gerrit.server.rules.SubmitRule;
 import com.google.inject.AbstractModule;
-import com.google.inject.Inject;
 import com.googlesource.gerrit.plugins.simplesubmitrules.config.ConfigServlet;
 import com.googlesource.gerrit.plugins.simplesubmitrules.config.ConfigTranslator;
 import com.googlesource.gerrit.plugins.simplesubmitrules.rules.NoUnresolvedCommentsRule;
 import com.googlesource.gerrit.plugins.simplesubmitrules.rules.RequireNonAuthorApprovalRule;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /** Bootstraps the Simple Submit Rules plugin */
 public class SimpleSubmitRulesModule extends AbstractModule {
-  private static final Logger log = LoggerFactory.getLogger(SimpleSubmitRulesModule.class);
-
-  /** Name of this plugin, as defined in the BUILD file */
-  @VisibleForTesting protected static final String PLUGIN_NAME = "simple-submit-rules";
-
-  private static final String API_ENDPOINT = PLUGIN_NAME;
-  private final PluginConfigFactory pluginConfigFactory;
-  private final String pluginName;
-
-  @Inject
-  public SimpleSubmitRulesModule(
-      PluginConfigFactory pluginConfigFactory, @PluginName String pluginName) {
-    this.pluginConfigFactory = pluginConfigFactory;
-    this.pluginName = pluginName;
-  }
+  private static final String API_ENDPOINT = "simple-submit-rules";
 
   @Override
   protected void configure() {
@@ -66,14 +43,5 @@ public class SimpleSubmitRulesModule extends AbstractModule {
 
     DynamicSet.bind(binder(), SubmitRule.class).to(RequireNonAuthorApprovalRule.class);
     DynamicSet.bind(binder(), SubmitRule.class).to(NoUnresolvedCommentsRule.class);
-  }
-
-  public PluginConfig getConfig(ChangeData changeData) {
-    try {
-      return pluginConfigFactory.getFromProjectConfig(changeData.project(), pluginName);
-    } catch (NoSuchProjectException e) {
-      log.error("Could not load plugin configuration", e);
-      return null;
-    }
   }
 }

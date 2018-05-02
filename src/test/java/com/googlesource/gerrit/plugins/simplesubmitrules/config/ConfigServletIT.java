@@ -21,7 +21,7 @@ import com.google.gerrit.acceptance.RestResponse;
 import com.google.gerrit.common.RawInputUtil;
 import com.google.gerrit.common.data.LabelFunction;
 import com.google.gerrit.extensions.restapi.RawInput;
-import com.google.gerrit.reviewdb.client.Project.NameKey;
+import com.google.gerrit.reviewdb.client.Project;
 import com.googlesource.gerrit.plugins.simplesubmitrules.AbstractSimpleSubmitRulesIT;
 import org.junit.Before;
 import org.junit.Test;
@@ -86,7 +86,7 @@ public class ConfigServletIT extends AbstractSimpleSubmitRulesIT {
         "application/json");
   }
 
-  private static String endpointUrl(NameKey project) {
+  private static String endpointUrl(Project.NameKey project) {
     return "/projects/" + project.get() + "/simple-submit-rules";
   }
 }

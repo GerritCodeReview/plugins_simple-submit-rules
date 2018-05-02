@@ -26,12 +26,11 @@ import org.eclipse.jgit.junit.TestRepository;
 import org.eclipse.jgit.lib.Config;
 import org.junit.Ignore;
 
-@TestPlugin(
-  name = SimpleSubmitRulesModule.PLUGIN_NAME,
-  sysModule = "com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesModule"
-)
-@Ignore
 /** Base class used by IT tests, loads the Simple Submit Rules plugin. */
+@TestPlugin(
+    name = "my-plugin",
+    sysModule = "com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesModule")
+@Ignore
 public abstract class AbstractSimpleSubmitRulesIT extends LightweightPluginDaemonTest {
   /** Helper method to change the project.config file using a provided consumer. */
   protected void changeProjectConfig(Consumer<Config> callback) throws Exception {
