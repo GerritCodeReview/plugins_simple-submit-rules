@@ -25,7 +25,6 @@ import com.google.gerrit.server.rules.SubmitRule;
 import com.google.gwtorm.server.OrmException;
 import com.google.inject.Inject;
 import com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesConfig;
-import com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesModule;
 import java.util.Collection;
 import java.util.Collections;
 import org.slf4j.Logger;
@@ -39,18 +38,18 @@ public class NoUnresolvedCommentsRule implements SubmitRule {
           .setType("unresolved_comments")
           .setFallbackText("Resolve all comments")
           .build();
-  private final SimpleSubmitRulesModule plugin;
+  private final SimpleSubmitRulesConfig config;
 
   @Inject
-  public NoUnresolvedCommentsRule(SimpleSubmitRulesModule plugin) {
-    this.plugin = plugin;
+  public NoUnresolvedCommentsRule(SimpleSubmitRulesConfig config) {
+    this.config = config;
   }
 
   @Override
   public Collection<SubmitRecord> evaluate(ChangeData cd, SubmitRuleOptions options) {
-    PluginConfig config = plugin.getConfig(cd);
+    PluginConfig pluginConfig = config.getConfig(cd);
     boolean blockIfUnresolvedComments =
-        config.getBoolean(SimpleSubmitRulesConfig.KEY_BLOCK_IF_UNRESOLVED_COMMENTS, false);
+        pluginConfig.getBoolean(SimpleSubmitRulesConfig.KEY_BLOCK_IF_UNRESOLVED_COMMENTS, false);
 
     if (!blockIfUnresolvedComments) {
       return Collections.emptyList();

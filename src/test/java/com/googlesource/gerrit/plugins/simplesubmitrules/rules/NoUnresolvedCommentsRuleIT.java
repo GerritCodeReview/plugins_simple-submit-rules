@@ -25,7 +25,7 @@ import com.google.gerrit.extensions.api.changes.ReviewInput;
 import com.google.gerrit.extensions.api.changes.ReviewInput.CommentInput;
 import com.google.gerrit.extensions.client.Side;
 import com.google.gerrit.server.project.SubmitRuleOptions;
-import com.google.inject.Inject;
+import com.google.gerrit.server.query.change.ChangeData;
 import com.googlesource.gerrit.plugins.simplesubmitrules.AbstractSimpleSubmitRulesIT;
 import com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesConfig;
 import java.util.Collection;
@@ -35,7 +35,6 @@ import org.junit.Test;
 @NoHttpd
 public class NoUnresolvedCommentsRuleIT extends AbstractSimpleSubmitRulesIT {
   private static final String FILENAME = "my.file";
-  @Inject private NoUnresolvedCommentsRule rule;
 
   @Before
   public void enableRuleBeforeTest() throws Exception {
@@ -48,8 +47,7 @@ public class NoUnresolvedCommentsRuleIT extends AbstractSimpleSubmitRulesIT {
     comment.unresolved = true;
     PushOneCommit.Result r = createChangeWithComment(comment);
 
-    Collection<SubmitRecord> submitRecords =
-        rule.evaluate(r.getChange(), SubmitRuleOptions.defaults());
+    Collection<SubmitRecord> submitRecords = evaluate(r.getChange(), SubmitRuleOptions.defaults());
 
     assertThat(submitRecords).hasSize(1);
     SubmitRecord result = submitRecords.iterator().next();
@@ -64,8 +62,7 @@ public class NoUnresolvedCommentsRuleIT extends AbstractSimpleSubmitRulesIT {
     comment.unresolved = false;
     PushOneCommit.Result r = createChangeWithComment(comment);
 
-    Collection<SubmitRecord> submitRecords =
-        rule.evaluate(r.getChange(), SubmitRuleOptions.defaults());
+    Collection<SubmitRecord> submitRecords = evaluate(r.getChange(), SubmitRuleOptions.defaults());
 
     assertThat(submitRecords).hasSize(1);
     SubmitRecord result = submitRecords.iterator().next();
@@ -79,7 +76,7 @@ public class NoUnresolvedCommentsRuleIT extends AbstractSimpleSubmitRulesIT {
     PushOneCommit.Result change = createChange("refs/for/master");
 
     Collection<SubmitRecord> submitRecords =
-        rule.evaluate(change.getChange(), SubmitRuleOptions.defaults());
+        evaluate(change.getChange(), SubmitRuleOptions.defaults());
 
     assertThat(submitRecords).hasSize(1);
     SubmitRecord result = submitRecords.iterator().next();
@@ -97,8 +94,7 @@ public class NoUnresolvedCommentsRuleIT extends AbstractSimpleSubmitRulesIT {
 
     enableRule(false);
 
-    Collection<SubmitRecord> submitRecords =
-        rule.evaluate(r.getChange(), SubmitRuleOptions.defaults());
+    Collection<SubmitRecord> submitRecords = evaluate(r.getChange(), SubmitRuleOptions.defaults());
     assertThat(submitRecords).isEmpty();
   }
 
@@ -119,6 +115,13 @@ public class NoUnresolvedCommentsRuleIT extends AbstractSimpleSubmitRulesIT {
                 plugin.getName(),
                 SimpleSubmitRulesConfig.KEY_BLOCK_IF_UNRESOLVED_COMMENTS,
                 newState));
+  }
+
+  private Collection<SubmitRecord> evaluate(ChangeData cd, SubmitRuleOptions options) {
+    NoUnresolvedCommentsRule rule =
+        plugin.getSysInjector().getInstance(NoUnresolvedCommentsRule.class);
+
+    return rule.evaluate(cd, options);
   }
 
   private static CommentInput newFileComment() {
