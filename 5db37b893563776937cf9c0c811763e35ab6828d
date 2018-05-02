@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5060f22a_484aaf29",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/SimpleSubmitRulesConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-05-02T14:58:56Z",
+      "side": 1,
+      "message": "Please pass in a Project.NameKey",
+      "range": {
+        "startLine": 41,
+        "startChar": 32,
+        "endLine": 41,
+        "endChar": 53
+      },
+      "revId": "5db37b893563776937cf9c0c811763e35ab6828d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38890949_e4d16f8f",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/SimpleSubmitRulesConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-05-02T14:58:56Z",
+      "side": 1,
+      "message": "Since this exception does not propagate, please add @Nullable to the method and check for null in callers.",
+      "range": {
+        "startLine": 44,
+        "startChar": 13,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "5db37b893563776937cf9c0c811763e35ab6828d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
