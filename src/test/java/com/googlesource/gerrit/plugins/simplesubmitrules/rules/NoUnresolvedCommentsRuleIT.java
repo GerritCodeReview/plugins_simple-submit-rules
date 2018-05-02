@@ -40,6 +40,7 @@ public class NoUnresolvedCommentsRuleIT extends AbstractSimpleSubmitRulesIT {
   @Before
   public void enableRuleBeforeTest() throws Exception {
     enableRule(true);
+    // rule = plugin.getSysInjector().getInstance(NoUnresolvedCommentsRule.class);
   }
 
   @Test

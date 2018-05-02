@@ -22,7 +22,10 @@ import com.googlesource.gerrit.plugins.simplesubmitrules.config.SubmitConfig.Lab
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
+@RunWith(JUnit4.class)
 public class ConfigTranslatorTest {
   /** Test the translations for each config key */
   @Test
