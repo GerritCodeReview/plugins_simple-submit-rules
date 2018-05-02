@@ -42,13 +42,10 @@ public class SimpleSubmitRulesModule extends AbstractModule {
 
   private static final String API_ENDPOINT = PLUGIN_NAME;
   private final PluginConfigFactory pluginConfigFactory;
-  private final String pluginName;
 
   @Inject
-  public SimpleSubmitRulesModule(
-      PluginConfigFactory pluginConfigFactory, @PluginName String pluginName) {
+  public SimpleSubmitRulesModule(PluginConfigFactory pluginConfigFactory) {
     this.pluginConfigFactory = pluginConfigFactory;
-    this.pluginName = pluginName;
   }
 
   @Override
@@ -70,7 +67,7 @@ public class SimpleSubmitRulesModule extends AbstractModule {
 
   public PluginConfig getConfig(ChangeData changeData) {
     try {
-      return pluginConfigFactory.getFromProjectConfig(changeData.project(), pluginName);
+      return pluginConfigFactory.getFromProjectConfig(changeData.project(), PLUGIN_NAME);
     } catch (NoSuchProjectException e) {
       log.error("Could not load plugin configuration", e);
       return null;
