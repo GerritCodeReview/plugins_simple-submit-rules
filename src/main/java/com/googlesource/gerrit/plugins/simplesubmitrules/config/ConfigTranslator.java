@@ -23,12 +23,14 @@ import com.google.gerrit.server.config.PluginConfigFactory;
 import com.google.gerrit.server.project.ProjectConfig;
 import com.google.gerrit.server.project.ProjectState;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesConfig;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 
 /** Codec class used to convert {@link SubmitConfig} from/to a Gerrit config */
+@Singleton
 public final class ConfigTranslator {
   private final PluginConfigFactory pluginConfigFactory;
   private final String pluginName;

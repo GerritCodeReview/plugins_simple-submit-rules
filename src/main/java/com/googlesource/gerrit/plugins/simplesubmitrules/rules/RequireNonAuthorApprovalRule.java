@@ -28,6 +28,7 @@ import com.google.gerrit.server.query.change.ChangeData;
 import com.google.gerrit.server.rules.SubmitRule;
 import com.google.gwtorm.server.OrmException;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesConfig;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,6 +40,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /** Simple rule: require a non-author approval or block submission */
+@Singleton
 public class RequireNonAuthorApprovalRule implements SubmitRule {
   private static final Logger log = LoggerFactory.getLogger(RequireNonAuthorApprovalRule.class);
   private static final String E_UNABLE_TO_FETCH_CHANGE_OWNER = "Unable to fetch the change owner";
