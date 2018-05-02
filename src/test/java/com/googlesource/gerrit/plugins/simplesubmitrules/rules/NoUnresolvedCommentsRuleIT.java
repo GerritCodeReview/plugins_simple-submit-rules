@@ -22,10 +22,9 @@ import com.google.gerrit.acceptance.NoHttpd;
 import com.google.gerrit.acceptance.PushOneCommit;
 import com.google.gerrit.common.data.SubmitRecord;
 import com.google.gerrit.extensions.api.changes.ReviewInput;
-import com.google.gerrit.extensions.api.changes.ReviewInput.CommentInput;
 import com.google.gerrit.extensions.client.Side;
 import com.google.gerrit.server.project.SubmitRuleOptions;
-import com.google.inject.Inject;
+import com.google.gerrit.server.query.change.ChangeData;
 import com.googlesource.gerrit.plugins.simplesubmitrules.AbstractSimpleSubmitRulesIT;
 import com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesConfig;
 import java.util.Collection;
@@ -35,7 +34,6 @@ import org.junit.Test;
 @NoHttpd
 public class NoUnresolvedCommentsRuleIT extends AbstractSimpleSubmitRulesIT {
   private static final String FILENAME = "my.file";
-  @Inject private NoUnresolvedCommentsRule rule;
 
   @Before
   public void enableRuleBeforeTest() throws Exception {
@@ -44,12 +42,11 @@ public class NoUnresolvedCommentsRuleIT extends AbstractSimpleSubmitRulesIT {
 
   @Test
   public void blocksWithUnresolvedComments() throws Exception {
-    CommentInput comment = newFileComment();
+    ReviewInput.CommentInput comment = newFileComment();
     comment.unresolved = true;
     PushOneCommit.Result r = createChangeWithComment(comment);
 
-    Collection<SubmitRecord> submitRecords =
-        rule.evaluate(r.getChange(), SubmitRuleOptions.defaults());
+    Collection<SubmitRecord> submitRecords = evaluate(r.getChange(), SubmitRuleOptions.defaults());
 
     assertThat(submitRecords).hasSize(1);
     SubmitRecord result = submitRecords.iterator().next();
@@ -60,12 +57,11 @@ public class NoUnresolvedCommentsRuleIT extends AbstractSimpleSubmitRulesIT {
 
   @Test
   public void doesNotBlockWithNoComments() throws Exception {
-    CommentInput comment = newFileComment();
+    ReviewInput.CommentInput comment = newFileComment();
     comment.unresolved = false;
     PushOneCommit.Result r = createChangeWithComment(comment);
 
-    Collection<SubmitRecord> submitRecords =
-        rule.evaluate(r.getChange(), SubmitRuleOptions.defaults());
+    Collection<SubmitRecord> submitRecords = evaluate(r.getChange(), SubmitRuleOptions.defaults());
 
     assertThat(submitRecords).hasSize(1);
     SubmitRecord result = submitRecords.iterator().next();
@@ -79,7 +75,7 @@ public class NoUnresolvedCommentsRuleIT extends AbstractSimpleSubmitRulesIT {
     PushOneCommit.Result change = createChange("refs/for/master");
 
     Collection<SubmitRecord> submitRecords =
-        rule.evaluate(change.getChange(), SubmitRuleOptions.defaults());
+        evaluate(change.getChange(), SubmitRuleOptions.defaults());
 
     assertThat(submitRecords).hasSize(1);
     SubmitRecord result = submitRecords.iterator().next();
@@ -90,19 +86,18 @@ public class NoUnresolvedCommentsRuleIT extends AbstractSimpleSubmitRulesIT {
 
   @Test
   public void doesNothingByDefault() throws Exception {
-    CommentInput comment = newFileComment();
+    ReviewInput.CommentInput comment = newFileComment();
     comment.unresolved = true;
 
     PushOneCommit.Result r = createChangeWithComment(comment);
 
     enableRule(false);
 
-    Collection<SubmitRecord> submitRecords =
-        rule.evaluate(r.getChange(), SubmitRuleOptions.defaults());
+    Collection<SubmitRecord> submitRecords = evaluate(r.getChange(), SubmitRuleOptions.defaults());
     assertThat(submitRecords).isEmpty();
   }
 
-  private PushOneCommit.Result createChangeWithComment(CommentInput comment) throws Exception {
+  private PushOneCommit.Result createChangeWithComment(ReviewInput.CommentInput comment) throws Exception {
     PushOneCommit.Result r = createChange("My change", FILENAME, "new content");
     ReviewInput reviewInput = new ReviewInput();
     reviewInput.comments = ImmutableMap.of(comment.path, ImmutableList.of(comment));
@@ -121,8 +116,15 @@ public class NoUnresolvedCommentsRuleIT extends AbstractSimpleSubmitRulesIT {
                 newState));
   }
 
-  private static CommentInput newFileComment() {
-    CommentInput c = new CommentInput();
+  private Collection<SubmitRecord> evaluate(ChangeData cd, SubmitRuleOptions options) {
+    NoUnresolvedCommentsRule rule =
+        plugin.getSysInjector().getInstance(NoUnresolvedCommentsRule.class);
+
+    return rule.evaluate(cd, options);
+  }
+
+  private static ReviewInput.CommentInput newFileComment() {
+    ReviewInput.CommentInput c = new ReviewInput.CommentInput();
     c.path = FILENAME;
     c.side = Side.REVISION;
     c.message = "nit: double  space.";

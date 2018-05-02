@@ -15,7 +15,7 @@
 package com.googlesource.gerrit.plugins.simplesubmitrules.config;
 
 import com.google.gerrit.extensions.restapi.AuthException;
-import com.google.gerrit.extensions.restapi.RestApiException;
+import com.google.gerrit.extensions.restapi.BadRequestException;
 import com.google.gerrit.extensions.restapi.RestModifyView;
 import com.google.gerrit.extensions.restapi.RestReadView;
 import com.google.gerrit.server.IdentifiedUser;
@@ -59,10 +59,8 @@ public class ConfigServlet
   }
 
   @Override
-  public Object apply(
-      ProjectResource resource,
-      com.googlesource.gerrit.plugins.simplesubmitrules.config.SubmitConfig inConfig)
-      throws PermissionBackendException, RestApiException, IOException {
+  public Object apply(ProjectResource resource, SubmitConfig inConfig)
+      throws PermissionBackendException, AuthException, BadRequestException, IOException {
 
     permissionBackend
         .user(resource.getUser())
