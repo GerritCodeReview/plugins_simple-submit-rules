@@ -26,9 +26,11 @@ import com.google.gerrit.server.permissions.ProjectPermission;
 import com.google.gerrit.server.project.ProjectCache;
 import com.google.gerrit.server.project.ProjectResource;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import java.io.IOException;
 
 /** REST Endpoint to configure labels and our simple submit rules */
+@Singleton
 public class ConfigServlet
     implements RestReadView<ProjectResource>, RestModifyView<ProjectResource, SubmitConfig> {
   private final ProjectCache projectCache;

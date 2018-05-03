@@ -26,6 +26,7 @@ import com.google.gerrit.server.query.change.ChangeData;
 import com.google.gerrit.server.rules.SubmitRule;
 import com.google.gwtorm.server.OrmException;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesConfig;
 import java.util.Collection;
 import java.util.Collections;
@@ -33,6 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /** Simple rule: block submission when unresolved comments are present. */
+@Singleton
 public class NoUnresolvedCommentsRule implements SubmitRule {
   private static final Logger log = LoggerFactory.getLogger(NoUnresolvedCommentsRule.class);
   private static final SubmitRequirement REQUIREMENT =

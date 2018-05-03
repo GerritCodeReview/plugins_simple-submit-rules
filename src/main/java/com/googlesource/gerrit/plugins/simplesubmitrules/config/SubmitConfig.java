@@ -16,11 +16,13 @@ package com.googlesource.gerrit.plugins.simplesubmitrules.config;
 
 import com.google.common.base.MoreObjects;
 import com.google.gerrit.common.data.LabelFunction;
+import com.google.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+@Singleton
 public class SubmitConfig {
   public Map<String, SubmitConfig.LabelDefinition> labels = new HashMap<>();
   public SubmitConfig.CommentsRules comments = new SubmitConfig.CommentsRules();
