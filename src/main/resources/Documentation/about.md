@@ -59,11 +59,11 @@ consumers should not rely upon it.
 
 ```
 {
-  "block-if-unresolved-comments": boolean
+  "block_if_unresolved_comments": boolean
 }
 ```
 
-When block-if-unresolved-comments is set to true, a Change with unresolved comments CAN'T be
+When block_if_unresolved_comments is set to true, a Change with unresolved comments CAN'T be
 submitted.
 
 ### LabelDefinition
@@ -71,8 +71,8 @@ submitted.
 ```
 {
   "function": LabelFunction,
-  "ignore-self-approval": boolean,
-  "copy-scores": CopyScoreRule[]
+  "ignore_self_approval": boolean,
+  "copy_scores": CopyScoreRule[]
 }
 ```
 
@@ -80,9 +80,9 @@ The LabelFunction specifies the behavior to use for this label.
 It allows marking a label as mandatory, and defines if negative votes are blocking or not.
 The list of functions is defined under.
 
-When ignore-self-approval is set, the change author can't vote to approve their own change.
+When ignore_self_approval is set, the change author can't vote to approve their own change.
 
-The copy-scores list defines under what circumstances the votes (for this specific label) should be
+The copy_scores list defines under what circumstances the votes (for this specific label) should be
 kept. The list of rules is defined below.
 
 
@@ -91,9 +91,9 @@ CopyScoreRule value is an enum value, encoded as a string.
 
 Each rule defines a behavior when a change is updated.
 
-The possible options are: `copy-min-score`, `copy-max-score`, `copy-all-scores-if-no-change`
-`copy-all-scores-if-no-code-change`, `copy-all-scores-on-merge-commit-first-parent-update`, and
-`copy-all-scores-on-trivial-rebase`
+The possible options are: `copyMinScore`, `copyMaxScore`, `copyAllScoresIfNoChange`
+`copyAllScoresIfNoCodeChange`, `copyAllScoresOnMergeCommitFirstParentUpdate`, and
+`copyAllScoresOnTrivialRebase`
 
 See the Labels documentation page for more information.
 
