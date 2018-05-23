@@ -1,12 +1,15 @@
 load("//tools/bzl:plugin.bzl", "gerrit_plugin", "PLUGIN_DEPS", "PLUGIN_TEST_DEPS")
 load("//tools/bzl:junit.bzl", "junit_tests")
 
+PACKAGE_NAME = "com.googlesource.gerrit.plugins.simplesubmitrules"
+
 gerrit_plugin(
     name = "simple-submit-rules",
     srcs = glob(["src/main/java/**/*.java"]),
     manifest_entries = [
         "Gerrit-PluginName: simple-submit-rules",
-        "Gerrit-Module: com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesModule",
+        "Gerrit-Module: com.googlesource.gerrit.plugins.simplesubmitrules.Module",
+        "Gerrit-BatchModule: com.googlesource.gerrit.plugins.simplesubmitrules.BatchModule",
     ],
     resources = glob(["src/main/resources/**/*"]),
 )
