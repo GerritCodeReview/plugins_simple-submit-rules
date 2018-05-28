@@ -6,7 +6,8 @@ gerrit_plugin(
     srcs = glob(["src/main/java/**/*.java"]),
     manifest_entries = [
         "Gerrit-PluginName: simple-submit-rules",
-        "Gerrit-Module: com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesModule",
+        "Gerrit-Module: com.googlesource.gerrit.plugins.simplesubmitrules.Module",
+        "Gerrit-BatchModule: com.googlesource.gerrit.plugins.simplesubmitrules.BatchModule",
     ],
     resources = glob(["src/main/resources/**/*"]),
 )

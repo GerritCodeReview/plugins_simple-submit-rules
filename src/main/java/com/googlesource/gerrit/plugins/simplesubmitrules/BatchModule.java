@@ -15,32 +15,17 @@
 package com.googlesource.gerrit.plugins.simplesubmitrules;
 
 import com.google.gerrit.extensions.registration.DynamicSet;
-import com.google.gerrit.extensions.restapi.RestApiModule;
-import com.google.gerrit.server.project.ProjectResource;
 import com.google.gerrit.server.rules.SubmitRule;
 import com.google.inject.AbstractModule;
-import com.googlesource.gerrit.plugins.simplesubmitrules.config.ConfigServlet;
 import com.googlesource.gerrit.plugins.simplesubmitrules.config.ConfigTranslator;
 import com.googlesource.gerrit.plugins.simplesubmitrules.rules.NoUnresolvedCommentsRule;
 import com.googlesource.gerrit.plugins.simplesubmitrules.rules.RequireNonAuthorApprovalRule;
 
-/** Bootstraps the Simple Submit Rules plugin */
-public class SimpleSubmitRulesModule extends AbstractModule {
-  private static final String API_ENDPOINT = "simple-submit-rules";
-
+/** Rules for the batch programs (offline reindexer) */
+public class BatchModule extends AbstractModule {
   @Override
   protected void configure() {
     bind(ConfigTranslator.class);
-
-    install(
-        new RestApiModule() {
-          @Override
-          protected void configure() {
-            get(ProjectResource.PROJECT_KIND, API_ENDPOINT).to(ConfigServlet.class);
-            put(ProjectResource.PROJECT_KIND, API_ENDPOINT).to(ConfigServlet.class);
-          }
-        });
-
     DynamicSet.bind(binder(), SubmitRule.class).to(RequireNonAuthorApprovalRule.class);
     DynamicSet.bind(binder(), SubmitRule.class).to(NoUnresolvedCommentsRule.class);
   }
