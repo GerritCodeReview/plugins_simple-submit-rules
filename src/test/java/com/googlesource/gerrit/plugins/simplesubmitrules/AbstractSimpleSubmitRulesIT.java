@@ -29,7 +29,7 @@ import org.junit.Ignore;
 /** Base class used by IT tests, loads the Simple Submit Rules plugin. */
 @TestPlugin(
     name = "my-plugin",
-    sysModule = "com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesModule")
+    sysModule = "com.googlesource.gerrit.plugins.simplesubmitrules.Module")
 @Ignore
 public abstract class AbstractSimpleSubmitRulesIT extends LightweightPluginDaemonTest {
   /** Helper method to change the project.config file using a provided consumer. */
