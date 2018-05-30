@@ -61,6 +61,7 @@ limitations under the License.
           this._loading = false;
           this._readOnly = false;
           this._repoConfig = {
+            labels: {},
             comments: {
               block_if_unresolved_comments: false
             }
@@ -90,6 +91,44 @@ limitations under the License.
 
       element._readOnly = true;
       assert.equal(unresolvedCommentsEl.disabled, true);
+    });
+
+    test('adds a label element', (done) => {
+      flushAsynchronousOperations();
+      element.set(["_repoConfig", "labels", "Verified"], {
+        function: "MaxNoBlock",
+        copy_scores: []
+      });
+      flush(function () {
+        let labelItems = element.querySelectorAll('gr-simple-submit-rules-label-config');
+        assert.ok(labelItems);
+        assert.equal(labelItems.length, 1);
+
+        let labelEl = labelItems[0];
+        assert.ok(labelEl);
+        assert.equal(labelEl.labelName, "Verified");
+        assert.equal(labelEl.readOnly, false);
+        done();
+      });
+    });
+
+    test('adds two labels elements', (done) => {
+      flushAsynchronousOperations();
+      element.set(["_repoConfig", "labels", "Verified"], {
+        function: "MaxNoBlock",
+        copy_scores: []
+      });
+
+      element.set(["_repoConfig", "labels", "Code-Review"], {
+        function: "MaxNoBlock",
+        copy_scores: []
+      });
+
+      flush(function () {
+        let labelItems = element.querySelectorAll('gr-simple-submit-rules-label-config');
+        assert.equal(labelItems.length, 2);
+        done();
+      });
     });
 
     test('unresolved comment uses the repoConfig value (false)', (done) => {
