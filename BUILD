@@ -1,5 +1,7 @@
-load("//tools/bzl:plugin.bzl", "gerrit_plugin", "PLUGIN_DEPS", "PLUGIN_TEST_DEPS")
+load("//tools/bzl:genrule2.bzl", "genrule2")
+load("//tools/bzl:js.bzl", "polygerrit_plugin")
 load("//tools/bzl:junit.bzl", "junit_tests")
+load("//tools/bzl:plugin.bzl", "gerrit_plugin", "PLUGIN_DEPS", "PLUGIN_TEST_DEPS")
 
 gerrit_plugin(
     name = "simple-submit-rules",
@@ -9,6 +11,7 @@ gerrit_plugin(
         "Gerrit-Module: com.googlesource.gerrit.plugins.simplesubmitrules.Module",
         "Gerrit-BatchModule: com.googlesource.gerrit.plugins.simplesubmitrules.BatchModule",
     ],
+    resource_jars = [":ssr-static"],
     resources = glob(["src/main/resources/**/*"]),
 )
 
@@ -35,4 +38,25 @@ junit_tests(
         ":abstract_test_base",
         ":simple-submit-rules__plugin",
     ],
+)
+
+genrule2(
+    name = "ssr-static",
+    srcs = [":ssr"],
+    outs = ["ssr-static.jar"],
+    cmd = " && ".join([
+        "mkdir $$TMP/static",
+        "cp -rp $(locations :ssr) $$TMP/static",
+        "cd $$TMP",
+        "zip -Drq $$ROOT/$@ -g .",
+    ]),
+)
+
+polygerrit_plugin(
+    name = "ssr",
+    srcs = glob([
+        "**/*.html",
+        "**/*.js",
+    ]),
+    app = "plugin.html",
 )
