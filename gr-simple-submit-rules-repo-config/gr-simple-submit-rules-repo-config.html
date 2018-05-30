@@ -15,6 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
+<link rel="import"
+    href="../gr-simple-submit-rules-label-config/gr-simple-submit-rules-label-config.html">
+<!-- TODO(maximeg) Import the web components when this issue is solved:
+        https://bugs.chromium.org/p/gerrit/issues/detail?id=8096 -->
+
 <dom-module id="gr-simple-submit-rules-repo-config">
     <template>
         <style include="shared-styles"></style>
@@ -35,6 +40,18 @@ limitations under the License.
                         </gr-select>
                     </span>
                 </section>
+
+                <template is="dom-repeat"
+                    id="allLabels"
+                    items="[[_labels]]"
+                    initial-count="5"
+                    target-framerate="60">
+                    <gr-simple-submit-rules-label-config mutable-data
+                        label-name="[[item]]"
+                        repo-config="{{_repoConfig}}"
+                        read-only="[[_readOnly]]">
+                    </gr-simple-submit-rules-label-config>
+                </template>
             </fieldset>
 
             <gr-button on-tap="_handleSaveRepoConfig"

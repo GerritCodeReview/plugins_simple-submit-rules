@@ -1,0 +1,246 @@
+<!--
+@license
+Copyright (C) 2018 The Android Open Source Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<!-- TODO(maximeg) Import the web components when this issue is solved:
+        https://bugs.chromium.org/p/gerrit/issues/detail?id=8096 -->
+
+<dom-module id="gr-simple-submit-rules-label-config">
+    <template>
+        <style include="shared-styles"></style>
+        <style include="gr-form-styles"></style>
+        <style>
+            :host {
+                display: block;
+                padding: 1em 1em;
+                margin-bottom: 1em;
+                border: 1px solid var(--border-color);
+            }
+
+            fieldset {
+                border: 1px solid var(--border-color);
+            }
+        </style>
+
+        <main class="gr-form-styles">
+            <h3 id="options">Label [[labelName]]</h3>
+            <fieldset id="simple-submit-rules">
+                <section>
+                    <span class="title">Should a vote with the maximum value be required?</span>
+                    <span class="value">
+                        <gr-select id="maxVoteRequired"
+                            bind-value="{{_maxVoteRequired}}">
+                            <select disabled$="[[readOnly]]">
+                                <option value="false">No</option>
+                                <option value="true">Yes</option>
+                            </select>
+                        </gr-select>
+                    </span>
+                </section>
+                <section>
+                    <span class="title">Should votes with the lowest value block submission?</span>
+                    <span class="value">
+                        <gr-select id="negativeBlocks"
+                            bind-value="{{_negativeBlocks}}">
+                            <select disabled$="[[readOnly]]">
+                                <option value="false">No</option>
+                                <option value="true">Yes</option>
+                            </select>
+                        </gr-select>
+                    </span>
+                </section>
+                <section>
+                    <span class="title">(Expert users) Function name</span>
+                    <span class="value">
+                        <gr-select id="functionName"
+                            bind-value="{{_labelConfig.function}}">
+                            <select disabled$="[[readOnly]]">
+                                <option value="MaxNoBlock">MaxNoBlock</option>
+                                <option value="MaxWithBlock">MaxWithBlock</option>
+                                <option value="AnyWithBlock">AnyWithBlock</option>
+                                <option value="NoBlock">NoBlock</option>
+                                <option value="NoOp">NoOp</option>
+                            </select>
+                        </gr-select>
+                    </span>
+                </section>
+                <section>
+                    <span class="title">Allow approval by the change owner</span>
+                    <span class="value">
+                        <gr-select id="allowUnresolvedComments"
+                            bind-value="{{_labelConfig.ignore_self_approval}}">
+                            <select disabled$="[[readOnly]]">
+                                <option value="false">Yes</option>
+                                <option value="true">No</option>
+                            </select>
+                        </gr-select>
+                    </span>
+                </section>
+            </fieldset>
+
+            <fieldset>
+                <section>
+                    <span class="title">
+                        When a new patchset is uploaded, Gerrit should copy votes ...
+                    </span>
+                </section>
+
+                <!-- copyMincore -->
+                <section>
+                    <span class="title">
+                        <gr-tooltip-content class="draftTooltip"
+                            has-tooltip
+                            title="Should votes be kept of the minimal value be kept?"
+                            max-width="20em"
+                            show-icon>
+                            with minimal value
+                        </gr-tooltip-content>
+                    </span>
+                    <span class="value">
+                        <gr-select id="copyMinScore"
+                            bind-value="{{_copyScores.copyMinScore}}">
+                            <select disabled$="[[readOnly]]">
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </gr-select>
+                    </span>
+                </section>
+
+
+                <!-- copyMaxScore -->
+                <section>
+                    <span class="title">
+                        <gr-tooltip-content class="draftTooltip"
+                            has-tooltip
+                            title="Should votes of the maximal value be kept?"
+                            max-width="20em"
+                            show-icon>
+                            with maximal value
+                        </gr-tooltip-content>
+                    </span>
+                    <span class="value">
+                        <gr-select id="copyMaxScore"
+                            bind-value="{{_copyScores.copyMaxScore}}">
+                            <select disabled$="[[readOnly]]">
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </gr-select>
+                    </span>
+                </section>
+
+                <!-- copyAllScoresOnTrivialRebase -->
+                <section>
+                    <span class="title">
+                        <gr-tooltip-content class="draftTooltip"
+                            has-tooltip
+                            title="Should votes be kept when a trivial rebase
+                                is done (same commit message and content, different parent)?"
+                            max-width="20em"
+                            show-icon>
+                            on trivial rebase
+                        </gr-tooltip-content>
+                    </span>
+                    <span class="value">
+                        <gr-select id="copyAllScoresOnTrivialRebase"
+                            bind-value="{{_copyScores.copyAllScoresOnTrivialRebase}}">
+                            <select disabled$="[[readOnly]]">
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </gr-select>
+                    </span>
+                </section>
+
+
+                <!-- copyAllScoresIfNoCodeChange -->
+                <section>
+                    <span class="title">
+                        <gr-tooltip-content class="draftTooltip"
+                            has-tooltip
+                            title="Should votes be kept when the commit message is modified?
+                                Changing the parent or changing files invalidates this."
+                            max-width="20em"
+                            show-icon>
+                            when only the commit message is modified
+                        </gr-tooltip-content>
+                    </span>
+                    <span class="value">
+                        <gr-select id="copyAllScoresIfNoCodeChange"
+                            bind-value="{{_copyScores.copyAllScoresIfNoCodeChange}}">
+                            <select disabled$="[[readOnly]]">
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </gr-select>
+                    </span>
+                </section>
+
+
+                <!-- copyAllScoresIfNoChange -->
+                <section>
+                    <span class="title">
+                        <gr-tooltip-content class="draftTooltip"
+                            has-tooltip
+                            title="Should votes be kept when the commit metadata (author,
+                                commit date) are modified?
+                                Changing anything else from the commit (message, content,
+                                parent) invalidates this."
+                            max-width="20em"
+                            show-icon>
+                            when only commit metatada are modified
+                        </gr-tooltip-content>
+                    </span>
+                    <span class="value">
+                        <gr-select id="copyAllScoresIfNoChange"
+                            bind-value="{{_copyScores.copyAllScoresIfNoChange}}">
+                            <select disabled$="[[readOnly]]">
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </gr-select>
+                    </span>
+                </section>
+
+
+                <!-- copyAllScoresOnMergeFirstParentUpdate -->
+                <section>
+                    <span class="title">
+                        <gr-tooltip-content class="draftTooltip"
+                            has-tooltip
+                            title="Only applies to Merge commits. Should votes be kept
+                                when the destination commit of a merge commit is changed?"
+                            max-width="20em"
+                            show-icon>
+                            on rebased merge commits
+                        </gr-tooltip-content>
+                    </span>
+                    <span class="value">
+                        <gr-select id="copyAllScoresOnMergeFirstParentUpdate"
+                            bind-value="{{_copyScores.copyAllScoresOnMergeFirstParentUpdate}}">
+                            <select disabled$="[[readOnly]]">
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </gr-select>
+                    </span>
+                </section>
+            </fieldset>
+        </main>
+        <gr-rest-api-interface id="restAPI"></gr-rest-api-interface>
+    </template>
+    <script src="./gr-simple-submit-rules-label-config.js"></script>
+</dom-module>
