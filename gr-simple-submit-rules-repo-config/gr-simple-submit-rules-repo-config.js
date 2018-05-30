@@ -31,6 +31,11 @@
         type: Boolean,
         value: true,
       },
+      _labels: {
+        type: Array,
+        value() { return []; },
+        computed: '_computeLabelNames(_repoConfig.*)'
+      },
     },
 
     observers: [
@@ -107,5 +112,9 @@
           this._configChanged = false;
         })
     },
+
+    _computeLabelNames() {
+      return Object.keys(this._repoConfig.labels);
+    }
   });
 })();
