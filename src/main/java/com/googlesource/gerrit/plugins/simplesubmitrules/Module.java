@@ -14,7 +14,10 @@
 
 package com.googlesource.gerrit.plugins.simplesubmitrules;
 
+import com.google.gerrit.extensions.registration.DynamicSet;
 import com.google.gerrit.extensions.restapi.RestApiModule;
+import com.google.gerrit.extensions.webui.JavaScriptPlugin;
+import com.google.gerrit.extensions.webui.WebUiPlugin;
 import com.google.gerrit.server.project.ProjectResource;
 import com.google.inject.AbstractModule;
 import com.googlesource.gerrit.plugins.simplesubmitrules.config.ConfigServlet;
@@ -33,6 +36,8 @@ public class Module extends AbstractModule {
             put(ProjectResource.PROJECT_KIND, API_ENDPOINT).to(ConfigServlet.class);
           }
         });
+
+    DynamicSet.bind(binder(), WebUiPlugin.class).toInstance(new JavaScriptPlugin("ssr.html"));
     install(new BatchModule());
   }
 }
