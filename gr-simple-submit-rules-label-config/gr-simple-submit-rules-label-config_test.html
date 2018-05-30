@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<!--
+@license
+Copyright (C) 2016 The Android Open Source Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<meta name="viewport"
+    content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+<title>gr-simple-submit-rules-label-config</title>
+
+<script src="../../../polygerrit-ui/app/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+<script src="../../../polygerrit-ui/app/bower_components/web-component-tester/browser.js"></script>
+<link rel="import"
+    href="../../../polygerrit-ui/app/test/common-test-setup.html" />
+<!-- TODO(maximeg) find if there is a better way to do this, like .. not in tests -->
+<link rel="import"
+    href="../../../polygerrit-ui/app/elements/shared/gr-select/gr-select.html" />
+<link rel="import"
+    href="../../../polygerrit-ui/app/styles/shared-styles.html" />
+<link rel="import"
+    href="../../../polygerrit-ui/app/styles/gr-form-styles.html" />
+
+<link rel="import"
+    href="gr-simple-submit-rules-label-config.html">
+
+<script>void (0);</script>
+
+<test-fixture id="basic">
+    <template>
+        <gr-simple-submit-rules-label-config label-name="Verified"
+            repo-config='{"labels": {"Verified": {"function": "MaxNoBlock", "copy_scores": []}}}'
+            readOnly="false">
+        </gr-simple-submit-rules-label-config>
+    </template>
+</test-fixture>
+
+<script>
+    const COPY_SCORES = [
+        "copyMinScore",
+        "copyMaxScore",
+        "copyAllScoresOnTrivialRebase",
+        "copyAllScoresIfNoCodeChange",
+        "copyAllScoresIfNoChange",
+        "copyAllScoresOnMergeFirstParentUpdate"
+    ];
+
+    suite('gr-simple-submit-rules-label-config tests', () => {
+        let element;
+        let sandbox;
+
+        setup(() => {
+            sandbox = sinon.sandbox.create();
+
+            element = fixture('basic');
+        });
+
+        teardown(() => {
+            sandbox.restore();
+        });
+
+        test('section title is correct', () => {
+            assert.equal(element.$$('#options').innerText.indexOf("Label Verified"), 0);
+        });
+
+        // The following tests check that changing the function name (from the REST API)
+        // has an impact on the displayed settings
+        test('function "MaxWithBlock" is properly mapped to UI', (done) => {
+            flushAsynchronousOperations();
+
+            element.set("_labelConfig.function", "MaxWithBlock");
+            flush(function () {
+                assert.equal(element.$$('#negativeBlocks select').value, "true");
+                assert.equal(element.$$('#maxVoteRequired select').value, "true");
+                assert.equal(element.$$('#functionName select').value, "MaxWithBlock");
+                done();
+            });
+        });
+
+        test('function "MaxNoBlock" is properly mapped to UI', (done) => {
+            flushAsynchronousOperations();
+
+            element.set("_labelConfig.function", "MaxNoBlock");
+            flush(function () {
+                assert.equal(element.$$('#negativeBlocks select').value, "false");
+                assert.equal(element.$$('#maxVoteRequired select').value, "true");
+                assert.equal(element.$$('#functionName select').value, "MaxNoBlock");
+                done();
+            });
+        });
+
+        test('function "NoBlock" is properly mapped to UI', (done) => {
+            flushAsynchronousOperations();
+
+            element.set("_labelConfig.function", "NoBlock");
+            flush(function () {
+                assert.equal(element.$$('#negativeBlocks select').value, "false");
+                assert.equal(element.$$('#maxVoteRequired select').value, "false");
+                assert.equal(element.$$('#functionName select').value, "NoBlock");
+                done();
+            });
+        });
+
+        test('function "AnyWithBlock" is properly mapped to UI', (done) => {
+            flushAsynchronousOperations();
+
+            element.set("_labelConfig.function", "AnyWithBlock");
+            flush(function () {
+                assert.equal(element.$$('#negativeBlocks select').value, "true");
+                assert.equal(element.$$('#maxVoteRequired select').value, "false");
+                assert.equal(element.$$('#functionName select').value, "AnyWithBlock");
+                done();
+            });
+        });
+
+        // The following tests check that changing the function from the UI has a
+        // visible impact on the easy checkboxes options, while keeping the function
+        // name intact.
+        test('picking function "MaxWithBlock" correctly updates the UI', (done) => {
+            flushAsynchronousOperations();
+
+            element.$$('#functionName select').value = "MaxWithBlock";
+            element.$$('#functionName').dispatchEvent(new Event("change"));
+
+            flush(function () {
+                assert.equal(element.$$('#negativeBlocks select').value, "true");
+                assert.equal(element.$$('#maxVoteRequired select').value, "true");
+                assert.equal(element.$$('#functionName select').value, "MaxWithBlock");
+                done();
+            });
+        });
+
+        test('picking function "NoBlock" correctly updates the UI', (done) => {
+            flushAsynchronousOperations();
+
+            element.$$('#functionName select').value = "NoBlock";
+            element.$$('#functionName').dispatchEvent(new Event("change"));
+
+            flush(function () {
+                assert.equal(element.$$('#negativeBlocks select').value, "false");
+                assert.equal(element.$$('#maxVoteRequired select').value, "false");
+                assert.equal(element.$$('#functionName select').value, "NoBlock");
+                done();
+            });
+        });
+
+        test('picking function "AnyWithBlock" correctly updates the UI', (done) => {
+            flushAsynchronousOperations();
+
+            element.$$('#functionName select').value = "AnyWithBlock";
+            element.$$('#functionName').dispatchEvent(new Event("change"));
+
+            flush(function () {
+                assert.equal(element.$$('#negativeBlocks select').value, "true");
+                assert.equal(element.$$('#maxVoteRequired select').value, "false");
+                assert.equal(element.$$('#functionName select').value, "AnyWithBlock");
+                done();
+            });
+        });
+
+        test('picking function "MaxNoBlock" correctly updates the UI', (done) => {
+            flushAsynchronousOperations();
+
+            element.$$('#functionName select').value = "MaxNoBlock";
+            element.$$('#functionName').dispatchEvent(new Event("change"));
+
+            flush(function () {
+                assert.equal(element.$$('#negativeBlocks select').value, "false");
+                assert.equal(element.$$('#maxVoteRequired select').value, "true");
+                assert.equal(element.$$('#functionName select').value, "MaxNoBlock");
+                done();
+            });
+        });
+
+        // The following tests check that the easy way to define the function
+        // ("negative blocks?" and "max vote required?") maps to the right function,
+        // without impacting the user choices.
+        test('function "MaxWithBlock" is properly suggested from UI', (done) => {
+            flushAsynchronousOperations();
+
+            element.$$('#negativeBlocks select').value = "true";
+            element.$$('#negativeBlocks').dispatchEvent(new Event("change"));
+
+            element.$$('#maxVoteRequired select').value = "true";
+            element.$$('#maxVoteRequired').dispatchEvent(new Event("change"));
+
+            flush(function () {
+                assert.equal(element.$$('#negativeBlocks select').value, "true");
+                assert.equal(element.$$('#maxVoteRequired select').value, "true");
+                assert.equal(element.$$('#functionName select').value, "MaxWithBlock");
+                done();
+            });
+        });
+
+        test('function "NoBlock" is properly suggested from UI', (done) => {
+            flushAsynchronousOperations();
+
+            element.$$('#negativeBlocks select').value = "false";
+            element.$$('#negativeBlocks').dispatchEvent(new Event("change"));
+
+            element.$$('#maxVoteRequired select').value = "false";
+            element.$$('#maxVoteRequired').dispatchEvent(new Event("change"));
+
+            flush(function () {
+                assert.equal(element.$$('#negativeBlocks select').value, "false");
+                assert.equal(element.$$('#maxVoteRequired select').value, "false");
+                assert.equal(element.$$('#functionName select').value, "NoBlock");
+                done();
+            });
+        });
+
+        test('function "AnyWithBlock" is properly suggested from UI', (done) => {
+            flushAsynchronousOperations();
+
+            element.$$('#negativeBlocks select').value = "true";
+            element.$$('#negativeBlocks').dispatchEvent(new Event("change"));
+
+            element.$$('#maxVoteRequired select').value = "false";
+            element.$$('#maxVoteRequired').dispatchEvent(new Event("change"));
+
+            flush(function () {
+                assert.equal(element.$$('#negativeBlocks select').value, "true");
+                assert.equal(element.$$('#maxVoteRequired select').value, "false");
+                assert.equal(element.$$('#functionName select').value, "AnyWithBlock");
+                done();
+            });
+        });
+
+        test('function "MaxNoBlock" is properly suggested from UI', (done) => {
+            flushAsynchronousOperations();
+
+            element.$$('#negativeBlocks select').value = "false";
+            element.$$('#negativeBlocks').dispatchEvent(new Event("change"));
+
+            element.$$('#maxVoteRequired select').value = "true";
+            element.$$('#maxVoteRequired').dispatchEvent(new Event("change"));
+
+            flush(function () {
+                assert.equal(element.$$('#negativeBlocks select').value, "false");
+                assert.equal(element.$$('#maxVoteRequired select').value, "true");
+                assert.equal(element.$$('#functionName select').value, "MaxNoBlock");
+                done();
+            });
+        });
+
+        // The following tests check that "copy scores" are correctly mapped *to* and
+        // *from* the UI, for the two possible boolean values.
+        for (let copyScoreName of COPY_SCORES) {
+            let elName = '#' + copyScoreName + ' select';
+
+            test('copyScore.' + copyScoreName + ' [false] is reflected *in* the UI', () => {
+                flushAsynchronousOperations();
+                assert.equal(element.$$(elName).value, 'false');
+            });
+
+            test('copyScore.' + copyScoreName + ' [true] is reflected in the UI', (done) => {
+                flushAsynchronousOperations();
+                element.set("_labelConfig.copy_scores", [copyScoreName]);
+
+                flush(function () {
+                    assert.equal(element.$$(elName).value, 'true');
+                    done();
+                });
+            });
+        }
+
+
+        for (let copyScoreName of COPY_SCORES) {
+            let elName = '#' + copyScoreName;
+
+            test('copyScore.' + copyScoreName + ' is reflected *from* the UI', (done) => {
+                flushAsynchronousOperations();
+                element.$$(elName + ' select').value = 'true';
+                element.$$(elName).dispatchEvent(new Event("change"));
+
+                flush(function () {
+                    assert.deepEqual(element.repoConfig.labels.Verified.copy_scores, [copyScoreName]);
+                    done();
+                });
+            });
+        }
+    });
+</script>
