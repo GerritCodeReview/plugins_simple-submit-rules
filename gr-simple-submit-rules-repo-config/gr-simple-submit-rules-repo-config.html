@@ -1,0 +1,49 @@
+<!--
+@license
+Copyright (C) 2018 The Android Open Source Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<dom-module id="gr-simple-submit-rules-repo-config">
+  <template>
+    <style include="shared-styles"></style>
+    <style include="gr-form-styles"></style>
+
+    <main class="gr-form-styles">
+      <h3 id="options">Simple Submit Rules</h3>
+      <fieldset id="unresolved_comments">
+        <section>
+          <span class="title">Allow submission with unresolved comments</span>
+          <span class="value">
+            <gr-select id="allowUnresolvedComments"
+                       bind-value="{{_repoConfig.comments.block_if_unresolved_comments}}">
+              <select disabled$="[[_readOnly]]">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </select>
+            </gr-select>
+          </span>
+        </section>
+      </fieldset>
+
+      <gr-button on-tap="_handleSaveRepoConfig"
+                 disabled$="[[_computeButtonDisabled(_readOnly, _configChanged)]]">
+        Save Changes
+      </gr-button>
+    </main>
+    <gr-rest-api-interface id="restAPI"></gr-rest-api-interface>
+    <gr-js-api-interface id="jsAPI"></gr-js-api-interface>
+  </template>
+  <script src="./gr-simple-submit-rules-repo-config.js"></script>
+</dom-module>
