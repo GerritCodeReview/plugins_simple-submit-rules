@@ -39,6 +39,332 @@
       "revId": "d2414935818ae59c789843a5a70f5f28a36c90bd",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e705f307_396e234c",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2018-05-31T17:27:50Z",
+      "side": 1,
+      "message": "I think PolyGerrit generally uses +4 indentation.",
+      "revId": "d2414935818ae59c789843a5a70f5f28a36c90bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f68b0ac4_26d3694d",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2018-05-31T17:27:50Z",
+      "side": 1,
+      "message": "Here too.",
+      "revId": "d2414935818ae59c789843a5a70f5f28a36c90bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc88bcc2_c7401143",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2018-05-31T17:27:50Z",
+      "side": 1,
+      "message": "This isn\u0027t guaranteed to work. Please use plugin.restApi()",
+      "revId": "d2414935818ae59c789843a5a70f5f28a36c90bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9639847_bca839b2",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2018-05-31T17:27:50Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this.",
+      "revId": "d2414935818ae59c789843a5a70f5f28a36c90bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e00e1b_5b7d5225",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2018-05-31T17:27:50Z",
+      "side": 1,
+      "message": "this.plugin.restApi().getLoggedIn()\n\nAlso, you might want to store returned value of this.plugin.restApi() in a property for convenience.",
+      "range": {
+        "startLine": 62,
+        "startChar": 20,
+        "endLine": 62,
+        "endChar": 48
+      },
+      "revId": "d2414935818ae59c789843a5a70f5f28a36c90bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74a43fd3_2f4950b8",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2018-05-31T17:27:50Z",
+      "side": 1,
+      "message": "return; can be used here",
+      "range": {
+        "startLine": 66,
+        "startChar": 27,
+        "endLine": 66,
+        "endChar": 52
+      },
+      "revId": "d2414935818ae59c789843a5a70f5f28a36c90bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d905a322_106184e4",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2018-05-31T17:27:50Z",
+      "side": 1,
+      "message": "this.plugin.restApi()",
+      "range": {
+        "startLine": 74,
+        "startChar": 20,
+        "endLine": 74,
+        "endChar": 41
+      },
+      "revId": "d2414935818ae59c789843a5a70f5f28a36c90bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a4a79d_2dc43a59",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2018-05-31T17:27:50Z",
+      "side": 1,
+      "message": "return;",
+      "range": {
+        "startLine": 76,
+        "startChar": 32,
+        "endLine": 76,
+        "endChar": 50
+      },
+      "revId": "d2414935818ae59c789843a5a70f5f28a36c90bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa0aa17e_25fb8699",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2018-05-31T17:27:50Z",
+      "side": 1,
+      "message": "_endpointUrl",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 16
+      },
+      "revId": "d2414935818ae59c789843a5a70f5f28a36c90bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "917caca0_26110c79",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2018-05-31T17:27:50Z",
+      "side": 1,
+      "message": "Keep baseUrl in mind - whole Gerrit might be served from non-root url, e.g. \u0027some.com/gerrit\u0027",
+      "revId": "d2414935818ae59c789843a5a70f5f28a36c90bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f557f86_98d6a888",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2018-05-31T17:27:50Z",
+      "side": 1,
+      "message": "this.plugin.restApi()",
+      "range": {
+        "startLine": 94,
+        "startChar": 13,
+        "endLine": 94,
+        "endChar": 34
+      },
+      "revId": "d2414935818ae59c789843a5a70f5f28a36c90bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfa0cfef_59c020bd",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config_test.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2018-05-31T17:27:50Z",
+      "side": 1,
+      "message": "Here and other similar ones below - pull up to the previous line or align at +4",
+      "revId": "d2414935818ae59c789843a5a70f5f28a36c90bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6b9d8d_93211c3f",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config_test.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2018-05-31T17:27:50Z",
+      "side": 1,
+      "message": "Not a review blocking, but it probably would be better to mock dependencies rather than implementation as a general rule.\n\nIn this case, for example, _loadRepo is an average-sized method with average complexity, and it\u0027s excluded from the test because it\u0027s being replaced with a stub. As a result, it\u0027s not tested.\n\nA better approach would be to mock restApi().",
+      "revId": "d2414935818ae59c789843a5a70f5f28a36c90bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3727a8f0_fa6a8a0b",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config_test.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2018-05-31T17:27:50Z",
+      "side": 1,
+      "message": "If you need this in every test, it should be put into setup()",
+      "range": {
+        "startLine": 80,
+        "startChar": 6,
+        "endLine": 80,
+        "endChar": 33
+      },
+      "revId": "d2414935818ae59c789843a5a70f5f28a36c90bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ccf193_9812fb29",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config_test.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2018-05-31T17:27:50Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 82,
+        "startChar": 6,
+        "endLine": 82,
+        "endChar": 9
+      },
+      "revId": "d2414935818ae59c789843a5a70f5f28a36c90bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7482d29_f734e423",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config_test.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2018-05-31T17:27:50Z",
+      "side": 1,
+      "message": "Here and other instances below:\n\ndone \u003d\u003e { instead of (done) \u003d\u003e {",
+      "range": {
+        "startLine": 95,
+        "startChar": 64,
+        "endLine": 95,
+        "endChar": 72
+      },
+      "revId": "d2414935818ae59c789843a5a70f5f28a36c90bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
