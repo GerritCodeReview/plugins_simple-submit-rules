@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4778759d_24f0db7a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1011123
+      },
+      "writtenOn": "2018-05-31T01:13:13Z",
+      "side": 1,
+      "message": "\"to configure submit rules\"?",
+      "range": {
+        "startLine": 7,
+        "startChar": 20,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "d2414935818ae59c789843a5a70f5f28a36c90bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "762c926c_43472f63",
         "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.html",
         "patchSetId": 1
