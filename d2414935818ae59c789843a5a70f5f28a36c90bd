@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "b8f03c0b_799f328c",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2018-05-31T17:29:39Z",
+      "side": 1,
+      "message": "Ideally, there should be single import containing all shared UI elements.\nThis is tracked by https://bugs.chromium.org/p/gerrit/issues/detail?id\u003d8096 but not ready yet.",
+      "parentUuid": "762c926c_43472f63",
+      "revId": "d2414935818ae59c789843a5a70f5f28a36c90bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e705f307_396e234c",
         "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.html",
         "patchSetId": 1
