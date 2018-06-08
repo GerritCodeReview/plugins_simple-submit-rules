@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "3681c1e5_c998c31c",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2018-06-08T16:52:52Z",
+      "side": 1,
+      "message": "There are multiple options here:\n- the right way is to file a bug for PolyGerrit to have a method added to plugin.restApi()\n- if you can\u0027t wait for it to be implemented and deployed, use direct XHR requests",
+      "parentUuid": "cb2cc37d_fc3b3bb8",
+      "revId": "d2414935818ae59c789843a5a70f5f28a36c90bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9639847_bca839b2",
         "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.html",
         "patchSetId": 1

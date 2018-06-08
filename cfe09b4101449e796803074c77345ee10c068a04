@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7f3d75c8_341cbd24",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2018-06-08T16:52:52Z",
+      "side": 1,
+      "message": "\u003d\u003d\u003d",
+      "range": {
+        "startLine": 113,
+        "startChar": 30,
+        "endLine": 113,
+        "endChar": 31
+      },
+      "revId": "cfe09b4101449e796803074c77345ee10c068a04",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24569beb_25253d89",
         "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config_test.html",
         "patchSetId": 3
@@ -13,6 +36,30 @@
       "writtenOn": "2018-06-01T17:20:00Z",
       "side": 1,
       "message": "Doing this causes the attached method to be called twice per test (not severe, and documented that attach can be called several times) and for some reasons tells the test framework to wait for the promises to return.\nI don\u0027t know if it\u0027s luck or a feature, but I like it :)",
+      "range": {
+        "startLine": 84,
+        "startChar": 12,
+        "endLine": 84,
+        "endChar": 38
+      },
+      "revId": "cfe09b4101449e796803074c77345ee10c068a04",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed283609_fa1df1b9",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config_test.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2018-06-08T16:52:52Z",
+      "side": 1,
+      "message": "Would calling _loadRepo() work instead?\n.attached() behaviour depends on Polymer and may change at some point.",
+      "parentUuid": "24569beb_25253d89",
       "range": {
         "startLine": 84,
         "startChar": 12,
