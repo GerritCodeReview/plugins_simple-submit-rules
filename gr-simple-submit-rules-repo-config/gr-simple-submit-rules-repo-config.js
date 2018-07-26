@@ -33,7 +33,12 @@
         value: true,
       },
      _restApi: Object,
- },
+      _labels: {
+        type: Array,
+        value() { return []; },
+        computed: '_computeLabelNames(_repoConfig.*)',
+      },
+    },
 
     observers: [
       '_handleConfigChanged(_repoConfig.*)',
@@ -75,7 +80,7 @@
       promises.push(this._pluginRestApi().get(this._endpointUrl())
         .then(config => {
           if (!config) { return; }
-          this._repoConfig = config;
+          this.set('_repoConfig', config);
           this._loading = false;
         }));
 
@@ -118,6 +123,13 @@
 
     _getRepoAccess(repoName) {
       return this._pluginRestApi().get('/access/?project=' + encodeURIComponent(repoName));
+    },
+
+    _computeLabelNames() {
+      if (this._repoConfig && this._repoConfig.labels) {
+        return Object.keys(this._repoConfig.labels);
+      }
+      return [];
     },
 
   });
