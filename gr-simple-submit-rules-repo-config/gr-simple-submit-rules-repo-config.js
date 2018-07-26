@@ -87,7 +87,7 @@
     },
 
     _endpointUrl() {
-      return "projects/" + encodeURIComponent(this.repoName) + "/simple-submit-rules";
+      return 'projects/' + encodeURIComponent(this.repoName) + '/simple-submit-rules';
     },
 
     _handleSaveRepoConfig() {
@@ -98,12 +98,12 @@
 
           this.dispatchEvent(new CustomEvent('show-alert', {
             detail: {
-              message: "Simple submit rules: configuration updated."
+              message: 'Simple submit rules: configuration updated.'
             },
             bubbles: true
           }));
 
-          this._repoConfig = config;
+          this.set('_repoConfig', config);
           this._loading = false;
           this._configChanged = false;
         })
