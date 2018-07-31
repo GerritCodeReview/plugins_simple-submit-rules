@@ -1,0 +1,302 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ccec1a6_dd6e2258",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1026519
+      },
+      "writtenOn": "2018-07-31T19:27:33Z",
+      "side": 1,
+      "message": "When I installed this plugin and tried to view it in the repo config, I got a JS error:\n\ngr-reporting.js:212 TypeError: this._pluginRestApi(...).getLoggedIn is not a function\n    at HTMLElement._loadRepo (ssr.js:formatted:135)\n    at HTMLElement.attached (ssr.js:formatted:120)\n    at polymer-micro.html:280\n    at Object.whenReady (polymer-micro.html:111)\n    at HTMLElement.attachedCallback (polymer-micro.html:271)\n    at HTMLElement.attachedCallback (polymer-mini.html:182)\n    at Object.appendChild (polymer-mini.html:650)\n    at DomApi.insertBefore (polymer-mini.html:819)\n    at DomApi.appendChild (polymer-mini.html:794)\n    at HTMLElement._appendChild (gr-endpoint-decorator.js:101)\n\nDo you get this error too? Maybe I did it wrong.",
+      "revId": "fc10111515511aaeb68d09d163cabffc30b0ebe5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac3e71ce_cee140c1",
+        "filename": "gr-simple-submit-rules-label-config/gr-simple-submit-rules-label-config.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1026519
+      },
+      "writtenOn": "2018-07-31T19:27:33Z",
+      "side": 1,
+      "message": "Niptick: alphabetize these.",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 46
+      },
+      "revId": "fc10111515511aaeb68d09d163cabffc30b0ebe5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d7aba7d_74d9b2c8",
+        "filename": "gr-simple-submit-rules-label-config/gr-simple-submit-rules-label-config.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1026519
+      },
+      "writtenOn": "2018-07-31T19:27:33Z",
+      "side": 1,
+      "message": "Style nitpick: here and throughout the file, HTML element continuations should be double-indented. For example, in this case:\n\n\u003cgr-select id\u003d\"maxVoteRequired\"\n    bind-value\u003d\"{{_maxVoteRequired}}\"\u003e\n  \u003cselect disabled$\u003d\"[[readOnly]]\"\u003e",
+      "range": {
+        "startLine": 45,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 47
+      },
+      "revId": "fc10111515511aaeb68d09d163cabffc30b0ebe5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee2f1c3_69b8e226",
+        "filename": "gr-simple-submit-rules-label-config/gr-simple-submit-rules-label-config.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1026519
+      },
+      "writtenOn": "2018-07-31T19:27:33Z",
+      "side": 1,
+      "message": "This isn\u0027t a blocking issue, but in my opinion, I prefer using checkboxes or toggles for binary controls like this, rather than selects. It\u0027s just a little easier to use.",
+      "range": {
+        "startLine": 47,
+        "startChar": 14,
+        "endLine": 50,
+        "endChar": 23
+      },
+      "revId": "fc10111515511aaeb68d09d163cabffc30b0ebe5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12df69bc_a6db5cbd",
+        "filename": "gr-simple-submit-rules-label-config/gr-simple-submit-rules-label-config.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1026519
+      },
+      "writtenOn": "2018-07-31T19:27:33Z",
+      "side": 1,
+      "message": "Spelling: copyMinScore",
+      "range": {
+        "startLine": 105,
+        "startChar": 13,
+        "endLine": 105,
+        "endChar": 24
+      },
+      "revId": "fc10111515511aaeb68d09d163cabffc30b0ebe5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fb4ca9b_5dde3f02",
+        "filename": "gr-simple-submit-rules-label-config/gr-simple-submit-rules-label-config.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1026519
+      },
+      "writtenOn": "2018-07-31T19:27:33Z",
+      "side": 1,
+      "message": "Nit: remove this \"be kept\".",
+      "range": {
+        "startLine": 110,
+        "startChar": 34,
+        "endLine": 110,
+        "endChar": 42
+      },
+      "revId": "fc10111515511aaeb68d09d163cabffc30b0ebe5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53d22f5_e834c092",
+        "filename": "gr-simple-submit-rules-label-config/gr-simple-submit-rules-label-config.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1026519
+      },
+      "writtenOn": "2018-07-31T19:27:33Z",
+      "side": 1,
+      "message": "It looks like this component\u0027s methods are all used only by this component, in which case their names should be prefixed with an underscore to indicate that they\u0027re \"private\".",
+      "revId": "fc10111515511aaeb68d09d163cabffc30b0ebe5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6111f952_a2aa0cd8",
+        "filename": "gr-simple-submit-rules-label-config/gr-simple-submit-rules-label-config.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1026519
+      },
+      "writtenOn": "2018-07-31T19:27:33Z",
+      "side": 1,
+      "message": "Nitpick: remove this blank line.",
+      "revId": "fc10111515511aaeb68d09d163cabffc30b0ebe5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b62a6b_c064917e",
+        "filename": "gr-simple-submit-rules-label-config/gr-simple-submit-rules-label-config.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1026519
+      },
+      "writtenOn": "2018-07-31T19:27:33Z",
+      "side": 1,
+      "message": "I\u0027m getting compilation errors from this. I don\u0027t think it\u0027s necessary though, since this isn\u0027t technically subclassing Polymer.",
+      "revId": "fc10111515511aaeb68d09d163cabffc30b0ebe5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b50ac54_00c88ad6",
+        "filename": "gr-simple-submit-rules-label-config/gr-simple-submit-rules-label-config.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1026519
+      },
+      "writtenOn": "2018-07-31T19:27:33Z",
+      "side": 1,
+      "message": "Is this method used?",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 6
+      },
+      "revId": "fc10111515511aaeb68d09d163cabffc30b0ebe5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a1ca30d_bdf89cae",
+        "filename": "gr-simple-submit-rules-label-config/gr-simple-submit-rules-label-config.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1026519
+      },
+      "writtenOn": "2018-07-31T19:27:33Z",
+      "side": 1,
+      "message": "If a user changes the function twice before saving, resulting in this method being called twice, does this line here mean that the second time it\u0027s called then it won\u0027t update properties like _negativeBlocks or _maxVoteRequired? Is this intended?",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 95,
+        "endChar": 45
+      },
+      "revId": "fc10111515511aaeb68d09d163cabffc30b0ebe5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a58966e_80c37d9a",
+        "filename": "gr-simple-submit-rules-label-config/gr-simple-submit-rules-label-config.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1026519
+      },
+      "writtenOn": "2018-07-31T19:27:33Z",
+      "side": 1,
+      "message": "Nitpick: add a trailing comma:\n\n },",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 5
+      },
+      "revId": "fc10111515511aaeb68d09d163cabffc30b0ebe5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8ffc33_8015ef1c",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1026519
+      },
+      "writtenOn": "2018-07-31T19:27:33Z",
+      "side": 1,
+      "message": "Here, the continuation should be double-indented as well:\n\n\u003ctemplate is\u003d\"dom-repeat\"\n    id\u003d\"allLabels\"\n    items\u003d\"[[_labels]]\"\n    initial-count\u003d\"5\"\n    target-framerate\u003d\"60\"\u003e\n  \u003cgr-simple-submit-rules-label-config mutable-data\n      label-name\u003d\"[[item]]\"\n      repo-config\u003d\"{{_repoConfig}}\"\n      read-only\u003d\"[[_readOnly]]\"\u003e\n  \u003c/gr-simple-submit-rules-label-config\u003e\n\u003c/template\u003e",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 19
+      },
+      "revId": "fc10111515511aaeb68d09d163cabffc30b0ebe5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3688113a_f7516152",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1026519
+      },
+      "writtenOn": "2018-07-31T19:27:33Z",
+      "side": 1,
+      "message": "Nit: add a trailing comma:\n\n )\u0027,",
+      "range": {
+        "startLine": 39,
+        "startChar": 52,
+        "endLine": 39,
+        "endChar": 53
+      },
+      "revId": "fc10111515511aaeb68d09d163cabffc30b0ebe5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
