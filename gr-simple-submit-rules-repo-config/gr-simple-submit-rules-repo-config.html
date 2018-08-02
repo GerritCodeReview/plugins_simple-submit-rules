@@ -28,7 +28,7 @@ limitations under the License.
           <span class="title">Allow submission with unresolved comments</span>
           <span class="value">
             <gr-select id="allowUnresolvedComments"
-              bind-value="{{_repoConfig.comments.block_if_unresolved_comments}}">
+                bind-value="{{_repoConfig.comments.block_if_unresolved_comments}}">
               <select disabled$="[[_readOnly]]">
                 <option value="true">Yes</option>
                 <option value="false">No</option>
@@ -39,7 +39,7 @@ limitations under the License.
       </fieldset>
 
       <gr-button on-tap="_handleSaveRepoConfig"
-        disabled$="[[_computeButtonDisabled(_readOnly, _configChanged)]]">
+          disabled$="[[_computeButtonDisabled(_readOnly, _configChanged)]]">
         Save Changes
       </gr-button>
 
