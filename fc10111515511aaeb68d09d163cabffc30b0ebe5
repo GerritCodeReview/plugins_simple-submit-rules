@@ -573,6 +573,30 @@
       "revId": "fc10111515511aaeb68d09d163cabffc30b0ebe5",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08eff52f_7269affa",
+        "filename": "gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1061517
+      },
+      "writtenOn": "2018-08-02T13:41:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3688113a_f7516152",
+      "range": {
+        "startLine": 39,
+        "startChar": 52,
+        "endLine": 39,
+        "endChar": 53
+      },
+      "revId": "fc10111515511aaeb68d09d163cabffc30b0ebe5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
