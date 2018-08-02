@@ -32,8 +32,8 @@
         type: Boolean,
         value: true,
       },
-      _pluginRestApi: Object,
-    },
+     _restApi: Object,
+ },
 
     observers: [
       '_handleConfigChanged(_repoConfig.*)',
@@ -87,7 +87,7 @@
     },
 
     _endpointUrl() {
-      return 'projects/' + encodeURIComponent(this.repoName) + '/simple-submit-rules';
+      return '/projects/' + encodeURIComponent(this.repoName) + '/simple-submit-rules';
     },
 
     _handleSaveRepoConfig() {
@@ -110,10 +110,10 @@
     },
 
     _pluginRestApi() {
-      if (this._pluginRestApi === undefined) {
-        this._pluginRestApi = this.plugin.restApi();
+      if (this._restApi === undefined) {
+        this._restApi = this.plugin.restApi();
       }
-      return this._pluginRestApi;
+      return this._restApi;
     },
 
     _getRepoAccess(repoName) {
