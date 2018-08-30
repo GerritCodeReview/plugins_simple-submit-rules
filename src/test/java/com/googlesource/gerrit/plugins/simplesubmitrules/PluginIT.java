@@ -24,6 +24,8 @@ import com.google.gerrit.acceptance.PushOneCommit;
 import com.google.gerrit.acceptance.RestResponse;
 import com.google.gerrit.acceptance.TestPlugin;
 import com.google.gerrit.common.RawInputUtil;
+import com.google.gerrit.common.data.LabelFunction;
+import com.google.gerrit.common.data.LabelType;
 import com.google.gerrit.extensions.api.changes.ReviewInput;
 import com.google.gerrit.extensions.client.Side;
 import com.google.gerrit.extensions.common.ChangeInfo;
@@ -88,6 +90,19 @@ public class PluginIT extends LightweightPluginDaemonTest {
     assertThat(changeInfo.requirements).isEmpty();
   }
 
+  @Test
+  public void pluginPersistsLabelInCurrentProjectWhenOverrideIsNeeded() throws Exception {
+    RawInput rawInput = configMaxNoBlock();
+    RestResponse configResult = adminRestSession.putRaw(endpointUrl(project), rawInput);
+    configResult.assertOK();
+
+    LabelType codeReview;
+    try (ProjectConfigUpdate u = updateProject(project)) {
+      codeReview = u.getConfig().getLabelSections().get("Code-Review");
+    }
+    assertThat(codeReview.getFunction()).isEqualTo(LabelFunction.MAX_NO_BLOCK);
+  }
+
   private static RawInput configWithNoSelfApproval() {
     return RawInputUtil.create(
         ("{\n"
@@ -95,6 +110,25 @@ public class PluginIT extends LightweightPluginDaemonTest {
                 + "        \"Code-Review\": {\n"
                 + "            \"function\": \"MaxWithBlock\",\n"
                 + "            \"ignore_self_approval\": true,\n"
+                + "            \"copy_scores\": [\n"
+                + "                \"copyAllScoresIfNoChange\",\n"
+                + "                \"copyMinScore\",\n"
+                + "                \"copyAllScoresOnTrivialRebase\"\n"
+                + "            ]\n"
+                + "        }\n"
+                + "    }\n"
+                + "}")
+            .getBytes(Charsets.UTF_8),
+        "application/json");
+  }
+
+  private static RawInput configMaxNoBlock() {
+    return RawInputUtil.create(
+        ("{\n"
+                + "    \"labels\": {\n"
+                + "        \"Code-Review\": {\n"
+                + "            \"function\": \"MaxNoBlock\",\n"
+                + "            \"ignore_self_approval\": false,\n"
                 + "            \"copy_scores\": [\n"
                 + "                \"copyAllScoresIfNoChange\",\n"
                 + "                \"copyMinScore\",\n"
