@@ -91,12 +91,14 @@ public final class ConfigTranslator {
     submitConfig.comments.blockIfUnresolvedComments =
         config.getBoolean(SimpleSubmitRulesConfig.KEY_BLOCK_IF_UNRESOLVED_COMMENTS, false);
 
+    PluginConfig pluginConfig =
+        pluginConfigFactory.getFromProjectConfigWithInheritance(projectState, pluginName);
     projectState
         .getLabelTypes()
         .getLabelTypes()
         .forEach(
             labelType -> {
-              extractLabelSettings(labelType, submitConfig);
+              extractLabelSettings(labelType, submitConfig, pluginConfig);
             });
 
     return submitConfig;
@@ -105,16 +107,18 @@ public final class ConfigTranslator {
   void applyTo(SubmitConfig inConfig, ProjectState projectState) throws BadRequestException {
     PluginConfig pluginConfig = pluginConfigFactory.getFromProjectConfig(projectState, pluginName);
     applyCommentRulesTo(inConfig.comments, pluginConfig);
-    applyLabelsTo(inConfig.labels, projectState.getLabelTypes());
+    applyLabelsTo(inConfig.labels, projectState.getLabelTypes(), pluginConfig);
   }
 
   private static void applyLabelsTo(
-      Map<String, SubmitConfig.LabelDefinition> labels, LabelTypes config)
+      Map<String, SubmitConfig.LabelDefinition> labels,
+      LabelTypes labelTypes,
+      PluginConfig pluginConfig)
       throws BadRequestException {
     for (Map.Entry<String, SubmitConfig.LabelDefinition> entry : labels.entrySet()) {
       String label = entry.getKey();
       SubmitConfig.LabelDefinition definition = entry.getValue();
-      LabelType labelType = config.byLabel(label);
+      LabelType labelType = labelTypes.byLabel(label);
 
       if (labelType == null) {
         throw new BadRequestException(
@@ -122,12 +126,20 @@ public final class ConfigTranslator {
       }
 
       definition.getFunction().ifPresent(labelType::setFunction);
-
       applyCopyScoresTo(definition.copyScores, labelType);
+      if (definition.ignoreSelfApproval != null) {
+        // Core Gerrit doesn't know about the self approval bit. Write it to the plugin config to
+        // keep it save from core Gerrit's loading and saving the project config, which can in some
+        // cases overwrite attributes it doesn't know (e.g. when the order of labels changes).
+        pluginConfig.setBoolean(
+            SimpleSubmitRulesConfig.requireNonAuthorApprovalKey(label),
+            definition.ignoreSelfApproval);
+      }
     }
   }
 
-  private static void extractLabelSettings(LabelType labelType, SubmitConfig config) {
+  private static void extractLabelSettings(
+      LabelType labelType, SubmitConfig config, PluginConfig pluginConfig) {
     if (labelType == null) {
       return;
     }
@@ -137,6 +149,9 @@ public final class ConfigTranslator {
 
     labelDefinition.function = labelType.getFunction().getFunctionName();
     extractLabelCopyScores(labelType, labelDefinition);
+    labelDefinition.ignoreSelfApproval =
+        pluginConfig.getBoolean(
+            SimpleSubmitRulesConfig.requireNonAuthorApprovalKey(labelType.getName()), false);
   }
 
   private static void applyCommentRulesTo(

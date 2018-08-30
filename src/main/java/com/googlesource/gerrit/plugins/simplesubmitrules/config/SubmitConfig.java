@@ -37,7 +37,7 @@ public class SubmitConfig {
 
   static class LabelDefinition {
     String function;
-    boolean ignoreSelfApproval;
+    Boolean ignoreSelfApproval;
     Set<String> copyScores;
 
     Optional<LabelFunction> getFunction() {

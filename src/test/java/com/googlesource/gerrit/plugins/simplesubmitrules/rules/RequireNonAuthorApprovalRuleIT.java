@@ -21,7 +21,7 @@ import com.google.gerrit.acceptance.PushOneCommit;
 import com.google.gerrit.common.data.SubmitRecord;
 import com.google.gerrit.extensions.api.changes.ReviewInput;
 import com.google.gerrit.server.project.SubmitRuleOptions;
-import com.google.inject.Inject;
+import com.google.gerrit.server.query.change.ChangeData;
 import com.googlesource.gerrit.plugins.simplesubmitrules.AbstractSimpleSubmitRulesIT;
 import com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesConfig;
 import java.util.Collection;
@@ -31,7 +31,6 @@ import org.junit.Test;
 @NoHttpd
 public class RequireNonAuthorApprovalRuleIT extends AbstractSimpleSubmitRulesIT {
   private static final String FILENAME = "my.file";
-  @Inject private RequireNonAuthorApprovalRule rule;
 
   @Before
   public void enableRuleBeforeTest() throws Exception {
@@ -42,8 +41,7 @@ public class RequireNonAuthorApprovalRuleIT extends AbstractSimpleSubmitRulesIT 
   public void blocksWhenAutorIsOnlyApprover() throws Exception {
     PushOneCommit.Result r = createChangeWithVote(2);
 
-    Collection<SubmitRecord> submitRecords =
-        rule.evaluate(r.getChange(), SubmitRuleOptions.defaults());
+    Collection<SubmitRecord> submitRecords = evaluate(r.getChange(), SubmitRuleOptions.defaults());
 
     assertThat(submitRecords).hasSize(1);
     SubmitRecord result = submitRecords.iterator().next();
@@ -53,12 +51,11 @@ public class RequireNonAuthorApprovalRuleIT extends AbstractSimpleSubmitRulesIT 
 
   @Test
   public void doesNothingByDefault() throws Exception {
-    PushOneCommit.Result r = createChangeWithVote(+2);
+    PushOneCommit.Result r = createChangeWithVote(2);
 
     enableRule("Code-Review", false);
 
-    Collection<SubmitRecord> submitRecords =
-        rule.evaluate(r.getChange(), SubmitRuleOptions.defaults());
+    Collection<SubmitRecord> submitRecords = evaluate(r.getChange(), SubmitRuleOptions.defaults());
     assertThat(submitRecords).isEmpty();
   }
 
@@ -75,9 +72,16 @@ public class RequireNonAuthorApprovalRuleIT extends AbstractSimpleSubmitRulesIT 
     changeProjectConfig(
         config ->
             config.setBoolean(
-                labelName,
-                null,
-                SimpleSubmitRulesConfig.KEY_REQUIRE_NON_AUTHOR_APPROVAL,
+                "plugin",
+                plugin.getName(),
+                SimpleSubmitRulesConfig.requireNonAuthorApprovalKey(labelName),
                 newState));
+  }
+
+  private Collection<SubmitRecord> evaluate(ChangeData cd, SubmitRuleOptions options) {
+    RequireNonAuthorApprovalRule rule =
+        plugin.getSysInjector().getInstance(RequireNonAuthorApprovalRule.class);
+
+    return rule.evaluate(cd, options);
   }
 }

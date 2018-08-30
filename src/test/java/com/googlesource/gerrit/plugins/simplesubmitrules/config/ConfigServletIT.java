@@ -70,7 +70,7 @@ public class ConfigServletIT extends AbstractSimpleSubmitRulesIT {
                 + "    \"labels\": {\n"
                 + "        \"Code-Review\": {\n"
                 + "            \"function\": \"MaxWithBlock\",\n"
-                + "            \"ignore_self_approval\": false,\n"
+                + "            \"ignore_self_approval\": true,\n"
                 + "            \"copy_scores\": [\n"
                 + "                \"copyAllScoresIfNoChange\",\n"
                 + "                \"copyMinScore\",\n"

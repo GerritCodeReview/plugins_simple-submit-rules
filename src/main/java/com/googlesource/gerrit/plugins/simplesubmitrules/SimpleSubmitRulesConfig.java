@@ -15,8 +15,11 @@
 package com.googlesource.gerrit.plugins.simplesubmitrules;
 
 public final class SimpleSubmitRulesConfig {
-  public static final String KEY_REQUIRE_NON_AUTHOR_APPROVAL = "nonAuthorApprovalRequired";
   public static final String KEY_BLOCK_IF_UNRESOLVED_COMMENTS = "blockIfUnresolvedComments";
+
+  public static String requireNonAuthorApprovalKey(String labelName) {
+    return "nonAuthorApprovalRequired-" + labelName;
+  }
 
   private SimpleSubmitRulesConfig() {}
 }

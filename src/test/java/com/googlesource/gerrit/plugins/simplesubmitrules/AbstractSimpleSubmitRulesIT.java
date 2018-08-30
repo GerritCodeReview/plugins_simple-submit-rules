@@ -32,6 +32,7 @@ import org.junit.Ignore;
     sysModule = "com.googlesource.gerrit.plugins.simplesubmitrules.Module")
 @Ignore
 public abstract class AbstractSimpleSubmitRulesIT extends LightweightPluginDaemonTest {
+
   /** Helper method to change the project.config file using a provided consumer. */
   protected void changeProjectConfig(Consumer<Config> callback) throws Exception {
     TestRepository<InMemoryRepository> projectRepo = cloneProject(project, admin);

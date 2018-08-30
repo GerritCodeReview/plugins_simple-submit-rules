@@ -18,10 +18,12 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.gerrit.common.data.LabelFunction;
 import com.google.gerrit.common.data.LabelType;
 import com.google.gerrit.common.data.SubmitRecord;
+import com.google.gerrit.extensions.annotations.PluginName;
 import com.google.gerrit.reviewdb.client.Account;
 import com.google.gerrit.reviewdb.client.PatchSetApproval;
+import com.google.gerrit.server.config.PluginConfig;
+import com.google.gerrit.server.config.PluginConfigFactory;
 import com.google.gerrit.server.project.ProjectCache;
-import com.google.gerrit.server.project.ProjectConfig;
 import com.google.gerrit.server.project.ProjectState;
 import com.google.gerrit.server.project.SubmitRuleOptions;
 import com.google.gerrit.server.query.change.ChangeData;
@@ -35,7 +37,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.eclipse.jgit.lib.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,16 +48,24 @@ public class RequireNonAuthorApprovalRule implements SubmitRule {
   private static final String E_UNABLE_TO_FETCH_LABELS =
       "Unable to fetch labels and approvals for the change";
   private final ProjectCache projectCache;
+  private final PluginConfigFactory pluginConfigFactory;
+  private final String pluginName;
 
   @Inject
-  public RequireNonAuthorApprovalRule(ProjectCache projectCache) {
+  public RequireNonAuthorApprovalRule(
+      ProjectCache projectCache,
+      PluginConfigFactory pluginConfigFactory,
+      @PluginName String pluginName) {
     this.projectCache = projectCache;
+    this.pluginConfigFactory = pluginConfigFactory;
+    this.pluginName = pluginName;
   }
 
   @Override
   public Collection<SubmitRecord> evaluate(ChangeData cd, SubmitRuleOptions options) {
     ProjectState projectState = projectCache.get(cd.project());
-    Config config = projectState.getConfig(ProjectConfig.PROJECT_CONFIG).getWithInheritance();
+    PluginConfig pluginConfig =
+        pluginConfigFactory.getFromProjectConfigWithInheritance(projectState, pluginName);
 
     Account.Id owner;
     try {
@@ -90,8 +99,8 @@ public class RequireNonAuthorApprovalRule implements SubmitRule {
     submitRecord.labels = new ArrayList<>(labelTypes.size());
 
     for (LabelType t : labelTypes) {
-      if (!config.getBoolean(
-          t.getName(), SimpleSubmitRulesConfig.KEY_REQUIRE_NON_AUTHOR_APPROVAL, false)) {
+      if (!pluginConfig.getBoolean(
+          SimpleSubmitRulesConfig.requireNonAuthorApprovalKey(t.getName()), false)) {
         // The default rules are enough in this case.
         continue;
       }
