@@ -97,7 +97,8 @@ public class NoUnresolvedCommentsRuleIT extends AbstractSimpleSubmitRulesIT {
     assertThat(submitRecords).isEmpty();
   }
 
-  private PushOneCommit.Result createChangeWithComment(ReviewInput.CommentInput comment) throws Exception {
+  private PushOneCommit.Result createChangeWithComment(ReviewInput.CommentInput comment)
+      throws Exception {
     PushOneCommit.Result r = createChange("My change", FILENAME, "new content");
     ReviewInput reviewInput = new ReviewInput();
     reviewInput.comments = ImmutableMap.of(comment.path, ImmutableList.of(comment));

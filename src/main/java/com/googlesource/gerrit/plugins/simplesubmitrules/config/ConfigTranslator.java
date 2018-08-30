@@ -109,12 +109,12 @@ public final class ConfigTranslator {
   }
 
   private static void applyLabelsTo(
-      Map<String, SubmitConfig.LabelDefinition> labels, LabelTypes config)
+      Map<String, SubmitConfig.LabelDefinition> labels, LabelTypes labelTypes)
       throws BadRequestException {
     for (Map.Entry<String, SubmitConfig.LabelDefinition> entry : labels.entrySet()) {
       String label = entry.getKey();
       SubmitConfig.LabelDefinition definition = entry.getValue();
-      LabelType labelType = config.byLabel(label);
+      LabelType labelType = labelTypes.byLabel(label);
 
       if (labelType == null) {
         throw new BadRequestException(
@@ -122,8 +122,7 @@ public final class ConfigTranslator {
       }
 
       definition.getFunction().ifPresent(labelType::setFunction);
-
-      applyCopyScoresTo(definition.copyScores, labelType);
+      labelType.setIgnoreSelfApproval(definition.ignoreSelfApproval);
     }
   }
 
@@ -137,6 +136,7 @@ public final class ConfigTranslator {
 
     labelDefinition.function = labelType.getFunction().getFunctionName();
     extractLabelCopyScores(labelType, labelDefinition);
+    labelDefinition.ignoreSelfApproval = labelType.ignoreSelfApproval();
   }
 
   private static void applyCommentRulesTo(
