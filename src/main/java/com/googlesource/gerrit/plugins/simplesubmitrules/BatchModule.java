@@ -19,14 +19,12 @@ import com.google.gerrit.server.rules.SubmitRule;
 import com.google.inject.AbstractModule;
 import com.googlesource.gerrit.plugins.simplesubmitrules.config.ConfigTranslator;
 import com.googlesource.gerrit.plugins.simplesubmitrules.rules.NoUnresolvedCommentsRule;
-import com.googlesource.gerrit.plugins.simplesubmitrules.rules.RequireNonAuthorApprovalRule;
 
 /** Rules for the batch programs (offline reindexer) */
 public class BatchModule extends AbstractModule {
   @Override
   protected void configure() {
     bind(ConfigTranslator.class);
-    DynamicSet.bind(binder(), SubmitRule.class).to(RequireNonAuthorApprovalRule.class);
     DynamicSet.bind(binder(), SubmitRule.class).to(NoUnresolvedCommentsRule.class);
   }
 }

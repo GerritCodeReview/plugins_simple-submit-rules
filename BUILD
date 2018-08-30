@@ -14,28 +14,14 @@ gerrit_plugin(
     resource_jars = [":ssr-static"],
     resources = glob(["src/main/resources/**/*"]),
 )
-
-ABSTRACT_TEST_BASE = ["src/test/java/com/googlesource/gerrit/plugins/simplesubmitrules/AbstractSimpleSubmitRulesIT.java"]
-
-java_library(
-    name = "abstract_test_base",
-    testonly = 1,
-    srcs = ABSTRACT_TEST_BASE,
-    visibility = ["//visibility:public"],
-    deps = PLUGIN_TEST_DEPS + PLUGIN_DEPS + [
-        ":simple-submit-rules__plugin",
-    ],
-)
-
+\
 junit_tests(
     name = "tests",
     srcs = glob(
         ["src/test/java/**/*.java"],
-        exclude = ABSTRACT_TEST_BASE,
     ),
     visibility = ["//visibility:public"],
     deps = PLUGIN_TEST_DEPS + PLUGIN_DEPS + [
-        ":abstract_test_base",
         ":simple-submit-rules__plugin",
     ],
 )

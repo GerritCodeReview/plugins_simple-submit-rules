@@ -18,21 +18,25 @@ import static com.google.common.truth.Truth.assertThat;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.gerrit.acceptance.LightweightPluginDaemonTest;
 import com.google.gerrit.acceptance.NoHttpd;
 import com.google.gerrit.acceptance.PushOneCommit;
+import com.google.gerrit.acceptance.TestPlugin;
 import com.google.gerrit.common.data.SubmitRecord;
 import com.google.gerrit.extensions.api.changes.ReviewInput;
 import com.google.gerrit.extensions.client.Side;
 import com.google.gerrit.server.project.SubmitRuleOptions;
 import com.google.gerrit.server.query.change.ChangeData;
-import com.googlesource.gerrit.plugins.simplesubmitrules.AbstractSimpleSubmitRulesIT;
 import com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesConfig;
 import java.util.Collection;
 import org.junit.Before;
 import org.junit.Test;
 
+@TestPlugin(
+    name = "my-plugin",
+    sysModule = "com.googlesource.gerrit.plugins.simplesubmitrules.Module")
 @NoHttpd
-public class NoUnresolvedCommentsRuleIT extends AbstractSimpleSubmitRulesIT {
+public class NoUnresolvedCommentsRuleIT extends LightweightPluginDaemonTest {
   private static final String FILENAME = "my.file";
 
   @Before
@@ -97,7 +101,8 @@ public class NoUnresolvedCommentsRuleIT extends AbstractSimpleSubmitRulesIT {
     assertThat(submitRecords).isEmpty();
   }
 
-  private PushOneCommit.Result createChangeWithComment(ReviewInput.CommentInput comment) throws Exception {
+  private PushOneCommit.Result createChangeWithComment(ReviewInput.CommentInput comment)
+      throws Exception {
     PushOneCommit.Result r = createChange("My change", FILENAME, "new content");
     ReviewInput reviewInput = new ReviewInput();
     reviewInput.comments = ImmutableMap.of(comment.path, ImmutableList.of(comment));
@@ -107,13 +112,12 @@ public class NoUnresolvedCommentsRuleIT extends AbstractSimpleSubmitRulesIT {
   }
 
   private void enableRule(boolean newState) throws Exception {
-    changeProjectConfig(
-        config ->
-            config.setBoolean(
-                "plugin",
-                plugin.getName(),
-                SimpleSubmitRulesConfig.KEY_BLOCK_IF_UNRESOLVED_COMMENTS,
-                newState));
+    try (ProjectConfigUpdate u = updateProject(project)) {
+      u.getConfig()
+          .getPluginConfig(plugin.getName())
+          .setBoolean(SimpleSubmitRulesConfig.KEY_BLOCK_IF_UNRESOLVED_COMMENTS, newState);
+      u.save();
+    }
   }
 
   private Collection<SubmitRecord> evaluate(ChangeData cd, SubmitRuleOptions options) {
