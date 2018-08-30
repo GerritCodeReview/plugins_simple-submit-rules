@@ -14,9 +14,9 @@
 
 package com.googlesource.gerrit.plugins.simplesubmitrules.config;
 
+import com.google.common.collect.ImmutableList;
 import com.google.gerrit.common.Nullable;
 import com.google.gerrit.common.data.LabelType;
-import com.google.gerrit.common.data.LabelTypes;
 import com.google.gerrit.extensions.annotations.PluginName;
 import com.google.gerrit.extensions.restapi.BadRequestException;
 import com.google.gerrit.server.config.PluginConfig;
@@ -108,15 +108,32 @@ public final class ConfigTranslator {
   void applyTo(SubmitConfig inConfig, ProjectState projectState) throws BadRequestException {
     PluginConfig pluginConfig = pluginConfigFactory.getFromProjectConfig(projectState, pluginName);
     applyCommentRulesTo(inConfig.comments, pluginConfig);
-    applyLabelsTo(inConfig.labels, projectState.getLabelTypes());
+    applyLabelsTo(inConfig.labels, projectState);
   }
 
-  private static void applyLabelsTo(Map<String, LabelDefinition> labels, LabelTypes labelTypes)
+  private static void applyLabelsTo(Map<String, LabelDefinition> labels, ProjectState projectState)
       throws BadRequestException {
+    if (labels.isEmpty()) {
+      return;
+    }
+
     for (Map.Entry<String, LabelDefinition> entry : labels.entrySet()) {
+      if (!projectState.getConfig().getLabelSections().containsKey(entry.getKey())) {
+        // The current project does not have this label. Try to copy it down from the inherited
+        // labels to be able to modify it locally.
+        Map<String, LabelType> copiedLabelTypes = projectState.getConfig().getLabelSections();
+        projectState
+            .getLabelTypes()
+            .getLabelTypes()
+            .stream()
+            .filter(l -> l.getName().equals(entry.getKey()))
+            .filter(l -> l.canOverride())
+            .forEach(l -> copiedLabelTypes.put(l.getName(), copyLabelType(l)));
+      }
+
       String label = entry.getKey();
       LabelDefinition definition = entry.getValue();
-      LabelType labelType = labelTypes.byLabel(label);
+      LabelType labelType = projectState.getConfig().getLabelSections().get(label);
 
       if (labelType == null) {
         throw new BadRequestException(
@@ -151,5 +168,24 @@ public final class ConfigTranslator {
     config.setBoolean(
         SimpleSubmitRulesConfig.KEY_BLOCK_IF_UNRESOLVED_COMMENTS,
         comments.blockIfUnresolvedComments);
+  }
+
+  private static LabelType copyLabelType(LabelType label) {
+    // TODO(hiesel) Move this to core
+    LabelType copy = new LabelType(label.getName(), ImmutableList.copyOf(label.getValues()));
+    if (label.getRefPatterns() != null) {
+      copy.setRefPatterns(ImmutableList.copyOf(label.getRefPatterns()));
+    }
+    copy.setAllowPostSubmit(label.allowPostSubmit());
+    copy.setCanOverride(label.canOverride());
+    copy.setCopyAllScoresIfNoChange(label.isCopyAllScoresIfNoChange());
+    copy.setCopyAllScoresIfNoCodeChange(label.isCopyAllScoresIfNoCodeChange());
+    copy.setCopyAllScoresOnMergeFirstParentUpdate(label.isCopyAllScoresOnMergeFirstParentUpdate());
+    copy.setCopyAllScoresOnTrivialRebase(label.isCopyAllScoresOnTrivialRebase());
+    copy.setIgnoreSelfApproval(label.ignoreSelfApproval());
+    copy.setCopyMaxScore(label.isCopyMaxScore());
+    copy.setCopyMinScore(label.isCopyMinScore());
+    copy.setFunction(label.getFunction());
+    return copy;
   }
 }

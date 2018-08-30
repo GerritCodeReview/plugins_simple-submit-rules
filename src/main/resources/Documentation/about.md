@@ -53,8 +53,10 @@ is the same used for the PUT request body, so it will only be described once.
 The comments section defines the rules to apply to comments (can the change be submitted with
 unresolved comments, …). The labels section defines each label.
 
-It is reasonable to consider that a label missing from the labels section won't be reset, but
-consumers should not rely upon it.
+When reading labels on the API, the result includes both local and inherited labels.
+When the configuration is modified through the API, the plugin will check if there are
+local label configurations. If the request modifies an inherited label, it will be copied
+down so that it can be modified locally.
 
 ### CommentsRules
 
