@@ -17,16 +17,20 @@ package com.googlesource.gerrit.plugins.simplesubmitrules.config;
 import static com.google.gerrit.server.project.testing.Util.value;
 
 import com.google.common.base.Charsets;
+import com.google.gerrit.acceptance.LightweightPluginDaemonTest;
 import com.google.gerrit.acceptance.RestResponse;
+import com.google.gerrit.acceptance.TestPlugin;
 import com.google.gerrit.common.RawInputUtil;
 import com.google.gerrit.common.data.LabelFunction;
 import com.google.gerrit.extensions.restapi.RawInput;
 import com.google.gerrit.reviewdb.client.Project;
-import com.googlesource.gerrit.plugins.simplesubmitrules.AbstractSimpleSubmitRulesIT;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ConfigServletIT extends AbstractSimpleSubmitRulesIT {
+@TestPlugin(
+    name = "my-plugin",
+    sysModule = "com.googlesource.gerrit.plugins.simplesubmitrules.Module")
+public class ConfigServletIT extends LightweightPluginDaemonTest {
   @Before
   public void setUp() throws Exception {
     configLabel(
@@ -70,7 +74,7 @@ public class ConfigServletIT extends AbstractSimpleSubmitRulesIT {
                 + "    \"labels\": {\n"
                 + "        \"Code-Review\": {\n"
                 + "            \"function\": \"MaxWithBlock\",\n"
-                + "            \"ignore_self_approval\": false,\n"
+                + "            \"ignore_self_approval\": true,\n"
                 + "            \"copy_scores\": [\n"
                 + "                \"copyAllScoresIfNoChange\",\n"
                 + "                \"copyMinScore\",\n"

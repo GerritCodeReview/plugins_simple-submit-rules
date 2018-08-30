@@ -3,7 +3,8 @@ This plugin provides simple-to-use submit rules, hence the name.
 ## Features
 - REST API to configure the options and labels.
 - Ability to prevent submission if there are unresolved comments.
-- Ability to require approval, and to consider approval from the change author or not.
+- Ability to require approval, and to consider approval from the uploader of the
+  latest patch set or not.
 - (soon!) a simple PolyGerrit UI to configure the labels and how they work.
 
 ### Inheritance

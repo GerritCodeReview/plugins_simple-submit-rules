@@ -14,6 +14,7 @@
 
 package com.googlesource.gerrit.plugins.simplesubmitrules.config;
 
+import com.google.gerrit.common.Nullable;
 import com.google.gerrit.common.data.LabelType;
 import com.google.gerrit.common.data.LabelTypes;
 import com.google.gerrit.extensions.annotations.PluginName;
@@ -25,6 +26,9 @@ import com.google.gerrit.server.project.ProjectState;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesConfig;
+import com.googlesource.gerrit.plugins.simplesubmitrules.api.CommentsRules;
+import com.googlesource.gerrit.plugins.simplesubmitrules.api.LabelDefinition;
+import com.googlesource.gerrit.plugins.simplesubmitrules.api.SubmitConfig;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -41,8 +45,7 @@ public final class ConfigTranslator {
     this.pluginName = pluginName;
   }
 
-  static void extractLabelCopyScores(
-      LabelType labelType, SubmitConfig.LabelDefinition labelDefinition) {
+  static void extractLabelCopyScores(LabelType labelType, LabelDefinition labelDefinition) {
     labelDefinition.copyScores = new HashSet<>();
     if (labelType.isCopyMinScore()) {
       labelDefinition.copyScores.add(ProjectConfig.KEY_COPY_MIN_SCORE);
@@ -65,20 +68,19 @@ public final class ConfigTranslator {
     }
   }
 
-  static void applyCopyScoresTo(Collection<String> copyScores, LabelType labelType) {
+  static void applyCopyScoresTo(@Nullable Collection<String> copyScores, LabelType labelType) {
+    if (copyScores == null) {
+      return;
+    }
+
     labelType.setCopyMinScore(copyScores.contains(ProjectConfig.KEY_COPY_MIN_SCORE));
-
     labelType.setCopyMaxScore(copyScores.contains(ProjectConfig.KEY_COPY_MAX_SCORE));
-
     labelType.setCopyAllScoresIfNoChange(
         copyScores.contains(ProjectConfig.KEY_COPY_ALL_SCORES_IF_NO_CHANGE));
-
     labelType.setCopyAllScoresIfNoCodeChange(
         copyScores.contains(ProjectConfig.KEY_COPY_ALL_SCORES_IF_NO_CODE_CHANGE));
-
     labelType.setCopyAllScoresOnMergeFirstParentUpdate(
         copyScores.contains(ProjectConfig.KEY_COPY_ALL_SCORES_ON_MERGE_FIRST_PARENT_UPDATE));
-
     labelType.setCopyAllScoresOnTrivialRebase(
         copyScores.contains(ProjectConfig.KEY_COPY_ALL_SCORES_ON_TRIVIAL_REBASE));
   }
@@ -88,8 +90,9 @@ public final class ConfigTranslator {
     PluginConfig config =
         pluginConfigFactory.getFromProjectConfigWithInheritance(projectState, pluginName);
 
-    submitConfig.comments.blockIfUnresolvedComments =
-        config.getBoolean(SimpleSubmitRulesConfig.KEY_BLOCK_IF_UNRESOLVED_COMMENTS, false);
+    submitConfig.comments =
+        new CommentsRules(
+            config.getBoolean(SimpleSubmitRulesConfig.KEY_BLOCK_IF_UNRESOLVED_COMMENTS, false));
 
     projectState
         .getLabelTypes()
@@ -108,13 +111,12 @@ public final class ConfigTranslator {
     applyLabelsTo(inConfig.labels, projectState.getLabelTypes());
   }
 
-  private static void applyLabelsTo(
-      Map<String, SubmitConfig.LabelDefinition> labels, LabelTypes config)
+  private static void applyLabelsTo(Map<String, LabelDefinition> labels, LabelTypes labelTypes)
       throws BadRequestException {
-    for (Map.Entry<String, SubmitConfig.LabelDefinition> entry : labels.entrySet()) {
+    for (Map.Entry<String, LabelDefinition> entry : labels.entrySet()) {
       String label = entry.getKey();
-      SubmitConfig.LabelDefinition definition = entry.getValue();
-      LabelType labelType = config.byLabel(label);
+      LabelDefinition definition = entry.getValue();
+      LabelType labelType = labelTypes.byLabel(label);
 
       if (labelType == null) {
         throw new BadRequestException(
@@ -122,7 +124,9 @@ public final class ConfigTranslator {
       }
 
       definition.getFunction().ifPresent(labelType::setFunction);
-
+      if (definition.ignoreSelfApproval != null) {
+        labelType.setIgnoreSelfApproval(definition.ignoreSelfApproval);
+      }
       applyCopyScoresTo(definition.copyScores, labelType);
     }
   }
@@ -132,15 +136,18 @@ public final class ConfigTranslator {
       return;
     }
 
-    SubmitConfig.LabelDefinition labelDefinition = new SubmitConfig.LabelDefinition();
+    LabelDefinition labelDefinition = new LabelDefinition();
     config.labels.put(labelType.getName(), labelDefinition);
 
     labelDefinition.function = labelType.getFunction().getFunctionName();
     extractLabelCopyScores(labelType, labelDefinition);
+    labelDefinition.ignoreSelfApproval = labelType.ignoreSelfApproval();
   }
 
-  private static void applyCommentRulesTo(
-      SubmitConfig.CommentsRules comments, PluginConfig config) {
+  private static void applyCommentRulesTo(@Nullable CommentsRules comments, PluginConfig config) {
+    if (comments == null) {
+      return;
+    }
     config.setBoolean(
         SimpleSubmitRulesConfig.KEY_BLOCK_IF_UNRESOLVED_COMMENTS,
         comments.blockIfUnresolvedComments);

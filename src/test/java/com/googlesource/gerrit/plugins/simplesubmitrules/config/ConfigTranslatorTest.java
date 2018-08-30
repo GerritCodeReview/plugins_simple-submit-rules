@@ -18,6 +18,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gerrit.common.data.LabelType;
+import com.googlesource.gerrit.plugins.simplesubmitrules.api.LabelDefinition;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 import org.junit.Test;
@@ -66,7 +67,7 @@ public class ConfigTranslatorTest {
       String copyScoreName, BiConsumer<LabelType, Boolean> functionToSet) {
 
     LabelType label = LabelType.withDefaultValues("Verified");
-    SubmitConfig.LabelDefinition labelDefinition = new SubmitConfig.LabelDefinition();
+    LabelDefinition labelDefinition = new LabelDefinition();
 
     functionToSet.accept(label, false);
     ConfigTranslator.extractLabelCopyScores(label, labelDefinition);
@@ -80,7 +81,7 @@ public class ConfigTranslatorTest {
       String copyScoreName, BiConsumer<LabelType, Boolean> functionToSet) {
 
     LabelType label = LabelType.withDefaultValues("Verified");
-    SubmitConfig.LabelDefinition labelDefinition = new SubmitConfig.LabelDefinition();
+    LabelDefinition labelDefinition = new LabelDefinition();
 
     functionToSet.accept(label, true);
     ConfigTranslator.extractLabelCopyScores(label, labelDefinition);

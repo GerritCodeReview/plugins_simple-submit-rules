@@ -27,6 +27,7 @@ import com.google.gerrit.server.project.ProjectCache;
 import com.google.gerrit.server.project.ProjectResource;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.googlesource.gerrit.plugins.simplesubmitrules.api.SubmitConfig;
 import java.io.IOException;
 
 /** REST Endpoint to configure labels and our simple submit rules */
