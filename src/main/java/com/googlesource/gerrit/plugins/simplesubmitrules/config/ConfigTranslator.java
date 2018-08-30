@@ -15,7 +15,6 @@
 package com.googlesource.gerrit.plugins.simplesubmitrules.config;
 
 import com.google.gerrit.common.data.LabelType;
-import com.google.gerrit.common.data.LabelTypes;
 import com.google.gerrit.extensions.annotations.PluginName;
 import com.google.gerrit.extensions.restapi.BadRequestException;
 import com.google.gerrit.server.config.PluginConfig;
@@ -105,16 +104,32 @@ public final class ConfigTranslator {
   void applyTo(SubmitConfig inConfig, ProjectState projectState) throws BadRequestException {
     PluginConfig pluginConfig = pluginConfigFactory.getFromProjectConfig(projectState, pluginName);
     applyCommentRulesTo(inConfig.comments, pluginConfig);
-    applyLabelsTo(inConfig.labels, projectState.getLabelTypes());
+    applyLabelsTo(inConfig.labels, projectState);
   }
 
   private static void applyLabelsTo(
-      Map<String, SubmitConfig.LabelDefinition> labels, LabelTypes labelTypes)
+      Map<String, SubmitConfig.LabelDefinition> labels, ProjectState projectState)
       throws BadRequestException {
+    if (labels.isEmpty()) {
+      return;
+    }
+
     for (Map.Entry<String, SubmitConfig.LabelDefinition> entry : labels.entrySet()) {
+      if (!projectState.getConfig().getLabelSections().containsKey(entry.getKey())) {
+        // The current project does not have this label. Try to copy it down from the inherited
+        // labels to be able to modify it locally.
+        Map<String, LabelType> copiedLabelTypes = projectState.getConfig().getLabelSections();
+        projectState
+            .getLabelTypes()
+            .getLabelTypes()
+            .stream()
+            .filter(l -> l.getName().equals(entry.getKey()))
+            .forEach(l -> copiedLabelTypes.put(l.getName(), l));
+      }
+
       String label = entry.getKey();
       SubmitConfig.LabelDefinition definition = entry.getValue();
-      LabelType labelType = labelTypes.byLabel(label);
+      LabelType labelType = projectState.getLabelTypes().byLabel(label);
 
       if (labelType == null) {
         throw new BadRequestException(
