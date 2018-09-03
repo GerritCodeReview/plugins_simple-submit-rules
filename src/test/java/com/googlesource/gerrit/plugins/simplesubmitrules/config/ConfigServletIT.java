@@ -14,9 +14,11 @@
 
 package com.googlesource.gerrit.plugins.simplesubmitrules.config;
 
+import static com.google.common.truth.Truth.assertThat;
 import static com.google.gerrit.server.project.testing.Util.value;
 
 import com.google.common.base.Charsets;
+import com.google.gerrit.acceptance.GerritConfig;
 import com.google.gerrit.acceptance.LightweightPluginDaemonTest;
 import com.google.gerrit.acceptance.RestResponse;
 import com.google.gerrit.acceptance.TestPlugin;
@@ -66,6 +68,16 @@ public class ConfigServletIT extends LightweightPluginDaemonTest {
     RawInput rawInput = createConfig();
     RestResponse r = userRestSession.putRaw(endpointUrl(project), rawInput);
     r.assertForbidden();
+  }
+
+  @Test
+  @GerritConfig(
+      name = "plugin.my-plugin.disallowedLabelFunctions-Code-Review",
+      value = "MaxWithBlock")
+  public void disallowedFunctionThrowsBadRequestException() throws Exception {
+    RawInput rawInput = createConfig();
+    RestResponse r = adminRestSession.putRaw(endpointUrl(project), rawInput);
+    assertThat(r.getEntityContent()).isEqualTo("MaxWithBlock disallowed");
   }
 
   private static RawInput createConfig() {
