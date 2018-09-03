@@ -16,6 +16,7 @@ package com.googlesource.gerrit.plugins.simplesubmitrules.config;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gerrit.common.Nullable;
+import com.google.gerrit.common.data.LabelFunction;
 import com.google.gerrit.common.data.LabelType;
 import com.google.gerrit.extensions.annotations.PluginName;
 import com.google.gerrit.extensions.restapi.BadRequestException;
@@ -31,6 +32,7 @@ import com.googlesource.gerrit.plugins.simplesubmitrules.api.LabelDefinition;
 import com.googlesource.gerrit.plugins.simplesubmitrules.api.SubmitConfig;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 /** Codec class used to convert {@link SubmitConfig} from/to a Gerrit config */
@@ -106,12 +108,15 @@ public final class ConfigTranslator {
   }
 
   void applyTo(SubmitConfig inConfig, ProjectState projectState) throws BadRequestException {
-    PluginConfig pluginConfig = pluginConfigFactory.getFromProjectConfig(projectState, pluginName);
-    applyCommentRulesTo(inConfig.comments, pluginConfig);
-    applyLabelsTo(inConfig.labels, projectState);
+    PluginConfig hostPluginConfig = pluginConfigFactory.getFromGerritConfig(pluginName);
+    PluginConfig projectPluginConfig =
+        pluginConfigFactory.getFromProjectConfig(projectState, pluginName);
+    applyCommentRulesTo(inConfig.comments, projectPluginConfig);
+    applyLabelsTo(inConfig.labels, projectState, hostPluginConfig);
   }
 
-  private static void applyLabelsTo(Map<String, LabelDefinition> labels, ProjectState projectState)
+  private static void applyLabelsTo(
+      Map<String, LabelDefinition> labels, ProjectState projectState, PluginConfig hostPluginConfig)
       throws BadRequestException {
     if (labels.isEmpty()) {
       return;
@@ -140,9 +145,19 @@ public final class ConfigTranslator {
             "The label " + label + " does not exist. You can't change its config.");
       }
 
-      definition.getFunction().ifPresent(labelType::setFunction);
       if (definition.ignoreSelfApproval != null) {
         labelType.setIgnoreSelfApproval(definition.ignoreSelfApproval);
+      }
+
+      if (definition.getFunction().isPresent()) {
+        List<String> disallowedLabelFunctions =
+            ImmutableList.copyOf(
+                hostPluginConfig.getStringList("disallowedLabelFunctions-" + label));
+        LabelFunction function = definition.getFunction().get();
+        if (disallowedLabelFunctions.contains(function.getFunctionName())) {
+          throw new BadRequestException(function.getFunctionName() + " disallowed");
+        }
+        labelType.setFunction(function);
       }
       applyCopyScoresTo(definition.copyScores, labelType);
     }

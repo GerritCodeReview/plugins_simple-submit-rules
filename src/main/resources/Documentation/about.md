@@ -106,3 +106,21 @@ The LabelFunction is an enum value, encoded as a string.
 Example: `MaxWithBlock`, `AnyWithBlock`...
 
 See the Labels documentation page for more information.
+
+### Configuration in gerrit.config
+
+The following is a list of configuration options that can be changed
+in gerrit.config. All configs have to be nested under plugin.@PLUGIN@:
+
+#### disallowedLabelFunctions-<label-name>
+
+This config will prevent users from changing the function in the
+label configuration that is referenced in the name to a matching value.
+However, the config does not effect existing labels that already have
+the forbidden value.
+
+Example:
+```
+[plugin "simple-submit"]
+  disallowedLabelFunctions-Code-Review = MaxNoBlock
+```
