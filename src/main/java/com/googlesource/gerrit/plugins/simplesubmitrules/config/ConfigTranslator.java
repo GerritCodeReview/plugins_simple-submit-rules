@@ -14,6 +14,8 @@
 
 package com.googlesource.gerrit.plugins.simplesubmitrules.config;
 
+import com.google.common.collect.ImmutableList;
+import com.google.gerrit.common.data.LabelFunction;
 import com.google.gerrit.common.data.LabelType;
 import com.google.gerrit.extensions.annotations.PluginName;
 import com.google.gerrit.extensions.restapi.BadRequestException;
@@ -26,6 +28,7 @@ import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesConfig;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 /** Codec class used to convert {@link SubmitConfig} from/to a Gerrit config */
@@ -104,15 +107,18 @@ public final class ConfigTranslator {
   }
 
   void applyTo(SubmitConfig inConfig, ProjectState projectState) throws BadRequestException {
-    PluginConfig pluginConfig = pluginConfigFactory.getFromProjectConfig(projectState, pluginName);
-    applyCommentRulesTo(inConfig.comments, pluginConfig);
-    applyLabelsTo(inConfig.labels, projectState, pluginConfig);
+    PluginConfig hostPluginConfig = pluginConfigFactory.getFromGerritConfig(pluginName);
+    PluginConfig perProjectPluginConfig =
+        pluginConfigFactory.getFromProjectConfig(projectState, pluginName);
+    applyCommentRulesTo(inConfig.comments, perProjectPluginConfig);
+    applyLabelsTo(inConfig.labels, projectState, hostPluginConfig, perProjectPluginConfig);
   }
 
   private static void applyLabelsTo(
       Map<String, SubmitConfig.LabelDefinition> labels,
       ProjectState projectState,
-      PluginConfig pluginConfig)
+      PluginConfig hostPluginConfig,
+      PluginConfig perProjectPluginConfig)
       throws BadRequestException {
     if (labels.isEmpty()) {
       return;
@@ -140,13 +146,22 @@ public final class ConfigTranslator {
             "The label " + label + " does not exist. You can't change its config.");
       }
 
-      definition.getFunction().ifPresent(labelType::setFunction);
+      if (definition.getFunction().isPresent()) {
+        List<String> disallowedLabelFunctions =
+            ImmutableList.copyOf(
+                hostPluginConfig.getStringList("disallowedLabelFunctions-" + label));
+        LabelFunction function = definition.getFunction().get();
+        if (disallowedLabelFunctions.contains(function.getFunctionName())) {
+          throw new BadRequestException(function.getFunctionName() + " disallowed");
+        }
+        labelType.setFunction(function);
+      }
       applyCopyScoresTo(definition.copyScores, labelType);
       if (definition.ignoreSelfApproval != null) {
         // Core Gerrit doesn't know about the self approval bit. Write it to the plugin config to
         // keep it save from core Gerrit's loading and saving the project config, which can in some
         // cases overwrite attributes it doesn't know (e.g. when the order of labels changes).
-        pluginConfig.setBoolean(
+        perProjectPluginConfig.setBoolean(
             SimpleSubmitRulesConfig.requireNonAuthorApprovalKey(label),
             definition.ignoreSelfApproval);
       }
