@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "271ddb45_eee7ffa2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1031898
+      },
+      "writtenOn": "2018-09-03T07:10:55Z",
+      "side": 1,
+      "message": "Haven\u0027t looked at the details. But it looks to me this config is stored in SubmitConfig#LabelDefinition which means it\u0027s per-label and should be stored in the label section rather than plugin section?",
+      "range": {
+        "startLine": 9,
+        "startChar": 57,
+        "endLine": 10,
+        "endChar": 14
+      },
+      "revId": "330da04b3f3b29f73d2c43f063a01260a079092f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
