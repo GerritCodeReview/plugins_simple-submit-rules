@@ -70,6 +70,30 @@
       "revId": "330da04b3f3b29f73d2c43f063a01260a079092f",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a78302f_01034712",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1031898
+      },
+      "writtenOn": "2018-09-03T08:08:22Z",
+      "side": 1,
+      "message": "\u003e Core Gerrit doesn\u0027t do well with per-label configs it doesn\u0027t know about. There are cases where it will just overwrite them. Therefore I stored this in the plugins configuration where that can\u0027t happen. I\u0027ll update the commit message.\n\nFor Core Gerrit, should it just ignore unknown label configs? IIUC, this \u0027ignoreAuthorSelfApproval\u0027 is handled by RequireNonAuthorApprovalRule when the plugin is used. It should work without letting core Gerrit know about this config?\n\n\u003e \n\u003e It is not exactly optimal though, as the config might get orphaned if the label gets renamed in core. The alternative would be to make sure that core never overwrites label configs and keeps \u0027unknown\u0027 settings in place. This seems not too hard to do for now, but very hard to enforce going forward).\n\nBy default, a project uses the label definition in All-Projects, at this case, if the definition there is renamed, the current project will be affected. But if the label is updated in the current project, it will be copied/stored in the current project, which means updates in All-Projects should not affect the current project because the current project has its own customized label. In this case, I assume the new label in the current project should not has connection to the default anymore. \n\nI assume \"orphan\" is based on the assumption that the definition in the current project is linked to the default definition. I think we should not do it because it can be very hard to make it right (it reminds me of account links). \n\n\u003e \n\u003e Having this config be orphaned in that case is annoying, but doesn\u0027t seem like a deal breaker to me.\n\u003e \n\u003e Do you have a better suggestion?\n\nAfter a label is updated in a project, it\u0027s copied/updated in the current project. If it happends, the project doesn\u0027t use the default anymore and it has no connection with the default either. If we do like this, should we be fine?",
+      "parentUuid": "16f7361b_be379a42",
+      "range": {
+        "startLine": 9,
+        "startChar": 57,
+        "endLine": 10,
+        "endChar": 14
+      },
+      "revId": "330da04b3f3b29f73d2c43f063a01260a079092f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
