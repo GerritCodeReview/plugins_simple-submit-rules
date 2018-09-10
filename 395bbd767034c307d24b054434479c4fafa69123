@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54ada640_d9769076",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigTranslator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-09-10T13:08:05Z",
+      "side": 1,
+      "message": "This is not optimal. I would want to move the copy functionality to core in the near-future.",
+      "range": {
+        "startLine": 174,
+        "startChar": 4,
+        "endLine": 174,
+        "endChar": 37
+      },
+      "revId": "395bbd767034c307d24b054434479c4fafa69123",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
