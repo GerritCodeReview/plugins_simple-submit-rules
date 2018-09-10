@@ -16,6 +16,24 @@
       "revId": "ba6e67a074f4cf8dd7d658e7fadc45ee7e00221d",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ae0916_e3a26811",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigTranslator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-09-10T13:06:57Z",
+      "side": 0,
+      "message": "Good catch. I initially just added some tests for the new logic I added, but this oversight made me realize that there is a lack of tests. I added more tests to cover the plain setting and retrieving of values on the API in PluginIT.",
+      "parentUuid": "1fc333d6_05d53ef4",
+      "revId": "ba6e67a074f4cf8dd7d658e7fadc45ee7e00221d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
