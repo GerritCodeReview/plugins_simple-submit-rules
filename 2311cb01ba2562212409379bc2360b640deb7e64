@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d595592b_23e2f805",
+        "filename": "BUILD",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003935
+      },
+      "writtenOn": "2018-09-12T12:25:39Z",
+      "side": 1,
+      "message": "Should this rather be a blank line?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 1
+      },
+      "revId": "2311cb01ba2562212409379bc2360b640deb7e64",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e967da23_68d8c470",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/api/SubmitConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003935
+      },
+      "writtenOn": "2018-09-12T12:25:39Z",
+      "side": 1,
+      "message": "nit: swap this to have the same order in which the parameters are passed in",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 25
+      },
+      "revId": "2311cb01ba2562212409379bc2360b640deb7e64",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce6353c_be320e07",
+        "filename": "src/main/resources/Documentation/about.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003935
+      },
+      "writtenOn": "2018-09-12T12:25:39Z",
+      "side": 1,
+      "message": "nit: one space too much",
+      "range": {
+        "startLine": 7,
+        "startChar": 18,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "2311cb01ba2562212409379bc2360b640deb7e64",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
