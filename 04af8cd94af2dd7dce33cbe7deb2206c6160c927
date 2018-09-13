@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79c93f06_9fdf691f",
+        "filename": "src/main/resources/Documentation/about.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1011123
+      },
+      "writtenOn": "2018-09-13T09:57:50Z",
+      "side": 1,
+      "message": "If this only applies to the simple-submit-rules plugin, this can be replaced with the @PLUGIN@ token.",
+      "range": {
+        "startLine": 113,
+        "startChar": 61,
+        "endLine": 113,
+        "endChar": 70
+      },
+      "revId": "04af8cd94af2dd7dce33cbe7deb2206c6160c927",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
