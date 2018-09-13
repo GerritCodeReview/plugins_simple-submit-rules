@@ -32,7 +32,12 @@
         type: Boolean,
         value: true,
       },
-      _pluginRestApi: Object,
+     _restApi: Object,
+      _labels: {
+        type: Array,
+        value() { return []; },
+        computed: '_computeLabelNames(_repoConfig.*)',
+      },
     },
 
     observers: [
@@ -75,7 +80,7 @@
       promises.push(this._pluginRestApi().get(this._endpointUrl())
         .then(config => {
           if (!config) { return; }
-          this._repoConfig = config;
+          this.set('_repoConfig', config);
           this._loading = false;
         }));
 
@@ -87,7 +92,7 @@
     },
 
     _endpointUrl() {
-      return 'projects/' + encodeURIComponent(this.repoName) + '/simple-submit-rules';
+      return '/projects/' + encodeURIComponent(this.repoName) + '/simple-submit-rules';
     },
 
     _handleSaveRepoConfig() {
@@ -110,14 +115,21 @@
     },
 
     _pluginRestApi() {
-      if (this._pluginRestApi === undefined) {
-        this._pluginRestApi = this.plugin.restApi();
+      if (this._restApi === undefined) {
+        this._restApi = this.plugin.restApi();
       }
-      return this._pluginRestApi;
+      return this._restApi;
     },
 
     _getRepoAccess(repoName) {
       return this._pluginRestApi().get('/access/?project=' + encodeURIComponent(repoName));
+    },
+
+    _computeLabelNames() {
+      if (this._repoConfig && this._repoConfig.labels) {
+        return Object.keys(this._repoConfig.labels);
+      }
+      return [];
     },
 
   });
