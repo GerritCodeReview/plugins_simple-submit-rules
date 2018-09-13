@@ -118,6 +118,30 @@
       "revId": "2311cb01ba2562212409379bc2360b640deb7e64",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7889ec5_be01c943",
+        "filename": "src/main/resources/Documentation/about.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-09-13T09:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ce6353c_be320e07",
+      "range": {
+        "startLine": 7,
+        "startChar": 18,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "2311cb01ba2562212409379bc2360b640deb7e64",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
