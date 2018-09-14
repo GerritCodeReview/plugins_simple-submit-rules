@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9428758b_d92fc3a5",
+        "filename": "src/test/java/com/googlesource/gerrit/plugins/simplesubmitrules/PluginIT.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1003935
+      },
+      "writtenOn": "2018-09-14T06:48:45Z",
+      "side": 1,
+      "message": "Why do you need a ProjectConfigUpdate just to read the config?",
+      "range": {
+        "startLine": 145,
+        "startChar": 9,
+        "endLine": 145,
+        "endChar": 28
+      },
+      "revId": "66979634c82fc1db4ca6dffdefec5b40db2726d0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
