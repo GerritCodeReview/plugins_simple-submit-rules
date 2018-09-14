@@ -14,9 +14,10 @@
 
 package com.googlesource.gerrit.plugins.simplesubmitrules.config;
 
+import com.google.common.collect.ImmutableList;
 import com.google.gerrit.common.Nullable;
+import com.google.gerrit.common.data.LabelFunction;
 import com.google.gerrit.common.data.LabelType;
-import com.google.gerrit.common.data.LabelTypes;
 import com.google.gerrit.extensions.annotations.PluginName;
 import com.google.gerrit.extensions.restapi.BadRequestException;
 import com.google.gerrit.server.config.PluginConfig;
@@ -31,6 +32,7 @@ import com.googlesource.gerrit.plugins.simplesubmitrules.api.LabelDefinition;
 import com.googlesource.gerrit.plugins.simplesubmitrules.api.SubmitConfig;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 /** Codec class used to convert {@link SubmitConfig} from/to a Gerrit config */
@@ -106,26 +108,56 @@ public final class ConfigTranslator {
   }
 
   void applyTo(SubmitConfig inConfig, ProjectState projectState) throws BadRequestException {
-    PluginConfig pluginConfig = pluginConfigFactory.getFromProjectConfig(projectState, pluginName);
-    applyCommentRulesTo(inConfig.comments, pluginConfig);
-    applyLabelsTo(inConfig.labels, projectState.getLabelTypes());
+    PluginConfig hostPluginConfig = pluginConfigFactory.getFromGerritConfig(pluginName);
+    PluginConfig projectPluginConfig =
+        pluginConfigFactory.getFromProjectConfig(projectState, pluginName);
+    applyCommentRulesTo(inConfig.comments, projectPluginConfig);
+    applyLabelsTo(inConfig.labels, projectState, hostPluginConfig);
   }
 
-  private static void applyLabelsTo(Map<String, LabelDefinition> labels, LabelTypes labelTypes)
+  private static void applyLabelsTo(
+      Map<String, LabelDefinition> labels, ProjectState projectState, PluginConfig hostPluginConfig)
       throws BadRequestException {
+    if (labels.isEmpty()) {
+      return;
+    }
+
     for (Map.Entry<String, LabelDefinition> entry : labels.entrySet()) {
+      if (!projectState.getConfig().getLabelSections().containsKey(entry.getKey())) {
+        // The current project does not have this label. Try to copy it down from the inherited
+        // labels to be able to modify it locally.
+        Map<String, LabelType> copiedLabelTypes = projectState.getConfig().getLabelSections();
+        projectState
+            .getLabelTypes()
+            .getLabelTypes()
+            .stream()
+            .filter(l -> l.getName().equals(entry.getKey()))
+            .filter(l -> l.canOverride())
+            .forEach(l -> copiedLabelTypes.put(l.getName(), copyLabelType(l)));
+      }
+
       String label = entry.getKey();
       LabelDefinition definition = entry.getValue();
-      LabelType labelType = labelTypes.byLabel(label);
+      LabelType labelType = projectState.getConfig().getLabelSections().get(label);
 
       if (labelType == null) {
         throw new BadRequestException(
             "The label " + label + " does not exist. You can't change its config.");
       }
 
-      definition.getFunction().ifPresent(labelType::setFunction);
       if (definition.ignoreSelfApproval != null) {
         labelType.setIgnoreSelfApproval(definition.ignoreSelfApproval);
+      }
+
+      if (definition.getFunction().isPresent()) {
+        List<String> disallowedLabelFunctions =
+            ImmutableList.copyOf(
+                hostPluginConfig.getStringList("disallowedLabelFunctions-" + label));
+        LabelFunction function = definition.getFunction().get();
+        if (disallowedLabelFunctions.contains(function.getFunctionName())) {
+          throw new BadRequestException(function.getFunctionName() + " disallowed");
+        }
+        labelType.setFunction(function);
       }
       applyCopyScoresTo(definition.copyScores, labelType);
     }
@@ -151,5 +183,24 @@ public final class ConfigTranslator {
     config.setBoolean(
         SimpleSubmitRulesConfig.KEY_BLOCK_IF_UNRESOLVED_COMMENTS,
         comments.blockIfUnresolvedComments);
+  }
+
+  private static LabelType copyLabelType(LabelType label) {
+    // TODO(hiesel) Move this to core
+    LabelType copy = new LabelType(label.getName(), ImmutableList.copyOf(label.getValues()));
+    if (label.getRefPatterns() != null) {
+      copy.setRefPatterns(ImmutableList.copyOf(label.getRefPatterns()));
+    }
+    copy.setAllowPostSubmit(label.allowPostSubmit());
+    copy.setCanOverride(label.canOverride());
+    copy.setCopyAllScoresIfNoChange(label.isCopyAllScoresIfNoChange());
+    copy.setCopyAllScoresIfNoCodeChange(label.isCopyAllScoresIfNoCodeChange());
+    copy.setCopyAllScoresOnMergeFirstParentUpdate(label.isCopyAllScoresOnMergeFirstParentUpdate());
+    copy.setCopyAllScoresOnTrivialRebase(label.isCopyAllScoresOnTrivialRebase());
+    copy.setIgnoreSelfApproval(label.ignoreSelfApproval());
+    copy.setCopyMaxScore(label.isCopyMaxScore());
+    copy.setCopyMinScore(label.isCopyMinScore());
+    copy.setFunction(label.getFunction());
+    return copy;
   }
 }

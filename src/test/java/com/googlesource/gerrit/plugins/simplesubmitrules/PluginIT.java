@@ -25,6 +25,7 @@ import com.google.gerrit.acceptance.PushOneCommit;
 import com.google.gerrit.acceptance.RestResponse;
 import com.google.gerrit.acceptance.TestPlugin;
 import com.google.gerrit.common.RawInputUtil;
+import com.google.gerrit.common.data.LabelFunction;
 import com.google.gerrit.common.data.LabelType;
 import com.google.gerrit.extensions.api.changes.ReviewInput;
 import com.google.gerrit.extensions.client.Side;
@@ -37,7 +38,6 @@ import com.googlesource.gerrit.plugins.simplesubmitrules.api.LabelDefinition;
 import com.googlesource.gerrit.plugins.simplesubmitrules.api.SubmitConfig;
 import org.eclipse.jgit.internal.storage.dfs.InMemoryRepository;
 import org.eclipse.jgit.junit.TestRepository;
-import org.junit.Before;
 import org.junit.Test;
 
 @TestPlugin(
@@ -46,16 +46,6 @@ import org.junit.Test;
 /** Overall end-to-end integration test for configuring labels and comments and merging changes. */
 public class PluginIT extends LightweightPluginDaemonTest {
   private static final String JSON_TYPE = "application/json";
-
-  @Before
-  public void setUpCodeReviewLabel() throws Exception {
-    // TODO(hiesel): Remove once copy-down logic is in place
-    try (ProjectConfigUpdate u = updateProject(project)) {
-      LabelType codeReview = projectCache.getAllProjects().getLabelTypes().byLabel("Code-Review");
-      u.getConfig().getLabelSections().put("Code-Review", codeReview);
-      u.save();
-    }
-  }
 
   @Test
   public void singleApprovalIsSufficientByDefault() throws Exception {
@@ -143,6 +133,16 @@ public class PluginIT extends LightweightPluginDaemonTest {
     String currentConfig = adminRestSession.get(endpointUrl(project)).getEntityContent();
     SubmitConfig parsedConfig = newGson().fromJson(currentConfig, SubmitConfig.class);
     assertThat(parsedConfig.comments).isEqualTo(new CommentsRules(true));
+  }
+
+  @Test
+  public void pluginPersistsLabelInCurrentProjectWhenOverrideIsNeeded() throws Exception {
+    LabelDefinition codeReview = new LabelDefinition("MaxNoBlock", false, null);
+    SubmitConfig config = new SubmitConfig(ImmutableMap.of("Code-Review", codeReview), null);
+    postConfig(project, config);
+
+    LabelType myLabel = projectCache.get(project).getConfig().getLabelSections().get("Code-Review");
+    assertThat(myLabel.getFunction()).isEqualTo(LabelFunction.MAX_NO_BLOCK);
   }
 
   private void postConfig(Project.NameKey project, SubmitConfig config) throws Exception {

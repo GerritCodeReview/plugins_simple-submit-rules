@@ -53,8 +53,10 @@ is the same used for the PUT request body, so it will only be described once.
 The comments section defines the rules to apply to comments (can the change be submitted with
 unresolved comments, …). The labels section defines each label.
 
-It is reasonable to consider that a label missing from the labels section won't be reset, but
-consumers should not rely upon it.
+When reading labels on the API, the result includes both local and inherited labels.
+When the configuration is modified through the API, the plugin will check if there are
+local label configurations. If the request modifies an inherited label, it will be copied
+down so that it can be modified locally.
 
 ### CommentsRules
 
@@ -104,3 +106,21 @@ The LabelFunction is an enum value, encoded as a string.
 Example: `MaxWithBlock`, `AnyWithBlock`...
 
 See the Labels documentation page for more information.
+
+### Configuration in gerrit.config
+
+The following is a list of configuration options that can be changed
+in gerrit.config. All configs have to be nested under plugin.@PLUGIN@:
+
+#### disallowedLabelFunctions-<label-name>
+
+This config will prevent users from changing the function in the
+label configuration that is referenced in the name to a matching value.
+However, the config does not effect existing labels that already have
+the forbidden value.
+
+Example:
+```
+[plugin "simple-submit"]
+  disallowedLabelFunctions-Code-Review = MaxNoBlock
+```
