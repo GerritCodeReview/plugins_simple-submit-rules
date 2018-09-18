@@ -77,6 +77,6 @@ public class ConfigServlet
       projectCache.evict(resource.getNameKey());
     }
 
-    return configTranslator.convertFrom(resource.getProjectState());
+    return configTranslator.convertFrom(projectCache.get(resource.getNameKey()));
   }
 }

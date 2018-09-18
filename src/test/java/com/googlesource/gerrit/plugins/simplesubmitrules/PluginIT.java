@@ -141,18 +141,53 @@ public class PluginIT extends LightweightPluginDaemonTest {
     SubmitConfig config = new SubmitConfig(ImmutableMap.of("Code-Review", codeReview), null);
     postConfig(project, config);
 
-    LabelType myLabel = projectCache.get(project).getConfig().getLabelSections().get("Code-Review");
-    assertThat(myLabel.getFunction()).isEqualTo(LabelFunction.MAX_NO_BLOCK);
+    LabelType localCR = projectCache.get(project).getConfig().getLabelSections().get("Code-Review");
+    assertThat(localCR.getFunction()).isEqualTo(LabelFunction.MAX_NO_BLOCK);
+
+    // Check that the label has the same configs besides the function, which we changed
+    LabelType allProjectsCR = projectCache.getAllProjects().getLabelTypes().byLabel("Code-Review");
+    localCR.setFunction(allProjectsCR.getFunction());
+    assertLabelTypeEquals(localCR, allProjectsCR);
   }
 
-  private void postConfig(Project.NameKey project, SubmitConfig config) throws Exception {
+  @Test
+  public void replyContainsUpdatedConfig() throws Exception {
+    LabelDefinition codeReviewNoSelfApproval = new LabelDefinition(null, true, null);
+    SubmitConfig config =
+        new SubmitConfig(ImmutableMap.of("Code-Review", codeReviewNoSelfApproval), null);
+    SubmitConfig response = postConfig(project, config);
+    assertThat(response.labels.keySet()).containsExactly("Code-Review");
+    assertThat(response.labels.get("Code-Review").ignoreSelfApproval).isTrue();
+  }
+
+  private SubmitConfig postConfig(Project.NameKey project, SubmitConfig config) throws Exception {
     RawInput rawInput =
         RawInputUtil.create(newGson().toJson(config).getBytes(Charsets.UTF_8), JSON_TYPE);
     RestResponse configResult = adminRestSession.putRaw(endpointUrl(project), rawInput);
     configResult.assertOK();
+    return newGson().fromJson(configResult.getEntityContent(), SubmitConfig.class);
   }
 
   private static String endpointUrl(Project.NameKey project) {
     return "/projects/" + project.get() + "/simple-submit-rules";
+  }
+
+  private static void assertLabelTypeEquals(LabelType l1, LabelType l2) {
+    assertThat(l1.allowPostSubmit()).isEqualTo(l2.allowPostSubmit());
+    assertThat(l1.canOverride()).isEqualTo(l2.canOverride());
+    assertThat(l1.getDefaultValue()).isEqualTo(l2.getDefaultValue());
+    assertThat(l1.getLabelId()).isEqualTo(l2.getLabelId());
+    assertThat(l1.getMax()).isEqualTo(l2.getMax());
+    assertThat(l1.getMin()).isEqualTo(l2.getMin());
+    assertThat(l1.getName()).isEqualTo(l2.getName());
+    assertThat(l1.getRefPatterns()).isEqualTo(l2.getRefPatterns());
+    assertThat(l1.ignoreSelfApproval()).isEqualTo(l2.ignoreSelfApproval());
+    assertThat(l1.isCopyAllScoresIfNoChange()).isEqualTo(l2.isCopyAllScoresIfNoChange());
+    assertThat(l1.isCopyAllScoresIfNoCodeChange()).isEqualTo(l2.isCopyAllScoresIfNoCodeChange());
+    assertThat(l1.isCopyAllScoresOnMergeFirstParentUpdate())
+        .isEqualTo(l2.isCopyAllScoresOnMergeFirstParentUpdate());
+    assertThat(l1.isCopyAllScoresOnTrivialRebase()).isEqualTo(l2.isCopyAllScoresOnTrivialRebase());
+    assertThat(l1.isCopyMaxScore()).isEqualTo(l2.isCopyMaxScore());
+    assertThat(l1.isCopyMinScore()).isEqualTo(l2.isCopyMinScore());
   }
 }

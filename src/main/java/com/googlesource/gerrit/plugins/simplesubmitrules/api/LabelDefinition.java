@@ -16,7 +16,6 @@ package com.googlesource.gerrit.plugins.simplesubmitrules.api;
 
 import com.google.common.base.MoreObjects;
 import com.google.gerrit.common.data.LabelFunction;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -26,9 +25,7 @@ public class LabelDefinition {
   public Boolean ignoreSelfApproval;
   public Set<String> copyScores;
 
-  public LabelDefinition() {
-    copyScores = new HashSet<>();
-  }
+  public LabelDefinition() {}
 
   public LabelDefinition(String function, Boolean ignoreSelfApproval, Set<String> copyScores) {
     this.function = function;
