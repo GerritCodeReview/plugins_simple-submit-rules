@@ -14,7 +14,10 @@
 
 package com.googlesource.gerrit.plugins.simplesubmitrules.config;
 
+
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
 import com.google.gerrit.common.Nullable;
 import com.google.gerrit.common.data.LabelFunction;
 import com.google.gerrit.common.data.LabelType;
@@ -30,10 +33,9 @@ import com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesConfig
 import com.googlesource.gerrit.plugins.simplesubmitrules.api.CommentsRules;
 import com.googlesource.gerrit.plugins.simplesubmitrules.api.LabelDefinition;
 import com.googlesource.gerrit.plugins.simplesubmitrules.api.SubmitConfig;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /** Codec class used to convert {@link SubmitConfig} from/to a Gerrit config */
 @Singleton
@@ -73,13 +75,17 @@ public final class ConfigTranslator {
   }
 
   static void applyCopyScoreRulesTo(
-      @Nullable Collection<String> copyScoreRules, LabelType labelType) {
-    if (copyScoreRules == null) {
-      return;
+      Set<String> copyScoreRules, Set<String> disallowedCopyScoreRules, LabelType labelType)
+      throws BadRequestException {
+    Set<String> disallowed =
+        Sets.intersection(ImmutableSet.copyOf(copyScoreRules), disallowedCopyScoreRules);
+    if (!disallowed.isEmpty()) {
+      throw new BadRequestException("copy scores " + disallowed + " are forbidden");
     }
 
     labelType.setCopyMinScore(copyScoreRules.contains(ProjectConfig.KEY_COPY_MIN_SCORE));
     labelType.setCopyMaxScore(copyScoreRules.contains(ProjectConfig.KEY_COPY_MAX_SCORE));
+
     labelType.setCopyAllScoresIfNoChange(
         copyScoreRules.contains(ProjectConfig.KEY_COPY_ALL_SCORES_IF_NO_CHANGE));
     labelType.setCopyAllScoresIfNoCodeChange(
@@ -153,8 +159,8 @@ public final class ConfigTranslator {
       }
 
       if (definition.getFunction().isPresent()) {
-        List<String> disallowedLabelFunctions =
-            ImmutableList.copyOf(
+        Set<String> disallowedLabelFunctions =
+            ImmutableSet.copyOf(
                 hostPluginConfig.getStringList("disallowedLabelFunctions-" + label));
         LabelFunction function = definition.getFunction().get();
         if (disallowedLabelFunctions.contains(function.getFunctionName())) {
@@ -162,10 +168,16 @@ public final class ConfigTranslator {
         }
         labelType.setFunction(function);
       }
+
       // TODO(hiesel): Remove fallback to copyScores
-      applyCopyScoreRulesTo(
-          definition.copyScoreRules != null ? definition.copyScoreRules : definition.copyScores,
-          labelType);
+      Set<String> copyScoreRules =
+          definition.copyScoreRules != null ? definition.copyScoreRules : definition.copyScores;
+      if (copyScoreRules != null) {
+        Set<String> disallowedCopyScoreRules =
+            ImmutableSet.copyOf(
+                hostPluginConfig.getStringList("disallowedCopyScoreRules-" + label));
+        applyCopyScoreRulesTo(copyScoreRules, disallowedCopyScoreRules, labelType);
+      }
     }
   }
 

@@ -5,7 +5,7 @@ This plugin provides simple-to-use submit rules, hence the name.
 - Ability to prevent submission if there are unresolved comments.
 - Ability to require approval, and to consider approval from the uploader of the
   latest patch set or not.
-- (soon!) a simple PolyGerrit UI to configure the labels and how they work.
+- A simple PolyGerrit UI to configure the labels and how they work.
 
 ### Inheritance
 This plugin supports configuration inheritance, following a worst case scenario when this is
@@ -123,4 +123,16 @@ Example:
 ```
 [plugin "simple-submit"]
   disallowedLabelFunctions-Code-Review = MaxNoBlock
+```
+
+#### disallowedCopyScoreRules-<label-name>
+
+This config will prevent users from changing adding referenced copy scores
+in the label configuration that is referenced in the name to a matching value.
+However, the config does not effect existing labels that already have
+the forbidden value.
+
+```
+[plugin "simple-submit"]
+  disallowedCopyScoreRules-Code-Review = copyMaxScore
 ```

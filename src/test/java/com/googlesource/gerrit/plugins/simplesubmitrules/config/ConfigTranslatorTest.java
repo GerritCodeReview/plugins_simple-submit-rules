@@ -16,17 +16,21 @@ package com.googlesource.gerrit.plugins.simplesubmitrules.config;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.gerrit.common.data.LabelType;
+import com.google.gerrit.extensions.restapi.BadRequestException;
 import com.googlesource.gerrit.plugins.simplesubmitrules.api.LabelDefinition;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class ConfigTranslatorTest {
-  /** Test the translations for each config key */
+  @Rule public ExpectedException exception = ExpectedException.none();
+
   @Test
-  public void checkLabelTranslation() {
+  public void checkLabelTranslation() throws Exception {
     checkTranslation("copyMinScore", LabelType::isCopyMinScore, LabelType::setCopyMinScore);
     checkTranslation("copyMaxScore", LabelType::isCopyMaxScore, LabelType::setCopyMaxScore);
 
@@ -51,11 +55,22 @@ public class ConfigTranslatorTest {
         LabelType::setCopyAllScoresOnTrivialRebase);
   }
 
+  @Test
+  public void checkDisallowedCopyScoreThrowsBadRequest() throws Exception {
+    exception.expect(BadRequestException.class);
+    exception.expectMessage("copy scores [copyAllScoresIfNoChange] are forbidden");
+    ConfigTranslator.applyCopyScoreRulesTo(
+        ImmutableSet.of("copyAllScoresIfNoChange", "copyAllScoresOnMergeFirstParentUpdate"),
+        ImmutableSet.of("copyAllScoresIfNoChange"),
+        LabelType.withDefaultValues("Verified"));
+  }
+
   /** Helper method to check that conversion from/to Gerrit works for both true and false values */
   private static void checkTranslation(
       String copyScoreName,
       Predicate<LabelType> functionToCheck,
-      BiConsumer<LabelType, Boolean> functionToSet) {
+      BiConsumer<LabelType, Boolean> functionToSet)
+      throws Exception {
     checkLabelToGerritPresent(copyScoreName, functionToCheck);
     checkLabelToGerritAbsent(copyScoreName, functionToCheck);
 
@@ -92,18 +107,19 @@ public class ConfigTranslatorTest {
   }
 
   private static void checkLabelToGerritPresent(
-      String copyScoreName, Predicate<LabelType> functionToCheck) {
+      String copyScoreName, Predicate<LabelType> functionToCheck) throws Exception {
     LabelType label = LabelType.withDefaultValues("Verified");
 
-    ConfigTranslator.applyCopyScoreRulesTo(ImmutableList.of(copyScoreName), label);
+    ConfigTranslator.applyCopyScoreRulesTo(
+        ImmutableSet.of(copyScoreName), ImmutableSet.of(), label);
     assertThat(functionToCheck.test(label)).named("[case %s:true]", copyScoreName).isTrue();
   }
 
   private static void checkLabelToGerritAbsent(
-      String copyScoreName, Predicate<LabelType> functionToCheck) {
+      String copyScoreName, Predicate<LabelType> functionToCheck) throws Exception {
     LabelType label = LabelType.withDefaultValues("Verified");
 
-    ConfigTranslator.applyCopyScoreRulesTo(ImmutableList.of(), label);
+    ConfigTranslator.applyCopyScoreRulesTo(ImmutableSet.of(), ImmutableSet.of(), label);
     assertThat(functionToCheck.test(label)).named("[case %s:false]", copyScoreName).isFalse();
   }
 }
