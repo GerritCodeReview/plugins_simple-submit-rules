@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89f3aee9_9a5e93b9",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigTranslator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003935
+      },
+      "writtenOn": "2018-09-25T07:39:33Z",
+      "side": 1,
+      "message": "I see this is already used as term in this plugin, so maybe it\u0027s unrelated to this change (but maybe this change makes it harder to change?). \nFor me it is not clear what a \u0027copy score\u0027 is. At least from the name I can\u0027t guess it. Is it a rule for copying votes on patch set creation?",
+      "range": {
+        "startLine": 84,
+        "startChar": 37,
+        "endLine": 84,
+        "endChar": 48
+      },
+      "revId": "ebe1a447cf6b8b58a638e9ce092d029861033de5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
