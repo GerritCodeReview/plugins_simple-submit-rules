@@ -24,6 +24,7 @@ import com.google.gerrit.extensions.annotations.PluginName;
 import com.google.gerrit.extensions.restapi.BadRequestException;
 import com.google.gerrit.server.config.PluginConfig;
 import com.google.gerrit.server.config.PluginConfigFactory;
+import com.google.gerrit.server.project.ProjectCache;
 import com.google.gerrit.server.project.ProjectConfig;
 import com.google.gerrit.server.project.ProjectState;
 import com.google.inject.Inject;
@@ -32,6 +33,7 @@ import com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesConfig
 import com.googlesource.gerrit.plugins.simplesubmitrules.api.CommentsRules;
 import com.googlesource.gerrit.plugins.simplesubmitrules.api.LabelDefinition;
 import com.googlesource.gerrit.plugins.simplesubmitrules.api.SubmitConfig;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -39,11 +41,16 @@ import java.util.Set;
 /** Codec class used to convert {@link SubmitConfig} from/to a Gerrit config */
 @Singleton
 public final class ConfigTranslator {
+  private final ProjectCache projectCache;
   private final PluginConfigFactory pluginConfigFactory;
   private final String pluginName;
 
   @Inject
-  public ConfigTranslator(PluginConfigFactory pluginConfigFactory, @PluginName String pluginName) {
+  public ConfigTranslator(
+      ProjectCache projectCache,
+      PluginConfigFactory pluginConfigFactory,
+      @PluginName String pluginName) {
+    this.projectCache = projectCache;
     this.pluginConfigFactory = pluginConfigFactory;
     this.pluginName = pluginName;
   }
@@ -114,26 +121,30 @@ public final class ConfigTranslator {
     return submitConfig;
   }
 
-  void applyTo(SubmitConfig inConfig, ProjectState projectState) throws BadRequestException {
+  void applyTo(SubmitConfig inConfig, ProjectConfig projectConfig)
+      throws BadRequestException, IOException {
     PluginConfig hostPluginConfig = pluginConfigFactory.getFromGerritConfig(pluginName);
-    PluginConfig projectPluginConfig =
-        pluginConfigFactory.getFromProjectConfig(projectState, pluginName);
+    PluginConfig projectPluginConfig = projectConfig.getPluginConfig(pluginName);
+
     applyCommentRulesTo(inConfig.comments, projectPluginConfig);
-    applyLabelsTo(inConfig.labels, projectState, hostPluginConfig);
+    applyLabelsTo(inConfig.labels, projectConfig, hostPluginConfig);
   }
 
-  private static void applyLabelsTo(
-      Map<String, LabelDefinition> labels, ProjectState projectState, PluginConfig hostPluginConfig)
-      throws BadRequestException {
+  private void applyLabelsTo(
+      Map<String, LabelDefinition> labels,
+      ProjectConfig projectConfig,
+      PluginConfig hostPluginConfig)
+      throws BadRequestException, IOException {
     if (labels.isEmpty()) {
       return;
     }
 
     for (Map.Entry<String, LabelDefinition> entry : labels.entrySet()) {
-      if (!projectState.getConfig().getLabelSections().containsKey(entry.getKey())) {
+      if (!projectConfig.getLabelSections().containsKey(entry.getKey())) {
         // The current project does not have this label. Try to copy it down from the inherited
         // labels to be able to modify it locally.
-        Map<String, LabelType> copiedLabelTypes = projectState.getConfig().getLabelSections();
+        Map<String, LabelType> copiedLabelTypes = projectConfig.getLabelSections();
+        ProjectState projectState = projectCache.checkedGet(projectConfig.getName());
         projectState
             .getLabelTypes()
             .getLabelTypes()
@@ -145,7 +156,7 @@ public final class ConfigTranslator {
 
       String label = entry.getKey();
       LabelDefinition definition = entry.getValue();
-      LabelType labelType = projectState.getConfig().getLabelSections().get(label);
+      LabelType labelType = projectConfig.getLabelSections().get(label);
 
       if (labelType == null) {
         throw new BadRequestException(

@@ -18,17 +18,20 @@ import com.google.gerrit.extensions.restapi.AuthException;
 import com.google.gerrit.extensions.restapi.BadRequestException;
 import com.google.gerrit.extensions.restapi.RestModifyView;
 import com.google.gerrit.extensions.restapi.RestReadView;
+import com.google.gerrit.reviewdb.client.Project;
 import com.google.gerrit.server.IdentifiedUser;
 import com.google.gerrit.server.git.meta.MetaDataUpdate;
 import com.google.gerrit.server.permissions.PermissionBackend;
 import com.google.gerrit.server.permissions.PermissionBackendException;
 import com.google.gerrit.server.permissions.ProjectPermission;
 import com.google.gerrit.server.project.ProjectCache;
+import com.google.gerrit.server.project.ProjectConfig;
 import com.google.gerrit.server.project.ProjectResource;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.simplesubmitrules.api.SubmitConfig;
 import java.io.IOException;
+import org.eclipse.jgit.errors.ConfigInvalidException;
 
 /** REST Endpoint to configure labels and our simple submit rules */
 @Singleton
@@ -63,20 +66,22 @@ public class ConfigServlet
 
   @Override
   public Object apply(ProjectResource resource, SubmitConfig inConfig)
-      throws PermissionBackendException, AuthException, BadRequestException, IOException {
-
+      throws PermissionBackendException, AuthException, BadRequestException, ConfigInvalidException,
+          IOException {
+    Project.NameKey projectName = resource.getNameKey();
     permissionBackend
         .user(resource.getUser())
         .project(resource.getNameKey())
         .check(ProjectPermission.WRITE_CONFIG);
 
     IdentifiedUser user = resource.getUser().asIdentifiedUser();
-    try (MetaDataUpdate md = metaDataUpdateFactory.create(resource.getNameKey(), user)) {
-      configTranslator.applyTo(inConfig, resource.getProjectState());
-      resource.getProjectState().getConfig().commit(md);
-      projectCache.evict(resource.getNameKey());
+    try (MetaDataUpdate md = metaDataUpdateFactory.create(projectName, user)) {
+      ProjectConfig projectConfig = ProjectConfig.read(md);
+      configTranslator.applyTo(inConfig, projectConfig);
+      projectConfig.commit(md);
+      projectCache.evict(projectName);
     }
 
-    return configTranslator.convertFrom(projectCache.get(resource.getNameKey()));
+    return configTranslator.convertFrom(projectCache.checkedGet(projectName));
   }
 }
