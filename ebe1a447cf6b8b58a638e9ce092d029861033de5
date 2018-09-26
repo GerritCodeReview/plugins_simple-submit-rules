@@ -22,6 +22,30 @@
       "revId": "ebe1a447cf6b8b58a638e9ce092d029861033de5",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf3ec028_7a7ffe65",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigTranslator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-09-26T09:47:24Z",
+      "side": 1,
+      "message": "It is also used on the API, so I don\u0027t think we can easily change it right now.",
+      "parentUuid": "89f3aee9_9a5e93b9",
+      "range": {
+        "startLine": 84,
+        "startChar": 37,
+        "endLine": 84,
+        "endChar": 48
+      },
+      "revId": "ebe1a447cf6b8b58a638e9ce092d029861033de5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
