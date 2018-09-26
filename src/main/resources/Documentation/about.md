@@ -75,7 +75,7 @@ submitted.
 {
   "function": LabelFunction,
   "ignore_self_approval": boolean,
-  "copy_scores": CopyScoreRule[]
+  "copy_score_rules": CopyScoreRule[]
 }
 ```
 

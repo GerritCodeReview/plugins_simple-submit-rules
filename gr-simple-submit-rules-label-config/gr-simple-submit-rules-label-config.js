@@ -45,7 +45,7 @@
         type: Boolean,
         value: false
       },
-      _updatingCopyScores: {
+      _updatingCopyScoreRules: {
         type: Boolean,
         value: false
       },
@@ -53,7 +53,7 @@
         type: Object,
         computed: '_computeLabelConfig(repoConfig.labels, labelName)'
       },
-      _copyScores: {
+      _copyScoreRules: {
         type: Object,
         value: {},
       },
@@ -64,8 +64,8 @@
     observers: [
       '_observeFunctionChange(_labelConfig.function)',
       '_observeFunctionDescriptorChange(_negativeBlocks, _maxVoteRequired)',
-      '_observeCopyScoresChange(_labelConfig.copy_scores)',
-      '_observeCopyScoresChangeInUi(_copyScores.*)',
+      '_observeCopyScoreRulesChange(_labelConfig.copy_scores)',
+      '_observeCopyScoreRulesChangeInUi(_copyScoreRules.*)',
     ],
 
     _observeFunctionDescriptorChange(negativeBlocks, maxVoteRequired) {
@@ -100,34 +100,34 @@
       return labels[this.labelName] || {};
     },
 
-    _observeCopyScoresChange() {
-      if (this._updatingCopyScores) { return; }
-      this._updatingCopyScores = true;
+    _observeCopyScoreRulesChange() {
+      if (this._updatingCopyScoreRules) { return; }
+      this._updatingCopyScoreRules = true;
 
       for (let key of COPY_SCORES) {
-        this.set(['_copyScores', key], false);
+        this.set(['_copyScoreRules', key], false);
       }
       for (let value of this._labelConfig.copy_scores) {
-        this.set(['_copyScores', value], true);
+        this.set(['_copyScoreRules', value], true);
       }
 
-      this._updatingCopyScores = false;
+      this._updatingCopyScoreRules = false;
     },
 
-    _observeCopyScoresChangeInUi() {
-      if (this._updatingCopyScores) { return; }
-      this._updatingCopyScores = true;
+    _observeCopyScoreRulesChangeInUi() {
+      if (this._updatingCopyScoreRules) { return; }
+      this._updatingCopyScoreRules = true;
 
 
-      let newCopyScores = [];
-      for (let key in this._copyScores) {
-        if (this._copyScores[key]) {
-          newCopyScores.push(key);
+      let newCopyScoreRules = [];
+      for (let key in this._copyScoreRules) {
+        if (this._copyScoreRules[key]) {
+          newCopyScoreRules.push(key);
         }
       }
-      this.set('_labelConfig.copy_scores', newCopyScores);
+      this.set('_labelConfig.copy_scores', newCopyScoreRules);
 
-      this._updatingCopyScores = false;
+      this._updatingCopyScoreRules = false;
     },
   });
 })();

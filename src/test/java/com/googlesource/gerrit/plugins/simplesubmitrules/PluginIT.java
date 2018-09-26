@@ -160,6 +160,27 @@ public class PluginIT extends LightweightPluginDaemonTest {
     assertThat(response.labels.get("Code-Review").ignoreSelfApproval).isTrue();
   }
 
+  @Test
+  public void copyScoreRulesApiFieldIsBackwardsCompatible() throws Exception {
+    LabelDefinition codeReviewNoSelfApproval =
+        new LabelDefinition("MaxNoBlock", true, ImmutableSet.of("copyAllScoresIfNoChange"));
+    codeReviewNoSelfApproval.copyScores = codeReviewNoSelfApproval.copyScoreRules;
+    // Use only deprecated API field, set the new one to NULL
+    codeReviewNoSelfApproval.copyScoreRules = null;
+
+    SubmitConfig config =
+        new SubmitConfig(ImmutableMap.of("Code-Review", codeReviewNoSelfApproval), null);
+    postConfig(project, config);
+
+    String currentConfig = adminRestSession.get(endpointUrl(project)).getEntityContent();
+    SubmitConfig parsedConfig = newGson().fromJson(currentConfig, SubmitConfig.class);
+    assertThat(parsedConfig.labels.keySet()).containsExactly("Code-Review");
+
+    LabelDefinition result = parsedConfig.labels.get("Code-Review");
+    assertThat(result.copyScoreRules).isEqualTo(result.copyScores);
+    assertThat(result.copyScoreRules).isEqualTo(codeReviewNoSelfApproval.copyScores);
+  }
+
   private SubmitConfig postConfig(Project.NameKey project, SubmitConfig config) throws Exception {
     RawInput rawInput =
         RawInputUtil.create(newGson().toJson(config).getBytes(Charsets.UTF_8), JSON_TYPE);
