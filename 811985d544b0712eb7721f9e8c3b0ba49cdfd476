@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33f92f60_7b987625",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigTranslator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1003935
+      },
+      "writtenOn": "2018-09-26T13:08:07Z",
+      "side": 1,
+      "message": "Doesn\u0027t this method have any caller that needs to be adapted to this change?",
+      "revId": "811985d544b0712eb7721f9e8c3b0ba49cdfd476",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
