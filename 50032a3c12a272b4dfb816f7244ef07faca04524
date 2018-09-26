@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "362ae8b0_b63d1891",
+        "filename": "src/main/resources/Documentation/about.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003935
+      },
+      "writtenOn": "2018-09-26T11:43:34Z",
+      "side": 0,
+      "message": "Funny that it was already named \"CopyScoreRule\" here.",
+      "range": {
+        "startLine": 78,
+        "startChar": 17,
+        "endLine": 78,
+        "endChar": 30
+      },
+      "revId": "50032a3c12a272b4dfb816f7244ef07faca04524",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
