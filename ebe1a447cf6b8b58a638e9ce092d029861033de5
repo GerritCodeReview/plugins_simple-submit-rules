@@ -46,6 +46,30 @@
       "revId": "ebe1a447cf6b8b58a638e9ce092d029861033de5",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7201da7_ecde9548",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigTranslator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003935
+      },
+      "writtenOn": "2018-09-26T09:56:36Z",
+      "side": 1,
+      "message": "Too bad, it\u0027s really a confusing name :(\nCould we deprecate this API, and add a properly named one next to it?\nAt least at the moment we would not need to migrate any existing config settings, would we?",
+      "parentUuid": "cf3ec028_7a7ffe65",
+      "range": {
+        "startLine": 84,
+        "startChar": 37,
+        "endLine": 84,
+        "endChar": 48
+      },
+      "revId": "ebe1a447cf6b8b58a638e9ce092d029861033de5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
