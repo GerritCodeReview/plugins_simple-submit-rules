@@ -70,9 +70,9 @@ public class ConfigTranslatorTest {
     LabelDefinition labelDefinition = new LabelDefinition();
 
     functionToSet.accept(label, false);
-    ConfigTranslator.extractLabelCopyScores(label, labelDefinition);
+    ConfigTranslator.extractLabelCopyScoreRules(label, labelDefinition);
 
-    assertThat(labelDefinition.copyScores)
+    assertThat(labelDefinition.copyScoreRules)
         .named("[case %s:false]", copyScoreName)
         .doesNotContain(copyScoreName);
   }
@@ -84,9 +84,9 @@ public class ConfigTranslatorTest {
     LabelDefinition labelDefinition = new LabelDefinition();
 
     functionToSet.accept(label, true);
-    ConfigTranslator.extractLabelCopyScores(label, labelDefinition);
+    ConfigTranslator.extractLabelCopyScoreRules(label, labelDefinition);
 
-    assertThat(labelDefinition.copyScores)
+    assertThat(labelDefinition.copyScoreRules)
         .named("[case %s:true]", copyScoreName)
         .contains(copyScoreName);
   }
@@ -95,7 +95,7 @@ public class ConfigTranslatorTest {
       String copyScoreName, Predicate<LabelType> functionToCheck) {
     LabelType label = LabelType.withDefaultValues("Verified");
 
-    ConfigTranslator.applyCopyScoresTo(ImmutableList.of(copyScoreName), label);
+    ConfigTranslator.applyCopyScoreRulesTo(ImmutableList.of(copyScoreName), label);
     assertThat(functionToCheck.test(label)).named("[case %s:true]", copyScoreName).isTrue();
   }
 
@@ -103,7 +103,7 @@ public class ConfigTranslatorTest {
       String copyScoreName, Predicate<LabelType> functionToCheck) {
     LabelType label = LabelType.withDefaultValues("Verified");
 
-    ConfigTranslator.applyCopyScoresTo(ImmutableList.of(), label);
+    ConfigTranslator.applyCopyScoreRulesTo(ImmutableList.of(), label);
     assertThat(functionToCheck.test(label)).named("[case %s:false]", copyScoreName).isFalse();
   }
 }

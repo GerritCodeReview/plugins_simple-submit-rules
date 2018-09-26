@@ -23,14 +23,16 @@ import java.util.Set;
 public class LabelDefinition {
   public String function;
   public Boolean ignoreSelfApproval;
-  public Set<String> copyScores;
+  public Set<String> copyScoreRules;
+  @Deprecated public Set<String> copyScores;
 
   public LabelDefinition() {}
 
-  public LabelDefinition(String function, Boolean ignoreSelfApproval, Set<String> copyScores) {
+  public LabelDefinition(String function, Boolean ignoreSelfApproval, Set<String> copyScoreRules) {
     this.function = function;
     this.ignoreSelfApproval = ignoreSelfApproval;
-    this.copyScores = copyScores;
+    this.copyScoreRules = copyScoreRules;
+    this.copyScores = copyScoreRules;
   }
 
   public Optional<LabelFunction> getFunction() {
@@ -39,7 +41,7 @@ public class LabelDefinition {
 
   @Override
   public int hashCode() {
-    return Objects.hash(function, ignoreSelfApproval, copyScores);
+    return Objects.hash(function, ignoreSelfApproval, copyScores, copyScoreRules);
   }
 
   @Override
@@ -50,7 +52,8 @@ public class LabelDefinition {
     LabelDefinition other = (LabelDefinition) o;
     return Objects.equals(function, other.function)
         && Objects.equals(ignoreSelfApproval, other.ignoreSelfApproval)
-        && Objects.equals(copyScores, other.copyScores);
+        && Objects.equals(copyScores, other.copyScores)
+        && Objects.equals(copyScoreRules, other.copyScoreRules);
   }
 
   @Override
@@ -59,6 +62,7 @@ public class LabelDefinition {
         .add("function", function)
         .add("ignoreSelfApproval", ignoreSelfApproval)
         .add("copyScores", copyScores)
+        .add("copyScoreRules", copyScoreRules)
         .toString();
   }
 }

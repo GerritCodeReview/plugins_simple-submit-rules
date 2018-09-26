@@ -14,7 +14,7 @@ possible. That is, children projects can't use weaker options that their parents
 The REST API provides a view of the configuration including inheritance.
 The PUT method only changes the current project's configuration.
 
-The Copy Scores are handled by Core Gerrit.
+The Copy Score Rules are handled by Core Gerrit.
 
 ## The REST API
 This plugin exposes a REST API to configure the labels and simple rules. It is available via the
@@ -75,7 +75,7 @@ submitted.
 {
   "function": LabelFunction,
   "ignore_self_approval": boolean,
-  "copy_scores": CopyScoreRule[]
+  "copy_score_rules": CopyScoreRule[]
 }
 ```
 

@@ -47,44 +47,47 @@ public final class ConfigTranslator {
     this.pluginName = pluginName;
   }
 
-  static void extractLabelCopyScores(LabelType labelType, LabelDefinition labelDefinition) {
-    labelDefinition.copyScores = new HashSet<>();
+  static void extractLabelCopyScoreRules(LabelType labelType, LabelDefinition labelDefinition) {
+    labelDefinition.copyScoreRules = new HashSet<>();
     if (labelType.isCopyMinScore()) {
-      labelDefinition.copyScores.add(ProjectConfig.KEY_COPY_MIN_SCORE);
+      labelDefinition.copyScoreRules.add(ProjectConfig.KEY_COPY_MIN_SCORE);
     }
     if (labelType.isCopyMaxScore()) {
-      labelDefinition.copyScores.add(ProjectConfig.KEY_COPY_MAX_SCORE);
+      labelDefinition.copyScoreRules.add(ProjectConfig.KEY_COPY_MAX_SCORE);
     }
     if (labelType.isCopyAllScoresIfNoChange()) {
-      labelDefinition.copyScores.add(ProjectConfig.KEY_COPY_ALL_SCORES_IF_NO_CHANGE);
+      labelDefinition.copyScoreRules.add(ProjectConfig.KEY_COPY_ALL_SCORES_IF_NO_CHANGE);
     }
     if (labelType.isCopyAllScoresIfNoCodeChange()) {
-      labelDefinition.copyScores.add(ProjectConfig.KEY_COPY_ALL_SCORES_IF_NO_CODE_CHANGE);
+      labelDefinition.copyScoreRules.add(ProjectConfig.KEY_COPY_ALL_SCORES_IF_NO_CODE_CHANGE);
     }
     if (labelType.isCopyAllScoresOnMergeFirstParentUpdate()) {
-      labelDefinition.copyScores.add(
+      labelDefinition.copyScoreRules.add(
           ProjectConfig.KEY_COPY_ALL_SCORES_ON_MERGE_FIRST_PARENT_UPDATE);
     }
     if (labelType.isCopyAllScoresOnTrivialRebase()) {
-      labelDefinition.copyScores.add(ProjectConfig.KEY_COPY_ALL_SCORES_ON_TRIVIAL_REBASE);
+      labelDefinition.copyScoreRules.add(ProjectConfig.KEY_COPY_ALL_SCORES_ON_TRIVIAL_REBASE);
     }
+    // TODO(hiesel) Remove once caller know of the new name
+    labelDefinition.copyScores = labelDefinition.copyScoreRules;
   }
 
-  static void applyCopyScoresTo(@Nullable Collection<String> copyScores, LabelType labelType) {
-    if (copyScores == null) {
+  static void applyCopyScoreRulesTo(
+      @Nullable Collection<String> copyScoreRules, LabelType labelType) {
+    if (copyScoreRules == null) {
       return;
     }
 
-    labelType.setCopyMinScore(copyScores.contains(ProjectConfig.KEY_COPY_MIN_SCORE));
-    labelType.setCopyMaxScore(copyScores.contains(ProjectConfig.KEY_COPY_MAX_SCORE));
+    labelType.setCopyMinScore(copyScoreRules.contains(ProjectConfig.KEY_COPY_MIN_SCORE));
+    labelType.setCopyMaxScore(copyScoreRules.contains(ProjectConfig.KEY_COPY_MAX_SCORE));
     labelType.setCopyAllScoresIfNoChange(
-        copyScores.contains(ProjectConfig.KEY_COPY_ALL_SCORES_IF_NO_CHANGE));
+        copyScoreRules.contains(ProjectConfig.KEY_COPY_ALL_SCORES_IF_NO_CHANGE));
     labelType.setCopyAllScoresIfNoCodeChange(
-        copyScores.contains(ProjectConfig.KEY_COPY_ALL_SCORES_IF_NO_CODE_CHANGE));
+        copyScoreRules.contains(ProjectConfig.KEY_COPY_ALL_SCORES_IF_NO_CODE_CHANGE));
     labelType.setCopyAllScoresOnMergeFirstParentUpdate(
-        copyScores.contains(ProjectConfig.KEY_COPY_ALL_SCORES_ON_MERGE_FIRST_PARENT_UPDATE));
+        copyScoreRules.contains(ProjectConfig.KEY_COPY_ALL_SCORES_ON_MERGE_FIRST_PARENT_UPDATE));
     labelType.setCopyAllScoresOnTrivialRebase(
-        copyScores.contains(ProjectConfig.KEY_COPY_ALL_SCORES_ON_TRIVIAL_REBASE));
+        copyScoreRules.contains(ProjectConfig.KEY_COPY_ALL_SCORES_ON_TRIVIAL_REBASE));
   }
 
   SubmitConfig convertFrom(ProjectState projectState) {
@@ -159,7 +162,10 @@ public final class ConfigTranslator {
         }
         labelType.setFunction(function);
       }
-      applyCopyScoresTo(definition.copyScores, labelType);
+      // TODO(hiesel): Remove fallback to copyScores
+      applyCopyScoreRulesTo(
+          definition.copyScoreRules != null ? definition.copyScoreRules : definition.copyScores,
+          labelType);
     }
   }
 
@@ -172,7 +178,7 @@ public final class ConfigTranslator {
     config.labels.put(labelType.getName(), labelDefinition);
 
     labelDefinition.function = labelType.getFunction().getFunctionName();
-    extractLabelCopyScores(labelType, labelDefinition);
+    extractLabelCopyScoreRules(labelType, labelDefinition);
     labelDefinition.ignoreSelfApproval = labelType.ignoreSelfApproval();
   }
 
