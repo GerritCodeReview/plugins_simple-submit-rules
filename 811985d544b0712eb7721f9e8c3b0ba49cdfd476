@@ -34,6 +34,24 @@
       "revId": "811985d544b0712eb7721f9e8c3b0ba49cdfd476",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2a3c39b_2d4c01e3",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigTranslator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1003935
+      },
+      "writtenOn": "2018-09-26T13:16:35Z",
+      "side": 1,
+      "message": "ups, missed that call in ConfigServlet.",
+      "parentUuid": "22e097a2_4a7b64d1",
+      "revId": "811985d544b0712eb7721f9e8c3b0ba49cdfd476",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
