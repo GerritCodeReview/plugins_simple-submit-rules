@@ -1,4 +1,39 @@
 {
   "pushCert": "certificate version 0.1\npusher Dave Borowitz \u003cdborowitz@google.com\u003e 1541463800 -0800\nnonce ADWBXRBvOi4jk9LVcu4UlpoV/Mdk9kfHRyZex7EWSBWgybLhHAzf75zBS+LemMBfcFHBJJv0qW+M\n\n0000000000000000000000000000000000000000 8315861b55d46e2bda709d81cc6af3760b2343a4 refs/for/master%r\u003dhiesel@google.com\n-----BEGIN PGP SIGNATURE-----\n\niQJJBAABCgAzFiEEpPm/sOxWgSqG5grhX9fFmpoSiIwFAlvg3vgVHGRib3Jvd2l0\nekBnb29nbGUuY29tAAoJEF/XxZqaEoiMVzUQAM/ADII/0FWqTMhZFVlYMEipcgcY\nBoJ+hzjM5eRXQbLmeHUfbOP0cxMpk9s4R72vkHkzZZG5H0n4z1YICGRry+w0PZjo\nevyUJ2CnXBLdcwEjvK3Xm6ILkvmxCZXXqguIGkpOMARTNglL/uiwu+rTM//ZToe8\nQthRwBg+5XzjxX8jk5T4lJEyLm2SWZ63hdQA+TG3xlLnh+RxlFJl3u+8OFsEsU5U\nsfRRllp9M2JgaBpFWSlgB23gzVftBXtGNhMrexBu3a7zpZcCU2xlyYyg6W7EVB3y\n5/uu6fjo4rS3YD7Lgw9cJ2uc19Q9jSqS541ByK2+ZPVy/PJ7fXLogpW1PEpJKm4R\ndJ3d/P+Zkd5bZ2izfMKebbSJsqBVsWRcwB++bO9HgYt97KbZu3wMP5+MlvDcb+I8\nIqRA4OkA5lZzxvP0RUBzg+TBLHwk1hY8YqEndfqsibdmDwRd2Mj+P8/y35NLpqPG\n6Tre2C+tlMoOqfmSQ6BSy82TOCM9ztKjf+bQcyS48BZzumWWWgk+34JwsNn38UT7\n9zTkrq0T6+Z7ur6TDFTp1zeYeuWnAhobvV0d7SlZ7I4YijacgQcBmGQHUW28Ndj1\nQ6MJr7swZkugMU+uS3eYe4TNblsMGugdtxnhHd+wMn61nGLXhQ5qKdmhZDlxuCeR\nLYgPIWz/JMDfxwll\n\u003d9xLH\n-----END PGP SIGNATURE-----\n",
-  "comments": []
+  "comments": [
+    {
+      "key": {
+        "uuid": "011b0934_481a55f2",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigServlet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1011123
+      },
+      "writtenOn": "2018-11-06T00:29:15Z",
+      "side": 1,
+      "message": "Does this need to be explicitly imported, rather than referencing as MetaDataUpdate.User as it was on the left?",
+      "revId": "8315861b55d46e2bda709d81cc6af3760b2343a4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc24ccd2_307b60a8",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigServlet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1011123
+      },
+      "writtenOn": "2018-11-06T00:29:15Z",
+      "side": 1,
+      "message": "Likewise, why not just import Projectconfig (the previous line) and then refer to ProjectConfig.Factory explicitly below?",
+      "revId": "8315861b55d46e2bda709d81cc6af3760b2343a4",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
 }
