@@ -21,11 +21,13 @@ import com.google.gerrit.extensions.restapi.RestReadView;
 import com.google.gerrit.reviewdb.client.Project;
 import com.google.gerrit.server.IdentifiedUser;
 import com.google.gerrit.server.git.meta.MetaDataUpdate;
+import com.google.gerrit.server.git.meta.MetaDataUpdate.User;
 import com.google.gerrit.server.permissions.PermissionBackend;
 import com.google.gerrit.server.permissions.PermissionBackendException;
 import com.google.gerrit.server.permissions.ProjectPermission;
 import com.google.gerrit.server.project.ProjectCache;
 import com.google.gerrit.server.project.ProjectConfig;
+import com.google.gerrit.server.project.ProjectConfig.Factory;
 import com.google.gerrit.server.project.ProjectResource;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -38,6 +40,7 @@ import org.eclipse.jgit.errors.ConfigInvalidException;
 public class ConfigServlet
     implements RestReadView<ProjectResource>, RestModifyView<ProjectResource, SubmitConfig> {
   private final ProjectCache projectCache;
+  private final ProjectConfig.Factory projectConfigFactory;
   private final PermissionBackend permissionBackend;
   private final MetaDataUpdate.User metaDataUpdateFactory;
   private final ConfigTranslator configTranslator;
@@ -46,9 +49,11 @@ public class ConfigServlet
   ConfigServlet(
       ProjectCache projectCache,
       PermissionBackend permissionBackend,
-      MetaDataUpdate.User metaDataUpdateFactory,
-      ConfigTranslator configTranslator) {
+      User metaDataUpdateFactory,
+      ConfigTranslator configTranslator,
+      ProjectConfig.Factory projectConfigFactory) {
     this.projectCache = projectCache;
+    this.projectConfigFactory = projectConfigFactory;
     this.permissionBackend = permissionBackend;
     this.metaDataUpdateFactory = metaDataUpdateFactory;
     this.configTranslator = configTranslator;
@@ -76,7 +81,7 @@ public class ConfigServlet
 
     IdentifiedUser user = resource.getUser().asIdentifiedUser();
     try (MetaDataUpdate md = metaDataUpdateFactory.create(projectName, user)) {
-      ProjectConfig projectConfig = ProjectConfig.read(md);
+      ProjectConfig projectConfig = projectConfigFactory.read(md);
       configTranslator.applyTo(inConfig, projectConfig);
       projectConfig.commit(md);
       projectCache.evict(projectName);
