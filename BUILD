@@ -28,21 +28,22 @@ junit_tests(
 
 genrule2(
     name = "ssr-static",
-    srcs = [":ssr"],
+    srcs = [":simple-submit-rules_ui"],
     outs = ["ssr-static.jar"],
     cmd = " && ".join([
         "mkdir $$TMP/static",
-        "cp -rp $(locations :ssr) $$TMP/static",
+        "cp -rp $(locations :simple-submit-rules_ui) $$TMP/static",
         "cd $$TMP",
         "zip -Drq $$ROOT/$@ -g .",
     ]),
 )
 
 polygerrit_plugin(
-    name = "ssr",
+    name = "simple-submit-rules_ui",
     srcs = glob([
         "**/*.html",
         "**/*.js",
     ]),
+    plugin_name = "simple-submit-rules",
     app = "plugin.html",
 )
