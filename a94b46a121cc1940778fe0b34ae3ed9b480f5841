@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae9b6aa7_20518374",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/Module.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1011123
+      },
+      "writtenOn": "2018-11-16T17:00:43Z",
+      "side": 1,
+      "message": "Wrap this line?",
+      "revId": "a94b46a121cc1940778fe0b34ae3ed9b480f5841",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
