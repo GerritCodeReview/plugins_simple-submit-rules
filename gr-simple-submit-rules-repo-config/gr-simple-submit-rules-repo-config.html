@@ -30,9 +30,9 @@ limitations under the License.
 
       <fieldset id="unresolved_comments">
         <section>
-          <span class="title">Allow submission with unresolved comments</span>
+          <span class="title">Block submission if change has unresolved comments</span>
           <span class="value">
-            <gr-select id="allowUnresolvedComments"
+            <gr-select id="blockOnUnresolvedComments"
                 bind-value="{{_repoConfig.comments.block_if_unresolved_comments}}">
               <select disabled$="[[_readOnly]]">
                 <option value="true">Yes</option>
