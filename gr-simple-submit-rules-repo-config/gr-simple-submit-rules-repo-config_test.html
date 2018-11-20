@@ -155,7 +155,7 @@ limitations under the License.
 
     test('unresolved comment sets the repoConfig value (true)', done => {
       unresolvedCommentsEl.value = 'true';
-      element.$$('#allowUnresolvedComments').dispatchEvent(new Event('change'));
+      element.$$('#blockOnUnresolvedComments').dispatchEvent(new Event('change'));
 
       flush(function () {
         assert.equal(element._repoConfig.comments.block_if_unresolved_comments, 'true');
@@ -165,7 +165,7 @@ limitations under the License.
 
     test('unresolved comment sets the repoConfig value (false)', done => {
       unresolvedCommentsEl.value = 'false';
-      element.$$('#allowUnresolvedComments').dispatchEvent(new Event('change'));
+      element.$$('#blockOnUnresolvedComments').dispatchEvent(new Event('change'));
 
       flush(function () {
         assert.equal(element._repoConfig.comments.block_if_unresolved_comments, 'false');
