@@ -52,6 +52,24 @@
       "revId": "a94b46a121cc1940778fe0b34ae3ed9b480f5841",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "249ecdff_031b285c",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/Module.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2018-11-22T10:17:34Z",
+      "side": 1,
+      "message": "I tried again and it formatted it correctly, so I think I was the problem :)\n\nhttps://gerrit-review.googlesource.com/c/plugins/simple-submit-rules/+/205471 Reformat with gjf",
+      "parentUuid": "152acf74_12a429ec",
+      "revId": "a94b46a121cc1940778fe0b34ae3ed9b480f5841",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
