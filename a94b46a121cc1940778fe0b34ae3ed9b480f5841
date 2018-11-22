@@ -34,6 +34,24 @@
       "revId": "a94b46a121cc1940778fe0b34ae3ed9b480f5841",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "152acf74_12a429ec",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/Module.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1011123
+      },
+      "writtenOn": "2018-11-22T05:24:06Z",
+      "side": 1,
+      "message": "I thought the max line length enforced by gjf was 100 columns.  I have my diff width set to 100 and this line extends beyond it by several columns.",
+      "parentUuid": "24225ad3_0fdad82a",
+      "revId": "a94b46a121cc1940778fe0b34ae3ed9b480f5841",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
