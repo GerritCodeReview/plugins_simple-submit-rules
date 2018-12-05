@@ -15,12 +15,10 @@
 package com.googlesource.gerrit.plugins.simplesubmitrules.api;
 
 import com.google.common.base.MoreObjects;
-import com.google.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@Singleton
 public class SubmitConfig {
   public Map<String, LabelDefinition> labels;
   public CommentsRules comments;
