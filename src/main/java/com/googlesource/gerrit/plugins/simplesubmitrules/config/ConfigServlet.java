@@ -28,6 +28,7 @@ import com.google.gerrit.server.project.ProjectCache;
 import com.google.gerrit.server.project.ProjectConfig;
 import com.google.gerrit.server.project.ProjectResource;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.simplesubmitrules.api.SubmitConfig;
 import java.io.IOException;
@@ -40,14 +41,14 @@ public class ConfigServlet
   private final ProjectCache projectCache;
   private final ProjectConfig.Factory projectConfigFactory;
   private final PermissionBackend permissionBackend;
-  private final MetaDataUpdate.User metaDataUpdateFactory;
+  private final Provider<MetaDataUpdate.User> metaDataUpdateFactory;
   private final ConfigTranslator configTranslator;
 
   @Inject
   ConfigServlet(
       ProjectCache projectCache,
       PermissionBackend permissionBackend,
-      MetaDataUpdate.User metaDataUpdateFactory,
+      Provider<MetaDataUpdate.User> metaDataUpdateFactory,
       ConfigTranslator configTranslator,
       ProjectConfig.Factory projectConfigFactory) {
     this.projectCache = projectCache;
@@ -78,7 +79,7 @@ public class ConfigServlet
         .check(ProjectPermission.WRITE_CONFIG);
 
     IdentifiedUser user = resource.getUser().asIdentifiedUser();
-    try (MetaDataUpdate md = metaDataUpdateFactory.create(projectName, user)) {
+    try (MetaDataUpdate md = metaDataUpdateFactory.get().create(projectName, user)) {
       ProjectConfig projectConfig = projectConfigFactory.read(md);
       configTranslator.applyTo(inConfig, projectConfig);
       projectConfig.commit(md);
