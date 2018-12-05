@@ -76,8 +76,6 @@ public final class ConfigTranslator {
     if (labelType.isCopyAllScoresOnTrivialRebase()) {
       labelDefinition.copyScoreRules.add(ProjectConfig.KEY_COPY_ALL_SCORES_ON_TRIVIAL_REBASE);
     }
-    // TODO(hiesel) Remove once caller know of the new name
-    labelDefinition.copyScores = labelDefinition.copyScoreRules;
   }
 
   static void applyCopyScoreRulesTo(
@@ -178,14 +176,11 @@ public final class ConfigTranslator {
         labelType.setFunction(function);
       }
 
-      // TODO(hiesel): Remove fallback to copyScores
-      Set<String> copyScoreRules =
-          definition.copyScoreRules != null ? definition.copyScoreRules : definition.copyScores;
-      if (copyScoreRules != null) {
+      if (definition.copyScoreRules != null) {
         Set<String> disallowedCopyScoreRules =
             ImmutableSet.copyOf(
                 hostPluginConfig.getStringList("disallowedCopyScoreRules-" + label));
-        applyCopyScoreRulesTo(copyScoreRules, disallowedCopyScoreRules, labelType);
+        applyCopyScoreRulesTo(definition.copyScoreRules, disallowedCopyScoreRules, labelType);
       }
     }
   }
