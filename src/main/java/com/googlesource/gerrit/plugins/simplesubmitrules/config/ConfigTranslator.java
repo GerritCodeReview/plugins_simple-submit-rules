@@ -143,10 +143,7 @@ public final class ConfigTranslator {
         // labels to be able to modify it locally.
         Map<String, LabelType> copiedLabelTypes = projectConfig.getLabelSections();
         ProjectState projectState = projectCache.checkedGet(projectConfig.getName());
-        projectState
-            .getLabelTypes()
-            .getLabelTypes()
-            .stream()
+        projectState.getLabelTypes().getLabelTypes().stream()
             .filter(l -> l.getName().equals(entry.getKey()))
             .filter(l -> l.canOverride())
             .forEach(l -> copiedLabelTypes.put(l.getName(), copyLabelType(l)));
