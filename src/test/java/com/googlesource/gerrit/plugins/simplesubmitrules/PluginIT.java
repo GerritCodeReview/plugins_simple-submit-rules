@@ -63,7 +63,7 @@ public class PluginIT extends LightweightPluginDaemonTest {
 
     // Create change as user
     TestRepository<InMemoryRepository> userTestRepo = cloneProject(project, user);
-    PushOneCommit push = pushFactory.create(user.getIdent(), userTestRepo);
+    PushOneCommit push = pushFactory.create(user.newIdent(), userTestRepo);
     PushOneCommit.Result r = push.to("refs/for/master");
 
     // Approve as admin
