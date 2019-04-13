@@ -44,6 +44,6 @@ polygerrit_plugin(
         "**/*.html",
         "**/*.js",
     ]),
-    plugin_name = "simple-submit-rules",
     app = "plugin.html",
+    plugin_name = "simple-submit-rules",
 )
