@@ -17,6 +17,7 @@ package com.googlesource.gerrit.plugins.simplesubmitrules.rules;
 import com.google.common.collect.ImmutableList;
 import com.google.gerrit.common.data.SubmitRecord;
 import com.google.gerrit.common.data.SubmitRequirement;
+import com.google.gerrit.exceptions.StorageException;
 import com.google.gerrit.extensions.annotations.PluginName;
 import com.google.gerrit.server.config.PluginConfig;
 import com.google.gerrit.server.config.PluginConfigFactory;
@@ -24,7 +25,6 @@ import com.google.gerrit.server.project.NoSuchProjectException;
 import com.google.gerrit.server.project.SubmitRuleOptions;
 import com.google.gerrit.server.query.change.ChangeData;
 import com.google.gerrit.server.rules.SubmitRule;
-import com.google.gwtorm.server.OrmException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesConfig;
@@ -73,7 +73,7 @@ public class NoUnresolvedCommentsRule implements SubmitRule {
     Integer unresolvedComments;
     try {
       unresolvedComments = cd.unresolvedCommentCount();
-    } catch (OrmException e) {
+    } catch (StorageException e) {
       log.error("Error when counting unresolved comments for change {}", cd.getId(), e);
 
       return error("Error when counting unresolved comments");
