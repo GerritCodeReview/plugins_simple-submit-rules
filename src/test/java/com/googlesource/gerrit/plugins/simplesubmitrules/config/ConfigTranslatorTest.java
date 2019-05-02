@@ -14,7 +14,7 @@
 
 package com.googlesource.gerrit.plugins.simplesubmitrules.config;
 
-import static com.google.common.truth.Truth.assertThat;
+import static com.google.common.truth.Truth.assertWithMessage;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.gerrit.common.data.LabelType;
@@ -87,8 +87,8 @@ public class ConfigTranslatorTest {
     functionToSet.accept(label, false);
     ConfigTranslator.extractLabelCopyScoreRules(label, labelDefinition);
 
-    assertThat(labelDefinition.copyScoreRules)
-        .named("[case %s:false]", copyScoreName)
+    assertWithMessage("[case %s:false]", copyScoreName)
+        .that(labelDefinition.copyScoreRules)
         .doesNotContain(copyScoreName);
   }
 
@@ -101,8 +101,8 @@ public class ConfigTranslatorTest {
     functionToSet.accept(label, true);
     ConfigTranslator.extractLabelCopyScoreRules(label, labelDefinition);
 
-    assertThat(labelDefinition.copyScoreRules)
-        .named("[case %s:true]", copyScoreName)
+    assertWithMessage("[case %s:true]", copyScoreName)
+        .that(labelDefinition.copyScoreRules)
         .contains(copyScoreName);
   }
 
@@ -112,7 +112,7 @@ public class ConfigTranslatorTest {
 
     ConfigTranslator.applyCopyScoreRulesTo(
         ImmutableSet.of(copyScoreName), ImmutableSet.of(), label);
-    assertThat(functionToCheck.test(label)).named("[case %s:true]", copyScoreName).isTrue();
+    assertWithMessage("[case %s:true]", copyScoreName).that(functionToCheck.test(label)).isTrue();
   }
 
   private static void checkLabelToGerritAbsent(
@@ -120,6 +120,6 @@ public class ConfigTranslatorTest {
     LabelType label = LabelType.withDefaultValues("Verified");
 
     ConfigTranslator.applyCopyScoreRulesTo(ImmutableSet.of(), ImmutableSet.of(), label);
-    assertThat(functionToCheck.test(label)).named("[case %s:false]", copyScoreName).isFalse();
+    assertWithMessage("[case %s:false]", copyScoreName).that(functionToCheck.test(label)).isFalse();
   }
 }
