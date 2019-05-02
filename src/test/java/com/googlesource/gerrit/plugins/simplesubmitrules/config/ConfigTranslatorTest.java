@@ -14,7 +14,9 @@
 
 package com.googlesource.gerrit.plugins.simplesubmitrules.config;
 
+import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
+import static com.google.gerrit.testing.GerritJUnit.assertThrows;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.gerrit.common.data.LabelType;
@@ -22,13 +24,9 @@ import com.google.gerrit.extensions.restapi.BadRequestException;
 import com.googlesource.gerrit.plugins.simplesubmitrules.api.LabelDefinition;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 public class ConfigTranslatorTest {
-  @Rule public ExpectedException exception = ExpectedException.none();
-
   @Test
   public void checkLabelTranslation() throws Exception {
     checkTranslation("copyMinScore", LabelType::isCopyMinScore, LabelType::setCopyMinScore);
@@ -57,12 +55,18 @@ public class ConfigTranslatorTest {
 
   @Test
   public void checkDisallowedCopyScoreThrowsBadRequest() throws Exception {
-    exception.expect(BadRequestException.class);
-    exception.expectMessage("copy score rules [copyAllScoresIfNoChange] are forbidden");
-    ConfigTranslator.applyCopyScoreRulesTo(
-        ImmutableSet.of("copyAllScoresIfNoChange", "copyAllScoresOnMergeFirstParentUpdate"),
-        ImmutableSet.of("copyAllScoresIfNoChange"),
-        LabelType.withDefaultValues("Verified"));
+    BadRequestException thrown =
+        assertThrows(
+            BadRequestException.class,
+            () ->
+                ConfigTranslator.applyCopyScoreRulesTo(
+                    ImmutableSet.of(
+                        "copyAllScoresIfNoChange", "copyAllScoresOnMergeFirstParentUpdate"),
+                    ImmutableSet.of("copyAllScoresIfNoChange"),
+                    LabelType.withDefaultValues("Verified")));
+    assertThat(thrown)
+        .hasMessageThat()
+        .contains("copy score rules [copyAllScoresIfNoChange] are forbidden");
   }
 
   /** Helper method to check that conversion from/to Gerrit works for both true and false values */
