@@ -15,7 +15,7 @@
 package com.googlesource.gerrit.plugins.simplesubmitrules.config;
 
 import static com.google.common.truth.Truth.assertThat;
-import static com.google.gerrit.server.project.testing.Util.value;
+import static com.google.gerrit.server.project.testing.TestLabels.value;
 
 import com.google.common.base.Charsets;
 import com.google.gerrit.acceptance.GerritConfig;
