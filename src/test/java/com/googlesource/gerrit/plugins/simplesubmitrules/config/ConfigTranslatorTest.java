@@ -20,8 +20,11 @@ import static com.google.gerrit.testing.GerritJUnit.assertThrows;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.gerrit.common.data.LabelType;
+import com.google.gerrit.common.data.LabelValue;
 import com.google.gerrit.extensions.restapi.BadRequestException;
 import com.googlesource.gerrit.plugins.simplesubmitrules.api.LabelDefinition;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 import org.junit.Test;
@@ -63,7 +66,7 @@ public class ConfigTranslatorTest {
                     ImmutableSet.of(
                         "copyAllScoresIfNoChange", "copyAllScoresOnMergeFirstParentUpdate"),
                     ImmutableSet.of("copyAllScoresIfNoChange"),
-                    LabelType.withDefaultValues("Verified")));
+                    labelWithDefaultValues("Verified")));
     assertThat(thrown)
         .hasMessageThat()
         .contains("copy score rules [copyAllScoresIfNoChange] are forbidden");
@@ -85,7 +88,7 @@ public class ConfigTranslatorTest {
   private static void checkLabelFromGerritPresent(
       String copyScoreName, BiConsumer<LabelType, Boolean> functionToSet) {
 
-    LabelType label = LabelType.withDefaultValues("Verified");
+    LabelType label = labelWithDefaultValues("Verified");
     LabelDefinition labelDefinition = new LabelDefinition();
 
     functionToSet.accept(label, false);
@@ -99,7 +102,7 @@ public class ConfigTranslatorTest {
   private static void checkLabelFromGerritAbsent(
       String copyScoreName, BiConsumer<LabelType, Boolean> functionToSet) {
 
-    LabelType label = LabelType.withDefaultValues("Verified");
+    LabelType label = labelWithDefaultValues("Verified");
     LabelDefinition labelDefinition = new LabelDefinition();
 
     functionToSet.accept(label, true);
@@ -112,7 +115,7 @@ public class ConfigTranslatorTest {
 
   private static void checkLabelToGerritPresent(
       String copyScoreName, Predicate<LabelType> functionToCheck) throws Exception {
-    LabelType label = LabelType.withDefaultValues("Verified");
+    LabelType label = labelWithDefaultValues("Verified");
 
     ConfigTranslator.applyCopyScoreRulesTo(
         ImmutableSet.of(copyScoreName), ImmutableSet.of(), label);
@@ -121,9 +124,16 @@ public class ConfigTranslatorTest {
 
   private static void checkLabelToGerritAbsent(
       String copyScoreName, Predicate<LabelType> functionToCheck) throws Exception {
-    LabelType label = LabelType.withDefaultValues("Verified");
+    LabelType label = labelWithDefaultValues("Verified");
 
     ConfigTranslator.applyCopyScoreRulesTo(ImmutableSet.of(), ImmutableSet.of(), label);
     assertWithMessage("[case %s:false]", copyScoreName).that(functionToCheck.test(label)).isFalse();
+  }
+
+  private static LabelType labelWithDefaultValues(String name) {
+    List<LabelValue> values = new ArrayList<>(2);
+    values.add(LabelValue.create((short) 0, "Rejected"));
+    values.add(LabelValue.create((short) 1, "Approved"));
+    return new LabelType(name, values);
   }
 }
