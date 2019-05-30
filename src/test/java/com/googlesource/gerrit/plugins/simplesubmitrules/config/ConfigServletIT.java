@@ -24,8 +24,8 @@ import com.google.gerrit.acceptance.RestResponse;
 import com.google.gerrit.acceptance.TestPlugin;
 import com.google.gerrit.common.RawInputUtil;
 import com.google.gerrit.common.data.LabelFunction;
+import com.google.gerrit.entities.Project;
 import com.google.gerrit.extensions.restapi.RawInput;
-import com.google.gerrit.reviewdb.client.Project;
 import org.junit.Before;
 import org.junit.Test;
 
