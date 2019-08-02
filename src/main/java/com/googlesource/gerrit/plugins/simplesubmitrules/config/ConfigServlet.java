@@ -16,6 +16,7 @@ package com.googlesource.gerrit.plugins.simplesubmitrules.config;
 
 import com.google.gerrit.extensions.restapi.AuthException;
 import com.google.gerrit.extensions.restapi.BadRequestException;
+import com.google.gerrit.extensions.restapi.Response;
 import com.google.gerrit.extensions.restapi.RestModifyView;
 import com.google.gerrit.extensions.restapi.RestReadView;
 import com.google.gerrit.reviewdb.client.Project;
@@ -59,17 +60,18 @@ public class ConfigServlet
   }
 
   @Override
-  public Object apply(ProjectResource resource) throws AuthException, PermissionBackendException {
+  public Response<SubmitConfig> apply(ProjectResource resource)
+      throws AuthException, PermissionBackendException {
     permissionBackend
         .user(resource.getUser())
         .project(resource.getNameKey())
         .check(ProjectPermission.READ_CONFIG);
 
-    return configTranslator.convertFrom(resource.getProjectState());
+    return Response.ok(configTranslator.convertFrom(resource.getProjectState()));
   }
 
   @Override
-  public Object apply(ProjectResource resource, SubmitConfig inConfig)
+  public Response<SubmitConfig> apply(ProjectResource resource, SubmitConfig inConfig)
       throws PermissionBackendException, AuthException, BadRequestException, ConfigInvalidException,
           IOException {
     Project.NameKey projectName = resource.getNameKey();
@@ -86,6 +88,6 @@ public class ConfigServlet
       projectCache.evict(projectName);
     }
 
-    return configTranslator.convertFrom(projectCache.checkedGet(projectName));
+    return Response.ok(configTranslator.convertFrom(projectCache.checkedGet(projectName)));
   }
 }
