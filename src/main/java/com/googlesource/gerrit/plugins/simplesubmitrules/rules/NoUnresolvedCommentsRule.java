@@ -22,7 +22,6 @@ import com.google.gerrit.extensions.annotations.PluginName;
 import com.google.gerrit.server.config.PluginConfig;
 import com.google.gerrit.server.config.PluginConfigFactory;
 import com.google.gerrit.server.project.NoSuchProjectException;
-import com.google.gerrit.server.project.SubmitRuleOptions;
 import com.google.gerrit.server.query.change.ChangeData;
 import com.google.gerrit.server.rules.SubmitRule;
 import com.google.inject.Inject;
@@ -53,7 +52,7 @@ public class NoUnresolvedCommentsRule implements SubmitRule {
   }
 
   @Override
-  public Collection<SubmitRecord> evaluate(ChangeData cd, SubmitRuleOptions options) {
+  public Collection<SubmitRecord> evaluate(ChangeData cd) {
     PluginConfig config;
     try {
       config = pluginConfigFactory.getFromProjectConfig(cd.project(), pluginName);
