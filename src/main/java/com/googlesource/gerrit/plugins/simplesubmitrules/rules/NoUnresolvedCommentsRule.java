@@ -14,7 +14,6 @@
 
 package com.googlesource.gerrit.plugins.simplesubmitrules.rules;
 
-import com.google.common.collect.ImmutableList;
 import com.google.gerrit.common.data.SubmitRecord;
 import com.google.gerrit.common.data.SubmitRequirement;
 import com.google.gerrit.exceptions.StorageException;
@@ -27,8 +26,8 @@ import com.google.gerrit.server.rules.SubmitRule;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesConfig;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +51,7 @@ public class NoUnresolvedCommentsRule implements SubmitRule {
   }
 
   @Override
-  public Collection<SubmitRecord> evaluate(ChangeData cd) {
+  public Optional<SubmitRecord> evaluate(ChangeData cd) {
     PluginConfig config;
     try {
       config = pluginConfigFactory.getFromProjectConfig(cd.project(), pluginName);
@@ -66,7 +65,7 @@ public class NoUnresolvedCommentsRule implements SubmitRule {
         config.getBoolean(SimpleSubmitRulesConfig.KEY_BLOCK_IF_UNRESOLVED_COMMENTS, false);
 
     if (!ruleEnabled) {
-      return Collections.emptyList();
+      return Optional.empty();
     }
 
     Integer unresolvedComments;
@@ -85,13 +84,13 @@ public class NoUnresolvedCommentsRule implements SubmitRule {
             ? SubmitRecord.Status.NOT_READY
             : SubmitRecord.Status.OK;
 
-    return ImmutableList.of(sr);
+    return Optional.of(sr);
   }
 
-  private static Collection<SubmitRecord> error(String errorMessage) {
+  private static Optional<SubmitRecord> error(String errorMessage) {
     SubmitRecord sr = new SubmitRecord();
     sr.status = SubmitRecord.Status.RULE_ERROR;
     sr.errorMessage = errorMessage;
-    return ImmutableList.of(sr);
+    return Optional.of(sr);
   }
 }

@@ -27,7 +27,7 @@ import com.google.gerrit.extensions.api.changes.ReviewInput;
 import com.google.gerrit.extensions.client.Side;
 import com.google.gerrit.server.query.change.ChangeData;
 import com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesConfig;
-import java.util.Collection;
+import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -49,10 +49,10 @@ public class NoUnresolvedCommentsRuleIT extends LightweightPluginDaemonTest {
     comment.unresolved = true;
     PushOneCommit.Result r = createChangeWithComment(comment);
 
-    Collection<SubmitRecord> submitRecords = evaluate(r.getChange());
+    Optional<SubmitRecord> submitRecords = evaluate(r.getChange());
 
-    assertThat(submitRecords).hasSize(1);
-    SubmitRecord result = submitRecords.iterator().next();
+    assertThat(submitRecords.isPresent()).isTrue();
+    SubmitRecord result = submitRecords.get();
     assertThat(result.status).isEqualTo(SubmitRecord.Status.NOT_READY);
     assertThat(result.labels).isNull();
     assertThat(result.requirements).hasSize(1);
@@ -64,10 +64,10 @@ public class NoUnresolvedCommentsRuleIT extends LightweightPluginDaemonTest {
     comment.unresolved = false;
     PushOneCommit.Result r = createChangeWithComment(comment);
 
-    Collection<SubmitRecord> submitRecords = evaluate(r.getChange());
+    Optional<SubmitRecord> submitRecords = evaluate(r.getChange());
 
-    assertThat(submitRecords).hasSize(1);
-    SubmitRecord result = submitRecords.iterator().next();
+    assertThat(submitRecords.isPresent()).isTrue();
+    SubmitRecord result = submitRecords.get();
     assertThat(result.status).isEqualTo(SubmitRecord.Status.OK);
     assertThat(result.labels).isNull();
     assertThat(result.requirements).hasSize(1);
@@ -77,10 +77,10 @@ public class NoUnresolvedCommentsRuleIT extends LightweightPluginDaemonTest {
   public void doesNotBlockWithOnlyResolvedComments() throws Exception {
     PushOneCommit.Result change = createChange("refs/for/master");
 
-    Collection<SubmitRecord> submitRecords = evaluate(change.getChange());
+    Optional<SubmitRecord> submitRecords = evaluate(change.getChange());
 
-    assertThat(submitRecords).hasSize(1);
-    SubmitRecord result = submitRecords.iterator().next();
+    assertThat(submitRecords.isPresent()).isTrue();
+    SubmitRecord result = submitRecords.get();
     assertThat(result.status).isEqualTo(SubmitRecord.Status.OK);
     assertThat(result.labels).isNull();
     assertThat(result.requirements).hasSize(1);
@@ -95,8 +95,8 @@ public class NoUnresolvedCommentsRuleIT extends LightweightPluginDaemonTest {
 
     enableRule(false);
 
-    Collection<SubmitRecord> submitRecords = evaluate(r.getChange());
-    assertThat(submitRecords).isEmpty();
+    Optional<SubmitRecord> submitRecords = evaluate(r.getChange());
+    assertThat(submitRecords.isPresent()).isFalse();
   }
 
   private PushOneCommit.Result createChangeWithComment(ReviewInput.CommentInput comment)
@@ -118,7 +118,7 @@ public class NoUnresolvedCommentsRuleIT extends LightweightPluginDaemonTest {
     }
   }
 
-  private Collection<SubmitRecord> evaluate(ChangeData cd) {
+  private Optional<SubmitRecord> evaluate(ChangeData cd) {
     NoUnresolvedCommentsRule rule =
         plugin.getSysInjector().getInstance(NoUnresolvedCommentsRule.class);
 
