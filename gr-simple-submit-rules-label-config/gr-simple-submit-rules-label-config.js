@@ -64,7 +64,7 @@
     observers: [
       '_observeFunctionChange(_labelConfig.function)',
       '_observeFunctionDescriptorChange(_negativeBlocks, _maxVoteRequired)',
-      '_observeCopyScoreRulesChange(_labelConfig.copy_scores)',
+      '_observeCopyScoreRulesChange(_labelConfig.copy_score_rules)',
       '_observeCopyScoreRulesChangeInUi(_copyScoreRules.*)',
     ],
 
@@ -107,7 +107,7 @@
       for (let key of COPY_SCORES) {
         this.set(['_copyScoreRules', key], false);
       }
-      for (let value of this._labelConfig.copy_scores) {
+      for (let value of this._labelConfig.copy_score_rules) {
         this.set(['_copyScoreRules', value], true);
       }
 
@@ -125,7 +125,7 @@
           newCopyScoreRules.push(key);
         }
       }
-      this.set('_labelConfig.copy_scores', newCopyScoreRules);
+      this.set('_labelConfig.copy_score_rules', newCopyScoreRules);
 
       this._updatingCopyScoreRules = false;
     },
