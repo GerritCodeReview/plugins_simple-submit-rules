@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d954ac2_876f7beb",
+        "filename": "src/test/java/com/googlesource/gerrit/plugins/simplesubmitrules/rules/NoUnresolvedCommentsRuleIT.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003935
+      },
+      "writtenOn": "2019-08-14T07:59:03Z",
+      "side": 1,
+      "message": "Use Truth8 assertion.",
+      "revId": "d29180328ebb6c7addc2b7e51c4abad52852a426",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
