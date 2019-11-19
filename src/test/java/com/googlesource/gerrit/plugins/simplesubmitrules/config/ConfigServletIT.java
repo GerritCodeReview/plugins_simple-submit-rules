@@ -18,10 +18,10 @@ import static com.google.common.truth.Truth.assertThat;
 import static com.google.gerrit.server.project.testing.TestLabels.value;
 
 import com.google.common.base.Charsets;
-import com.google.gerrit.acceptance.GerritConfig;
 import com.google.gerrit.acceptance.LightweightPluginDaemonTest;
 import com.google.gerrit.acceptance.RestResponse;
 import com.google.gerrit.acceptance.TestPlugin;
+import com.google.gerrit.acceptance.config.GerritConfig;
 import com.google.gerrit.common.RawInputUtil;
 import com.google.gerrit.common.data.LabelFunction;
 import com.google.gerrit.entities.Project;
