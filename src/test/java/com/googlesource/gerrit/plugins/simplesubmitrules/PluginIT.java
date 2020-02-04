@@ -70,7 +70,7 @@ public class PluginIT extends LightweightPluginDaemonTest {
     approve(r.getChangeId());
 
     ReviewInput reviewInput = new ReviewInput();
-    ReviewInput.CommentInput c = new ReviewInput.CommentInput();
+    ReviewInput.HumanCommentInput c = new ReviewInput.HumanCommentInput();
     c.path = "a.txt";
     c.side = Side.REVISION;
     c.unresolved = true;

@@ -46,7 +46,7 @@ public class NoUnresolvedCommentsRuleIT extends LightweightPluginDaemonTest {
 
   @Test
   public void blocksWithUnresolvedComments() throws Exception {
-    ReviewInput.CommentInput comment = newFileComment();
+    ReviewInput.HumanCommentInput comment = newFileComment();
     comment.unresolved = true;
     PushOneCommit.Result r = createChangeWithComment(comment);
 
@@ -61,7 +61,7 @@ public class NoUnresolvedCommentsRuleIT extends LightweightPluginDaemonTest {
 
   @Test
   public void doesNotBlockWithNoComments() throws Exception {
-    ReviewInput.CommentInput comment = newFileComment();
+    ReviewInput.HumanCommentInput comment = newFileComment();
     comment.unresolved = false;
     PushOneCommit.Result r = createChangeWithComment(comment);
 
@@ -89,7 +89,7 @@ public class NoUnresolvedCommentsRuleIT extends LightweightPluginDaemonTest {
 
   @Test
   public void doesNothingByDefault() throws Exception {
-    ReviewInput.CommentInput comment = newFileComment();
+    ReviewInput.HumanCommentInput comment = newFileComment();
     comment.unresolved = true;
 
     PushOneCommit.Result r = createChangeWithComment(comment);
@@ -100,7 +100,7 @@ public class NoUnresolvedCommentsRuleIT extends LightweightPluginDaemonTest {
     assertThat(submitRecords).isEmpty();
   }
 
-  private PushOneCommit.Result createChangeWithComment(ReviewInput.CommentInput comment)
+  private PushOneCommit.Result createChangeWithComment(ReviewInput.HumanCommentInput comment)
       throws Exception {
     PushOneCommit.Result r = createChange("My change", FILENAME, "new content");
     ReviewInput reviewInput = new ReviewInput();
@@ -126,8 +126,8 @@ public class NoUnresolvedCommentsRuleIT extends LightweightPluginDaemonTest {
     return rule.evaluate(cd);
   }
 
-  private static ReviewInput.CommentInput newFileComment() {
-    ReviewInput.CommentInput c = new ReviewInput.CommentInput();
+  private static ReviewInput.HumanCommentInput newFileComment() {
+    ReviewInput.HumanCommentInput c = new ReviewInput.HumanCommentInput();
     c.path = FILENAME;
     c.side = Side.REVISION;
     c.message = "nit: double  space.";
