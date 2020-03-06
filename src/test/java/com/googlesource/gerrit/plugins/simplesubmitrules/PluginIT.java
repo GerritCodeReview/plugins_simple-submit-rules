@@ -141,7 +141,8 @@ public class PluginIT extends LightweightPluginDaemonTest {
     SubmitConfig config = new SubmitConfig(ImmutableMap.of("Code-Review", codeReview), null);
     postConfig(project, config);
 
-    LabelType localCR = projectCache.get(project).getConfig().getLabelSections().get("Code-Review");
+    LabelType localCR =
+        projectCache.get(project).get().getConfig().getLabelSections().get("Code-Review");
     assertThat(localCR.getFunction()).isEqualTo(LabelFunction.MAX_NO_BLOCK);
 
     // Check that the label has the same configs besides the function, which we changed
