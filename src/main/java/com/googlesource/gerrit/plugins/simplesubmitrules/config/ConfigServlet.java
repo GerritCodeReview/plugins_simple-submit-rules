@@ -14,6 +14,8 @@
 
 package com.googlesource.gerrit.plugins.simplesubmitrules.config;
 
+import static com.google.gerrit.server.project.ProjectCache.illegalState;
+
 import com.google.gerrit.entities.Project;
 import com.google.gerrit.extensions.restapi.AuthException;
 import com.google.gerrit.extensions.restapi.BadRequestException;
@@ -28,6 +30,7 @@ import com.google.gerrit.server.permissions.ProjectPermission;
 import com.google.gerrit.server.project.ProjectCache;
 import com.google.gerrit.server.project.ProjectConfig;
 import com.google.gerrit.server.project.ProjectResource;
+import com.google.gerrit.server.project.ProjectState;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
@@ -88,6 +91,8 @@ public class ConfigServlet
       projectCache.evict(projectName);
     }
 
-    return Response.ok(configTranslator.convertFrom(projectCache.checkedGet(projectName)));
+    ProjectState projectState =
+        projectCache.get(projectName).orElseThrow(illegalState(projectName));
+    return Response.ok(configTranslator.convertFrom(projectState));
   }
 }

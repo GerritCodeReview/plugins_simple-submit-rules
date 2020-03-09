@@ -14,6 +14,8 @@
 
 package com.googlesource.gerrit.plugins.simplesubmitrules.config;
 
+import static com.google.gerrit.server.project.ProjectCache.illegalState;
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
@@ -142,7 +144,10 @@ public final class ConfigTranslator {
         // The current project does not have this label. Try to copy it down from the inherited
         // labels to be able to modify it locally.
         Map<String, LabelType> copiedLabelTypes = projectConfig.getLabelSections();
-        ProjectState projectState = projectCache.checkedGet(projectConfig.getName());
+        ProjectState projectState =
+            projectCache
+                .get(projectConfig.getName())
+                .orElseThrow(illegalState(projectConfig.getName()));
         projectState.getLabelTypes().getLabelTypes().stream()
             .filter(l -> l.getName().equals(entry.getKey()))
             .filter(l -> l.canOverride())
