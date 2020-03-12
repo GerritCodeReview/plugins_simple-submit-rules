@@ -36,6 +36,7 @@ import com.google.gerrit.reviewdb.client.Project;
 import com.googlesource.gerrit.plugins.simplesubmitrules.api.CommentsRules;
 import com.googlesource.gerrit.plugins.simplesubmitrules.api.LabelDefinition;
 import com.googlesource.gerrit.plugins.simplesubmitrules.api.SubmitConfig;
+import java.util.List;
 import org.eclipse.jgit.internal.storage.dfs.InMemoryRepository;
 import org.eclipse.jgit.junit.TestRepository;
 import org.junit.Test;
@@ -80,13 +81,17 @@ public class PluginIT extends LightweightPluginDaemonTest {
 
     ChangeInfo changeInfo = gApi.changes().id(r.getChangeId()).get();
     assertThat(changeInfo.submittable).isFalse();
-    SubmitRequirementInfo noUnresolveComments =
+    SubmitRequirementInfo noUnresolvedComments =
         new SubmitRequirementInfo(
             "NOT_READY",
             "Resolve all comments",
             "unresolved_comments",
             ImmutableMap.<String, String>of());
-    assertThat(changeInfo.requirements).containsExactly(noUnresolveComments);
+    assertThat(changeInfo.requirements).containsExactly(noUnresolvedComments);
+
+    List<ChangeInfo> results = gApi.changes().query("status:open project:" + project.get()).get();
+    assertThat(results).hasSize(1);
+    assertThat(results.get(0).requirements).containsExactly(noUnresolvedComments);
   }
 
   @Test
@@ -109,6 +114,10 @@ public class PluginIT extends LightweightPluginDaemonTest {
             "non_uploader_approval",
             ImmutableMap.<String, String>of());
     assertThat(changeInfo.requirements).containsExactly(noSelfApproval);
+
+    List<ChangeInfo> results = gApi.changes().query("status:open project:" + project.get()).get();
+    assertThat(results).hasSize(1);
+    assertThat(results.get(0).requirements).containsExactly(noSelfApproval);
   }
 
   @Test
