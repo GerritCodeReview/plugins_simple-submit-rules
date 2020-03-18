@@ -81,11 +81,7 @@ public class PluginIT extends LightweightPluginDaemonTest {
     ChangeInfo changeInfo = gApi.changes().id(r.getChangeId()).get();
     assertThat(changeInfo.submittable).isFalse();
     SubmitRequirementInfo noUnresolveComments =
-        new SubmitRequirementInfo(
-            "NOT_READY",
-            "Resolve all comments",
-            "unresolved_comments",
-            ImmutableMap.<String, String>of());
+        new SubmitRequirementInfo("NOT_READY", "Resolve all comments", "unresolved_comments");
     assertThat(changeInfo.requirements).containsExactly(noUnresolveComments);
   }
 
@@ -104,10 +100,7 @@ public class PluginIT extends LightweightPluginDaemonTest {
     assertThat(changeInfo.submittable).isFalse();
     SubmitRequirementInfo noSelfApproval =
         new SubmitRequirementInfo(
-            "NOT_READY",
-            "Approval from non-uploader required",
-            "non_uploader_approval",
-            ImmutableMap.<String, String>of());
+            "NOT_READY", "Approval from non-uploader required", "non_uploader_approval");
     assertThat(changeInfo.requirements).containsExactly(noSelfApproval);
   }
 
