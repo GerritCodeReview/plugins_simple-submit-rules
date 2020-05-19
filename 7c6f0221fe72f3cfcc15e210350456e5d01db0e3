@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1814f30_7b2cc8c6",
+        "filename": "src/test/java/com/googlesource/gerrit/plugins/simplesubmitrules/PluginIT.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1026112
+      },
+      "writtenOn": "2020-05-19T06:49:08Z",
+      "side": 1,
+      "message": "Thanks for writing a test!\n\nShouldn\u0027t this rather be some generic test in code? In the end, the fact that a SR gets surfaced in query results is not special for simple-submit-rules, it\u0027s rather functionality that core Gerrit provides.",
+      "revId": "7c6f0221fe72f3cfcc15e210350456e5d01db0e3",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
