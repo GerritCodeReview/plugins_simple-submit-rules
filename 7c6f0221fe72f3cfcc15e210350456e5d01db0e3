@@ -16,6 +16,24 @@
       "revId": "7c6f0221fe72f3cfcc15e210350456e5d01db0e3",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e38811fc_8bcc614e",
+        "filename": "src/test/java/com/googlesource/gerrit/plugins/simplesubmitrules/PluginIT.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1011123
+      },
+      "writtenOn": "2020-05-19T06:56:23Z",
+      "side": 1,
+      "message": "I assume you meant \"in core\", and yes, that\u0027s true.  I can\u0027t remember the exact reason why I ended up putting it in here; I think it was something to do with some issue specifically related to submit requirements provided by plugins in the query result.",
+      "parentUuid": "f1814f30_7b2cc8c6",
+      "revId": "7c6f0221fe72f3cfcc15e210350456e5d01db0e3",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
     }
   ]
 }
