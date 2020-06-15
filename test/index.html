@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
 @license
 Copyright (C) 2018 The Android Open Source Project
@@ -15,13 +16,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<link rel="import"
-  href="./gr-simple-submit-rules-repo-config/gr-simple-submit-rules-repo-config.html">
-
-<dom-module id="simple-submit-rules">
-  <script>
-    Gerrit.install(plugin => {
-      plugin.registerCustomComponent('repo-config', 'gr-simple-submit-rules-repo-config');
-    });
-  </script>
-</dom-module>
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+<title>Test Runner</title>
+<meta charset="utf-8">
+<script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+<script src="../bower_components/web-component-tester/browser.js"></script>
+<script>
+  WCT.loadSuites([
+    '../submit-rules/gr-simple-submit-rules-repo-config_test.html',
+    '../submit-rules/gr-simple-submit-rules-label-config_test.html',
+  ]);;
+</script>
