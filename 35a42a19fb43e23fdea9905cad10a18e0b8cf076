@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef1146eb_5ef3aa77",
+        "filename": "bower.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1011323
+      },
+      "writtenOn": "2020-06-15T12:39:49Z",
+      "side": 1,
+      "message": "Why we still need bower.json?",
+      "revId": "35a42a19fb43e23fdea9905cad10a18e0b8cf076",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c5ac87a_117a9b05",
+        "filename": "plugin.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1011323
+      },
+      "writtenOn": "2020-06-15T12:39:49Z",
+      "side": 1,
+      "message": "Consistently change to 2020 for every new file, even though the content was duplicated from the file with different extension? If yes, other files are affected as well.",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "35a42a19fb43e23fdea9905cad10a18e0b8cf076",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a095791_77843454",
+        "filename": "test/index.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1011323
+      },
+      "writtenOn": "2020-06-15T12:39:49Z",
+      "side": 1,
+      "message": "Remove superfluous semicolon.",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 6
+      },
+      "revId": "35a42a19fb43e23fdea9905cad10a18e0b8cf076",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
