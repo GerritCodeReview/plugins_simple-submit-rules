@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<!--
+@license
+Copyright (C) 2020 The Android Open Source Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<meta name="viewport"
+  content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+<meta charset="utf-8">
+<title>gr-simple-submit-rules-label-config</title>
+
+<script src="/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+<script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+<script src="../bower_components/web-component-tester/browser.js"></script>
+
+<test-fixture id="basic">
+  <template>
+    <gr-simple-submit-rules-label-config label-name="Verified"
+      repo-config='{"labels": {"Verified": {"function": "MaxNoBlock", "copy_scores": []}}}'
+      readOnly="false">
+    </gr-simple-submit-rules-label-config>
+  </template>
+</test-fixture>
+
+<script type="module">
+  import '../test/common-test-setup.js';
+  import '../test/gr-select.js';
+  import "./gr-simple-submit-rules-label-config.js";
+  const COPY_SCORES = [
+    'copyMinScore',
+    'copyMaxScore',
+    'copyAllScoresOnTrivialRebase',
+    'copyAllScoresIfNoCodeChange',
+    'copyAllScoresIfNoChange',
+    'copyAllScoresOnMergeFirstParentUpdate',
+  ];
+
+  suite('gr-simple-submit-rules-label-config tests', () => {
+    let element;
+    let sandbox;
+
+    setup(() => {
+      sandbox = sinon.sandbox.create();
+
+      element = fixture('basic');
+    });
+
+    teardown(() => {
+      sandbox.restore();
+    });
+
+    test('section title is correct', () => {
+      assert.equal(element.shadowRoot.querySelector('#options').innerText.indexOf('Label Verified'), 0);
+    });
+
+    // The following tests check that changing the function name (from the REST API)
+    // has an impact on the displayed settings
+    test('function "MaxWithBlock" is properly mapped to UI', done => {
+      element.set('_labelConfig.function', 'MaxWithBlock');
+
+      flush(() => {
+        assert.ok(element.shadowRoot.querySelector('#negativeBlocks').checked);
+        assert.ok(element.shadowRoot.querySelector('#maxVoteRequired').checked);
+        assert.equal(element.shadowRoot.querySelector('#functionName select').value, 'MaxWithBlock');
+        done();
+      });
+    });
+
+    test('function "MaxNoBlock" is properly mapped to UI', done => {
+      element.set('_labelConfig.function', 'MaxNoBlock');
+
+      flush(() => {
+        assert.equal(element.shadowRoot.querySelector('#negativeBlocks').checked, false);
+        assert.ok(element.shadowRoot.querySelector('#maxVoteRequired').checked);
+        assert.equal(element.shadowRoot.querySelector('#functionName select').value, 'MaxNoBlock');
+        done();
+      });
+    });
+
+    test('function "NoBlock" is properly mapped to UI', done => {
+      element.set('_labelConfig.function', 'NoBlock');
+
+      flush(() => {
+        assert.equal(element.shadowRoot.querySelector('#negativeBlocks').checked, false);
+        assert.equal(element.shadowRoot.querySelector('#maxVoteRequired').checked, false);
+        assert.equal(element.shadowRoot.querySelector('#functionName select').value, 'NoBlock');
+        done();
+      });
+    });
+
+    test('function "AnyWithBlock" is properly mapped to UI', done => {
+      element.set('_labelConfig.function', 'AnyWithBlock');
+
+      flush(() => {
+        assert.ok(element.shadowRoot.querySelector('#negativeBlocks').checked);
+        assert.equal(element.shadowRoot.querySelector('#maxVoteRequired').checked, false);
+        assert.equal(element.shadowRoot.querySelector('#functionName select').value, 'AnyWithBlock');
+        done();
+      });
+    });
+
+    // The following tests check that changing the function from the UI has a
+    // visible impact on the easy checkboxes options, while keeping the function
+    // name intact.
+    test('picking function "MaxWithBlock" correctly updates the UI', done => {
+      element.shadowRoot.querySelector('#functionName select').value = 'MaxWithBlock';
+      element.shadowRoot.querySelector('#functionName').dispatchEvent(new Event('change'));
+
+      flush(() => {
+        assert.ok(element.shadowRoot.querySelector('#negativeBlocks').checked);
+        assert.ok(element.shadowRoot.querySelector('#maxVoteRequired').checked);
+        assert.equal(element.shadowRoot.querySelector('#functionName select').value, 'MaxWithBlock');
+        done();
+      });
+    });
+
+    test('picking function "NoBlock" correctly updates the UI', done => {
+      element.shadowRoot.querySelector('#functionName select').value = 'NoBlock';
+      element.shadowRoot.querySelector('#functionName').dispatchEvent(new Event('change'));
+
+      flush(() => {
+        assert.equal(element.shadowRoot.querySelector('#negativeBlocks').checked, false);
+        assert.equal(element.shadowRoot.querySelector('#maxVoteRequired').checked, false);
+        assert.equal(element.shadowRoot.querySelector('#functionName select').value, 'NoBlock');
+        done();
+      });
+    });
+
+    test('picking function "AnyWithBlock" correctly updates the UI', done => {
+      element.shadowRoot.querySelector('#functionName select').value = 'AnyWithBlock';
+      element.shadowRoot.querySelector('#functionName').dispatchEvent(new Event('change'));
+
+      flush(() => {
+        assert.ok(element.shadowRoot.querySelector('#negativeBlocks').checked);
+        assert.equal(element.shadowRoot.querySelector('#maxVoteRequired').checked, false);
+        assert.equal(element.shadowRoot.querySelector('#functionName select').value, 'AnyWithBlock');
+        done();
+      });
+    });
+
+    test('picking function "MaxNoBlock" correctly updates the UI', done => {
+      element.shadowRoot.querySelector('#functionName select').value = 'MaxNoBlock';
+      element.shadowRoot.querySelector('#functionName').dispatchEvent(new Event('change'));
+
+      flush(() => {
+        assert.equal(element.shadowRoot.querySelector('#negativeBlocks').checked, false);
+        assert.ok(element.shadowRoot.querySelector('#maxVoteRequired').checked);
+        assert.equal(element.shadowRoot.querySelector('#functionName select').value, 'MaxNoBlock');
+        done();
+      });
+    });
+
+    // The following tests check that the easy way to define the function
+    // ("negative blocks?" and "max vote required?") maps to the right function,
+    // without impacting the user choices.
+    test('function "MaxWithBlock" is properly suggested from UI', done => {
+      element.shadowRoot.querySelector('#negativeBlocks').checked = true;
+      element.shadowRoot.querySelector('#negativeBlocks').dispatchEvent(new Event('change'));
+
+      element.shadowRoot.querySelector('#maxVoteRequired').checked = 'true';
+      element.shadowRoot.querySelector('#maxVoteRequired').dispatchEvent(new Event('change'));
+
+      flush(() => {
+        assert.ok(element.shadowRoot.querySelector('#negativeBlocks').checked);
+        assert.ok(element.shadowRoot.querySelector('#maxVoteRequired').checked);
+        assert.equal(element.shadowRoot.querySelector('#functionName select').value, 'MaxWithBlock');
+        done();
+      });
+    });
+
+    test('function "NoBlock" is properly suggested from UI', done => {
+      element.shadowRoot.querySelector('#negativeBlocks').checked = false;
+      element.shadowRoot.querySelector('#negativeBlocks').dispatchEvent(new Event('change'));
+
+      element.shadowRoot.querySelector('#maxVoteRequired').checked = false;
+      element.shadowRoot.querySelector('#maxVoteRequired').dispatchEvent(new Event('change'));
+
+      flush(() => {
+        assert.equal(element.shadowRoot.querySelector('#negativeBlocks').checked, false);
+        assert.equal(element.shadowRoot.querySelector('#maxVoteRequired').checked, false);
+        assert.equal(element.shadowRoot.querySelector('#functionName select').value, 'NoBlock');
+        done();
+      });
+    });
+
+    test('function "AnyWithBlock" is properly suggested from UI', done => {
+      element.shadowRoot.querySelector('#negativeBlocks').checked = true;
+      element.shadowRoot.querySelector('#negativeBlocks').dispatchEvent(new Event('change'));
+
+      element.shadowRoot.querySelector('#maxVoteRequired').checked = false;
+      element.shadowRoot.querySelector('#maxVoteRequired').dispatchEvent(new Event('change'));
+
+      flush(() => {
+        assert.ok(element.shadowRoot.querySelector('#negativeBlocks').checked);
+        assert.equal(element.shadowRoot.querySelector('#maxVoteRequired').checked, false);
+        assert.equal(element.shadowRoot.querySelector('#functionName select').value, 'AnyWithBlock');
+        done();
+      });
+    });
+
+    test('function "MaxNoBlock" is properly suggested from UI', done => {
+      element.shadowRoot.querySelector('#negativeBlocks').checked = false;
+
+      element.shadowRoot.querySelector('#maxVoteRequired').checked = 'true';
+      element.shadowRoot.querySelector('#maxVoteRequired').dispatchEvent(new Event('change'));
+
+      flush(() => {
+        assert.equal(element.shadowRoot.querySelector('#negativeBlocks').checked, false);
+        assert.ok(element.shadowRoot.querySelector('#maxVoteRequired').checked);
+        assert.equal(element.shadowRoot.querySelector('#functionName select').value, 'MaxNoBlock');
+        done();
+      });
+    });
+
+    // The following tests check that "copy scores" are correctly mapped *to* and
+    // *from* the UI, for the two possible boolean values.
+    for (const copyScoreName of COPY_SCORES) {
+      const elName = '#' + copyScoreName;
+
+      test('copyScore.' + copyScoreName + ' [false] is reflected *in* the UI', () => {
+        assert.equal(element.shadowRoot.querySelector(elName).checked, false);
+      });
+
+      test('copyScore.' + copyScoreName + ' [true] is reflected in the UI', done => {
+        element.set('_labelConfig.copy_score_rules', [copyScoreName]);
+
+        flush(() => {
+          assert.ok(element.shadowRoot.querySelector(elName).checked);
+          done();
+        });
+      });
+    }
+
+    for (const copyScoreName of COPY_SCORES) {
+      const elName = '#' + copyScoreName;
+
+      test('copyScore.' + copyScoreName + ' is reflected *from* the UI', done => {
+        element.shadowRoot.querySelector(elName).checked = 'true';
+        element.shadowRoot.querySelector(elName).dispatchEvent(new Event('change'));
+
+        flush(() => {
+          assert.isTrue(
+            element.repoConfig.labels.Verified.copy_score_rules.includes(copyScoreName)
+          );
+          done();
+        });
+      });
+    }
+  });
+</script>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 @license
-Copyright (C) 2016 The Android Open Source Project
+Copyright (C) 2020 The Android Open Source Project
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,24 +18,12 @@ limitations under the License.
 
 <meta name="viewport"
   content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+<meta charset="utf-8">
 <title>gr-simple-submit-rules-repo-config</title>
 
-<script src="../../../polygerrit-ui/app/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
-<script src="../../../polygerrit-ui/app/bower_components/web-component-tester/browser.js"></script>
-<link rel="import"
-  href="../../../polygerrit-ui/app/test/common-test-setup.html" />
-<!-- TODO(maximeg) find if there is a better way to do this, like .. not in tests -->
-<link rel="import"
-  href="../../../polygerrit-ui/app/elements/shared/gr-select/gr-select.html" />
-<link rel="import"
-  href="../../../polygerrit-ui/app/styles/shared-styles.html" />
-<link rel="import"
-  href="../../../polygerrit-ui/app/styles/gr-form-styles.html" />
-
-<link rel="import"
-  href="gr-simple-submit-rules-repo-config.html">
-
-<script>void (0);</script>
+<script src="/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+<script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+<script src="../bower_components/web-component-tester/browser.js"></script>
 
 <test-fixture id="basic">
   <template>
@@ -43,7 +31,10 @@ limitations under the License.
   </template>
 </test-fixture>
 
-<script>
+<script type="module">
+  import '../test/common-test-setup.js';
+  import '../test/gr-select.js';
+  import "./gr-simple-submit-rules-repo-config.js";
   suite('gr-simple-submit-rules-repo-config tests', () => {
     let element;
     let sandbox;
@@ -64,7 +55,7 @@ limitations under the License.
               });
             },
             getLoggedIn() { return Promise.resolve(true); },
-          }
+          };
         },
 
         _getRepoAccess(repoName) {
@@ -78,7 +69,7 @@ limitations under the License.
       });
 
       element = fixture('basic');
-      unresolvedCommentsEl = element.$$('#unresolved_comments select');
+      unresolvedCommentsEl = element.shadowRoot.querySelector('#unresolved_comments select');
       return element._loadRepo();
     });
 
@@ -87,7 +78,7 @@ limitations under the License.
     });
 
     test('unresolved comments option exists', () => {
-      const unresolvedCommentsEl = element.$$('#unresolved_comments');
+      const unresolvedCommentsEl = element.shadowRoot.querySelector('#unresolved_comments');
       assert.ok(unresolvedCommentsEl);
     });
 
@@ -102,14 +93,14 @@ limitations under the License.
     test('adds a label element', done => {
       element.set(['_repoConfig', 'labels', 'Verified'], {
         function: 'MaxNoBlock',
-        copy_scores: []
+        copy_scores: [],
       });
-      flush(function () {
-        let labelItems = element.querySelectorAll('gr-simple-submit-rules-label-config');
+      flush(() => {
+        const labelItems = element.shadowRoot.querySelectorAll('gr-simple-submit-rules-label-config');
         assert.ok(labelItems);
         assert.equal(labelItems.length, 1);
 
-        let labelEl = labelItems[0];
+        const labelEl = labelItems[0];
         assert.ok(labelEl);
         assert.equal(labelEl.labelName, 'Verified');
         assert.equal(labelEl.readOnly, false);
@@ -120,16 +111,16 @@ limitations under the License.
     test('adds two labels elements', done => {
       element.set(['_repoConfig', 'labels', 'Verified'], {
         function: 'MaxNoBlock',
-        copy_scores: []
+        copy_scores: [],
       });
 
       element.set(['_repoConfig', 'labels', 'Code-Review'], {
         function: 'MaxNoBlock',
-        copy_scores: []
+        copy_scores: [],
       });
 
-      flush(function () {
-        let labelItems = element.querySelectorAll('gr-simple-submit-rules-label-config');
+      flush(() => {
+        const labelItems = element.shadowRoot.querySelectorAll('gr-simple-submit-rules-label-config');
         assert.equal(labelItems.length, 2);
         done();
       });
@@ -138,7 +129,7 @@ limitations under the License.
     test('unresolved comment uses the repoConfig value (false)', done => {
       element.set('_repoConfig.comments.block_if_unresolved_comments', false);
 
-      flush(function () {
+      flush(() => {
         assert.equal(unresolvedCommentsEl.value, 'false');
         done();
       });
@@ -147,7 +138,7 @@ limitations under the License.
     test('unresolved comment uses the repoConfig value (true)', done => {
       element.set('_repoConfig.comments.block_if_unresolved_comments', true);
 
-      flush(function () {
+      flush(() => {
         assert.equal(unresolvedCommentsEl.value, 'true');
         done();
       });
@@ -155,9 +146,9 @@ limitations under the License.
 
     test('unresolved comment sets the repoConfig value (true)', done => {
       unresolvedCommentsEl.value = 'true';
-      element.$$('#blockOnUnresolvedComments').dispatchEvent(new Event('change'));
+      element.shadowRoot.querySelector('#blockOnUnresolvedComments').dispatchEvent(new Event('change'));
 
-      flush(function () {
+      flush(() => {
         assert.equal(element._repoConfig.comments.block_if_unresolved_comments, 'true');
         done();
       });
@@ -165,9 +156,9 @@ limitations under the License.
 
     test('unresolved comment sets the repoConfig value (false)', done => {
       unresolvedCommentsEl.value = 'false';
-      element.$$('#blockOnUnresolvedComments').dispatchEvent(new Event('change'));
+      element.shadowRoot.querySelector('#blockOnUnresolvedComments').dispatchEvent(new Event('change'));
 
-      flush(function () {
+      flush(() => {
         assert.equal(element._repoConfig.comments.block_if_unresolved_comments, 'false');
         done();
       });
