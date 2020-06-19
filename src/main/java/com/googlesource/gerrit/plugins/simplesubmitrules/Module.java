@@ -38,7 +38,7 @@ public class Module extends AbstractModule {
         });
 
     DynamicSet.bind(binder(), WebUiPlugin.class)
-        .toInstance(new JavaScriptPlugin("simple-submit-rules.html"));
+        .toInstance(new JavaScriptPlugin("simple-submit-rules.js"));
     install(new BatchModule());
   }
 }
