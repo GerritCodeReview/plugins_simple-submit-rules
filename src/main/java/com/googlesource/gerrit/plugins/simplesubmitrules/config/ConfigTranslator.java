@@ -16,7 +16,6 @@ package com.googlesource.gerrit.plugins.simplesubmitrules.config;
 
 import static com.google.gerrit.server.project.ProjectCache.illegalState;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.gerrit.common.Nullable;
@@ -81,7 +80,7 @@ public final class ConfigTranslator {
   }
 
   static void applyCopyScoreRulesTo(
-      Set<String> copyScoreRules, Set<String> disallowedCopyScoreRules, LabelType labelType)
+      Set<String> copyScoreRules, Set<String> disallowedCopyScoreRules, LabelType.Builder labelType)
       throws BadRequestException {
     Set<String> disallowed =
         Sets.intersection(ImmutableSet.copyOf(copyScoreRules), disallowedCopyScoreRules);
@@ -150,23 +149,16 @@ public final class ConfigTranslator {
                 .orElseThrow(illegalState(projectConfig.getName()));
         projectState.getLabelTypes().getLabelTypes().stream()
             .filter(l -> l.getName().equals(entry.getKey()))
-            .filter(l -> l.canOverride())
-            .forEach(l -> copiedLabelTypes.put(l.getName(), copyLabelType(l)));
+            .filter(l -> l.isCanOverride())
+            .forEach(l -> copiedLabelTypes.put(l.getName(), l));
       }
 
       String label = entry.getKey();
       LabelDefinition definition = entry.getValue();
-      LabelType labelType = projectConfig.getLabelSections().get(label);
-
-      if (labelType == null) {
+      if (projectConfig.getLabelSections().get(label) == null) {
         throw new BadRequestException(
             "The label " + label + " does not exist. You can't change its config.");
       }
-
-      if (definition.ignoreSelfApproval != null) {
-        labelType.setIgnoreSelfApproval(definition.ignoreSelfApproval);
-      }
-
       if (definition.getFunction().isPresent()) {
         Set<String> disallowedLabelFunctions =
             ImmutableSet.copyOf(
@@ -175,14 +167,25 @@ public final class ConfigTranslator {
         if (disallowedLabelFunctions.contains(function.getFunctionName())) {
           throw new BadRequestException(function.getFunctionName() + " disallowed");
         }
-        labelType.setFunction(function);
       }
+      projectConfig.updateLabelType(
+          label,
+          labelType -> {
+            if (definition.ignoreSelfApproval != null) {
+              labelType.setIgnoreSelfApproval(definition.ignoreSelfApproval);
+            }
+            if (definition.getFunction().isPresent()) {
+              labelType.setFunction(definition.getFunction().get());
+            }
+          });
 
       if (definition.copyScoreRules != null) {
+        LabelType.Builder builder = projectConfig.getLabelSections().get(label).toBuilder();
         Set<String> disallowedCopyScoreRules =
             ImmutableSet.copyOf(
                 hostPluginConfig.getStringList("disallowedCopyScoreRules-" + label));
-        applyCopyScoreRulesTo(definition.copyScoreRules, disallowedCopyScoreRules, labelType);
+        applyCopyScoreRulesTo(definition.copyScoreRules, disallowedCopyScoreRules, builder);
+        projectConfig.upsertLabelType(builder.build());
       }
     }
   }
@@ -197,7 +200,7 @@ public final class ConfigTranslator {
 
     labelDefinition.function = labelType.getFunction().getFunctionName();
     extractLabelCopyScoreRules(labelType, labelDefinition);
-    labelDefinition.ignoreSelfApproval = labelType.ignoreSelfApproval();
+    labelDefinition.ignoreSelfApproval = labelType.isIgnoreSelfApproval();
   }
 
   private static void applyCommentRulesTo(@Nullable CommentsRules comments, PluginConfig config) {
@@ -207,24 +210,5 @@ public final class ConfigTranslator {
     config.setBoolean(
         SimpleSubmitRulesConfig.KEY_BLOCK_IF_UNRESOLVED_COMMENTS,
         comments.blockIfUnresolvedComments);
-  }
-
-  private static LabelType copyLabelType(LabelType label) {
-    // TODO(hiesel) Move this to core
-    LabelType copy = new LabelType(label.getName(), ImmutableList.copyOf(label.getValues()));
-    if (label.getRefPatterns() != null) {
-      copy.setRefPatterns(ImmutableList.copyOf(label.getRefPatterns()));
-    }
-    copy.setAllowPostSubmit(label.allowPostSubmit());
-    copy.setCanOverride(label.canOverride());
-    copy.setCopyAllScoresIfNoChange(label.isCopyAllScoresIfNoChange());
-    copy.setCopyAllScoresIfNoCodeChange(label.isCopyAllScoresIfNoCodeChange());
-    copy.setCopyAllScoresOnMergeFirstParentUpdate(label.isCopyAllScoresOnMergeFirstParentUpdate());
-    copy.setCopyAllScoresOnTrivialRebase(label.isCopyAllScoresOnTrivialRebase());
-    copy.setIgnoreSelfApproval(label.ignoreSelfApproval());
-    copy.setCopyMaxScore(label.isCopyMaxScore());
-    copy.setCopyMinScore(label.isCopyMinScore());
-    copy.setFunction(label.getFunction());
-    return copy;
   }
 }
