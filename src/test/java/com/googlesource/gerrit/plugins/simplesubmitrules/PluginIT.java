@@ -140,7 +140,11 @@ public class PluginIT extends LightweightPluginDaemonTest {
 
     // Check that the label has the same configs besides the function, which we changed
     LabelType allProjectsCR = projectCache.getAllProjects().getLabelTypes().byLabel("Code-Review");
-    localCR.setFunction(allProjectsCR.getFunction());
+    projectCache
+        .get(project)
+        .get()
+        .getConfig()
+        .updateLabelType("Code-Review", lt -> lt.setFunction(allProjectsCR.getFunction()));
     assertLabelTypeEquals(localCR, allProjectsCR);
   }
 
@@ -167,15 +171,15 @@ public class PluginIT extends LightweightPluginDaemonTest {
   }
 
   private static void assertLabelTypeEquals(LabelType l1, LabelType l2) {
-    assertThat(l1.allowPostSubmit()).isEqualTo(l2.allowPostSubmit());
-    assertThat(l1.canOverride()).isEqualTo(l2.canOverride());
+    assertThat(l1.isAllowPostSubmit()).isEqualTo(l2.isAllowPostSubmit());
+    assertThat(l1.isCanOverride()).isEqualTo(l2.isCanOverride());
     assertThat(l1.getDefaultValue()).isEqualTo(l2.getDefaultValue());
     assertThat(l1.getLabelId()).isEqualTo(l2.getLabelId());
     assertThat(l1.getMax()).isEqualTo(l2.getMax());
     assertThat(l1.getMin()).isEqualTo(l2.getMin());
     assertThat(l1.getName()).isEqualTo(l2.getName());
     assertThat(l1.getRefPatterns()).isEqualTo(l2.getRefPatterns());
-    assertThat(l1.ignoreSelfApproval()).isEqualTo(l2.ignoreSelfApproval());
+    assertThat(l1.isIgnoreSelfApproval()).isEqualTo(l2.isIgnoreSelfApproval());
     assertThat(l1.isCopyAllScoresIfNoChange()).isEqualTo(l2.isCopyAllScoresIfNoChange());
     assertThat(l1.isCopyAllScoresIfNoCodeChange()).isEqualTo(l2.isCopyAllScoresIfNoCodeChange());
     assertThat(l1.isCopyAllScoresOnMergeFirstParentUpdate())
