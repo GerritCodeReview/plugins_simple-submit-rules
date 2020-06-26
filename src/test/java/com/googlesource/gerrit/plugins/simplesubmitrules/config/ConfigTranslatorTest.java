@@ -29,28 +29,28 @@ import org.junit.Test;
 public class ConfigTranslatorTest {
   @Test
   public void checkLabelTranslation() throws Exception {
-    checkTranslation("copyMinScore", LabelType::isCopyMinScore, LabelType::setCopyMinScore);
-    checkTranslation("copyMaxScore", LabelType::isCopyMaxScore, LabelType::setCopyMaxScore);
+    checkTranslation("copyMinScore", LabelType::isCopyMinScore, LabelType.Builder::setCopyMinScore);
+    checkTranslation("copyMaxScore", LabelType::isCopyMaxScore, LabelType.Builder::setCopyMaxScore);
 
     checkTranslation(
         "copyAllScoresIfNoChange",
         LabelType::isCopyAllScoresIfNoChange,
-        LabelType::setCopyAllScoresIfNoChange);
+        LabelType.Builder::setCopyAllScoresIfNoChange);
 
     checkTranslation(
         "copyAllScoresIfNoCodeChange",
         LabelType::isCopyAllScoresIfNoCodeChange,
-        LabelType::setCopyAllScoresIfNoCodeChange);
+        LabelType.Builder::setCopyAllScoresIfNoCodeChange);
 
     checkTranslation(
         "copyAllScoresOnMergeFirstParentUpdate",
         LabelType::isCopyAllScoresOnMergeFirstParentUpdate,
-        LabelType::setCopyAllScoresOnMergeFirstParentUpdate);
+        LabelType.Builder::setCopyAllScoresOnMergeFirstParentUpdate);
 
     checkTranslation(
         "copyAllScoresOnTrivialRebase",
         LabelType::isCopyAllScoresOnTrivialRebase,
-        LabelType::setCopyAllScoresOnTrivialRebase);
+        LabelType.Builder::setCopyAllScoresOnTrivialRebase);
   }
 
   @Test
@@ -63,7 +63,7 @@ public class ConfigTranslatorTest {
                     ImmutableSet.of(
                         "copyAllScoresIfNoChange", "copyAllScoresOnMergeFirstParentUpdate"),
                     ImmutableSet.of("copyAllScoresIfNoChange"),
-                    LabelType.withDefaultValues("Verified")));
+                    LabelType.withDefaultValues("Verified").toBuilder()));
     assertThat(thrown)
         .hasMessageThat()
         .contains("copy score rules [copyAllScoresIfNoChange] are forbidden");
@@ -73,7 +73,7 @@ public class ConfigTranslatorTest {
   private static void checkTranslation(
       String copyScoreName,
       Predicate<LabelType> functionToCheck,
-      BiConsumer<LabelType, Boolean> functionToSet)
+      BiConsumer<LabelType.Builder, Boolean> functionToSet)
       throws Exception {
     checkLabelToGerritPresent(copyScoreName, functionToCheck);
     checkLabelToGerritAbsent(copyScoreName, functionToCheck);
@@ -83,13 +83,13 @@ public class ConfigTranslatorTest {
   }
 
   private static void checkLabelFromGerritPresent(
-      String copyScoreName, BiConsumer<LabelType, Boolean> functionToSet) {
+      String copyScoreName, BiConsumer<LabelType.Builder, Boolean> functionToSet) {
 
-    LabelType label = LabelType.withDefaultValues("Verified");
+    LabelType.Builder label = LabelType.withDefaultValues("Verified").toBuilder();
     LabelDefinition labelDefinition = new LabelDefinition();
 
     functionToSet.accept(label, false);
-    ConfigTranslator.extractLabelCopyScoreRules(label, labelDefinition);
+    ConfigTranslator.extractLabelCopyScoreRules(label.build(), labelDefinition);
 
     assertWithMessage("[case %s:false]", copyScoreName)
         .that(labelDefinition.copyScoreRules)
@@ -97,13 +97,13 @@ public class ConfigTranslatorTest {
   }
 
   private static void checkLabelFromGerritAbsent(
-      String copyScoreName, BiConsumer<LabelType, Boolean> functionToSet) {
+      String copyScoreName, BiConsumer<LabelType.Builder, Boolean> functionToSet) {
 
-    LabelType label = LabelType.withDefaultValues("Verified");
+    LabelType.Builder label = LabelType.withDefaultValues("Verified").toBuilder();
     LabelDefinition labelDefinition = new LabelDefinition();
 
     functionToSet.accept(label, true);
-    ConfigTranslator.extractLabelCopyScoreRules(label, labelDefinition);
+    ConfigTranslator.extractLabelCopyScoreRules(label.build(), labelDefinition);
 
     assertWithMessage("[case %s:true]", copyScoreName)
         .that(labelDefinition.copyScoreRules)
@@ -112,18 +112,21 @@ public class ConfigTranslatorTest {
 
   private static void checkLabelToGerritPresent(
       String copyScoreName, Predicate<LabelType> functionToCheck) throws Exception {
-    LabelType label = LabelType.withDefaultValues("Verified");
-
+    LabelType.Builder label = LabelType.withDefaultValues("Verified").toBuilder();
     ConfigTranslator.applyCopyScoreRulesTo(
         ImmutableSet.of(copyScoreName), ImmutableSet.of(), label);
-    assertWithMessage("[case %s:true]", copyScoreName).that(functionToCheck.test(label)).isTrue();
+    assertWithMessage("[case %s:true]", copyScoreName)
+        .that(functionToCheck.test(label.build()))
+        .isTrue();
   }
 
   private static void checkLabelToGerritAbsent(
       String copyScoreName, Predicate<LabelType> functionToCheck) throws Exception {
-    LabelType label = LabelType.withDefaultValues("Verified");
+    LabelType.Builder label = LabelType.withDefaultValues("Verified").toBuilder();
 
     ConfigTranslator.applyCopyScoreRulesTo(ImmutableSet.of(), ImmutableSet.of(), label);
-    assertWithMessage("[case %s:false]", copyScoreName).that(functionToCheck.test(label)).isFalse();
+    assertWithMessage("[case %s:false]", copyScoreName)
+        .that(functionToCheck.test(label.build()))
+        .isFalse();
   }
 }
