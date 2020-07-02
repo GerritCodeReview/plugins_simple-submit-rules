@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "629ef5f6_0afc6937",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/config/ConfigTranslator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1003935
+      },
+      "writtenOn": "2020-07-02T13:14:48Z",
+      "side": 1,
+      "message": "Is copying still needed now that LabelType is immutable?",
+      "revId": "6a115ff7aa419e83a94e91d30960fa70f649171e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
