@@ -143,7 +143,7 @@ public class PluginIT extends LightweightPluginDaemonTest {
     projectCache
         .get(project)
         .get()
-        .getConfig()
+        .getBareConfig()
         .updateLabelType("Code-Review", lt -> lt.setFunction(allProjectsCR.getFunction()));
     assertLabelTypeEquals(localCR, allProjectsCR);
   }
