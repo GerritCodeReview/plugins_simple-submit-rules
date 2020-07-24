@@ -15,7 +15,7 @@
 package com.googlesource.gerrit.plugins.simplesubmitrules.api;
 
 import com.google.common.base.MoreObjects;
-import com.google.gerrit.common.data.LabelFunction;
+import com.google.gerrit.entities.LabelFunction;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;

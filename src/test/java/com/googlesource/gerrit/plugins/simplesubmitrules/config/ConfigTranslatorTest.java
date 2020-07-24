@@ -19,7 +19,7 @@ import static com.google.common.truth.Truth.assertWithMessage;
 import static com.google.gerrit.testing.GerritJUnit.assertThrows;
 
 import com.google.common.collect.ImmutableSet;
-import com.google.gerrit.common.data.LabelType;
+import com.google.gerrit.entities.LabelType;
 import com.google.gerrit.extensions.restapi.BadRequestException;
 import com.googlesource.gerrit.plugins.simplesubmitrules.api.LabelDefinition;
 import java.util.function.BiConsumer;

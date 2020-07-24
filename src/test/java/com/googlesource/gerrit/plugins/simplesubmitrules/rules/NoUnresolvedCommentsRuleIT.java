@@ -23,7 +23,7 @@ import com.google.gerrit.acceptance.LightweightPluginDaemonTest;
 import com.google.gerrit.acceptance.NoHttpd;
 import com.google.gerrit.acceptance.PushOneCommit;
 import com.google.gerrit.acceptance.TestPlugin;
-import com.google.gerrit.common.data.SubmitRecord;
+import com.google.gerrit.entities.SubmitRecord;
 import com.google.gerrit.extensions.api.changes.ReviewInput;
 import com.google.gerrit.extensions.client.Side;
 import com.google.gerrit.server.query.change.ChangeData;

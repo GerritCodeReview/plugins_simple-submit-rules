@@ -23,7 +23,7 @@ import com.google.gerrit.acceptance.RestResponse;
 import com.google.gerrit.acceptance.TestPlugin;
 import com.google.gerrit.acceptance.config.GerritConfig;
 import com.google.gerrit.common.RawInputUtil;
-import com.google.gerrit.common.data.LabelFunction;
+import com.google.gerrit.entities.LabelFunction;
 import com.google.gerrit.entities.Project;
 import com.google.gerrit.extensions.restapi.RawInput;
 import org.junit.Before;

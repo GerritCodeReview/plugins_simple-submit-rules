@@ -14,8 +14,8 @@
 
 package com.googlesource.gerrit.plugins.simplesubmitrules.rules;
 
-import com.google.gerrit.common.data.SubmitRecord;
-import com.google.gerrit.common.data.SubmitRequirement;
+import com.google.gerrit.entities.SubmitRecord;
+import com.google.gerrit.entities.SubmitRequirement;
 import com.google.gerrit.exceptions.StorageException;
 import com.google.gerrit.extensions.annotations.PluginName;
 import com.google.gerrit.server.config.PluginConfig;
