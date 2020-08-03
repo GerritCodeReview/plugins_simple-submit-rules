@@ -123,9 +123,8 @@ public final class ConfigTranslator {
   void applyTo(SubmitConfig inConfig, ProjectConfig projectConfig)
       throws BadRequestException, IOException {
     PluginConfig hostPluginConfig = pluginConfigFactory.getFromGerritConfig(pluginName);
-    PluginConfig projectPluginConfig = projectConfig.getPluginConfig(pluginName);
 
-    applyCommentRulesTo(inConfig.comments, projectPluginConfig);
+    applyCommentRulesTo(inConfig.comments, projectConfig, pluginName);
     applyLabelsTo(inConfig.labels, projectConfig, hostPluginConfig);
   }
 
@@ -203,12 +202,13 @@ public final class ConfigTranslator {
     labelDefinition.ignoreSelfApproval = labelType.isIgnoreSelfApproval();
   }
 
-  private static void applyCommentRulesTo(@Nullable CommentsRules comments, PluginConfig config) {
+  private static void applyCommentRulesTo(@Nullable CommentsRules comments,
+      ProjectConfig projectConfig, String pluginName) {
     if (comments == null) {
       return;
     }
-    config.setBoolean(
+    projectConfig.updatePluginConfig(pluginName, cfg -> cfg.setBoolean(
         SimpleSubmitRulesConfig.KEY_BLOCK_IF_UNRESOLVED_COMMENTS,
-        comments.blockIfUnresolvedComments);
+        comments.blockIfUnresolvedComments));
   }
 }

@@ -25,6 +25,7 @@ import com.google.gerrit.acceptance.PushOneCommit;
 import com.google.gerrit.acceptance.RestResponse;
 import com.google.gerrit.acceptance.TestPlugin;
 import com.google.gerrit.common.RawInputUtil;
+import com.google.gerrit.entities.CachedProjectConfig;
 import com.google.gerrit.entities.LabelFunction;
 import com.google.gerrit.entities.LabelType;
 import com.google.gerrit.entities.Project;
@@ -140,12 +141,7 @@ public class PluginIT extends LightweightPluginDaemonTest {
 
     // Check that the label has the same configs besides the function, which we changed
     LabelType allProjectsCR = projectCache.getAllProjects().getLabelTypes().byLabel("Code-Review");
-    projectCache
-        .get(project)
-        .get()
-        .getBareConfig()
-        .updateLabelType("Code-Review", lt -> lt.setFunction(allProjectsCR.getFunction()));
-    assertLabelTypeEquals(localCR, allProjectsCR);
+    assertThat(localCR.toBuilder().setFunction(allProjectsCR.getFunction()).build()).isEqualTo(allProjectsCR);
   }
 
   @Test
@@ -168,24 +164,5 @@ public class PluginIT extends LightweightPluginDaemonTest {
 
   private static String endpointUrl(Project.NameKey project) {
     return "/projects/" + project.get() + "/simple-submit-rules";
-  }
-
-  private static void assertLabelTypeEquals(LabelType l1, LabelType l2) {
-    assertThat(l1.isAllowPostSubmit()).isEqualTo(l2.isAllowPostSubmit());
-    assertThat(l1.isCanOverride()).isEqualTo(l2.isCanOverride());
-    assertThat(l1.getDefaultValue()).isEqualTo(l2.getDefaultValue());
-    assertThat(l1.getLabelId()).isEqualTo(l2.getLabelId());
-    assertThat(l1.getMax()).isEqualTo(l2.getMax());
-    assertThat(l1.getMin()).isEqualTo(l2.getMin());
-    assertThat(l1.getName()).isEqualTo(l2.getName());
-    assertThat(l1.getRefPatterns()).isEqualTo(l2.getRefPatterns());
-    assertThat(l1.isIgnoreSelfApproval()).isEqualTo(l2.isIgnoreSelfApproval());
-    assertThat(l1.isCopyAllScoresIfNoChange()).isEqualTo(l2.isCopyAllScoresIfNoChange());
-    assertThat(l1.isCopyAllScoresIfNoCodeChange()).isEqualTo(l2.isCopyAllScoresIfNoCodeChange());
-    assertThat(l1.isCopyAllScoresOnMergeFirstParentUpdate())
-        .isEqualTo(l2.isCopyAllScoresOnMergeFirstParentUpdate());
-    assertThat(l1.isCopyAllScoresOnTrivialRebase()).isEqualTo(l2.isCopyAllScoresOnTrivialRebase());
-    assertThat(l1.isCopyMaxScore()).isEqualTo(l2.isCopyMaxScore());
-    assertThat(l1.isCopyMinScore()).isEqualTo(l2.isCopyMinScore());
   }
 }
