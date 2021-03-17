@@ -73,7 +73,7 @@ export const htmlTemplate = Polymer.html`
         </section>
 
         <section>
-          <span class="title">Allow approval by the change owner</span>
+          <span class="title">Disallow approval by the change owner</span>
           <span class="value">
             <input id="allowUnresolvedComments"
                 type="checkbox"
