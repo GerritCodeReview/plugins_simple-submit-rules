@@ -14,8 +14,8 @@
 
 package com.googlesource.gerrit.plugins.simplesubmitrules.rules;
 
+import com.google.gerrit.entities.LegacySubmitRequirement;
 import com.google.gerrit.entities.SubmitRecord;
-import com.google.gerrit.entities.SubmitRequirement;
 import com.google.gerrit.exceptions.StorageException;
 import com.google.gerrit.extensions.annotations.PluginName;
 import com.google.gerrit.server.config.PluginConfig;
@@ -35,8 +35,8 @@ import org.slf4j.LoggerFactory;
 @Singleton
 public class NoUnresolvedCommentsRule implements SubmitRule {
   private static final Logger log = LoggerFactory.getLogger(NoUnresolvedCommentsRule.class);
-  private static final SubmitRequirement REQUIREMENT =
-      SubmitRequirement.builder()
+  private static final LegacySubmitRequirement REQUIREMENT =
+      LegacySubmitRequirement.builder()
           .setType("unresolved_comments")
           .setFallbackText("Resolve all comments")
           .build();

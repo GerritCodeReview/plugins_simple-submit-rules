@@ -25,14 +25,13 @@ import com.google.gerrit.acceptance.PushOneCommit;
 import com.google.gerrit.acceptance.RestResponse;
 import com.google.gerrit.acceptance.TestPlugin;
 import com.google.gerrit.common.RawInputUtil;
-import com.google.gerrit.entities.CachedProjectConfig;
 import com.google.gerrit.entities.LabelFunction;
 import com.google.gerrit.entities.LabelType;
 import com.google.gerrit.entities.Project;
 import com.google.gerrit.extensions.api.changes.ReviewInput;
 import com.google.gerrit.extensions.client.Side;
 import com.google.gerrit.extensions.common.ChangeInfo;
-import com.google.gerrit.extensions.common.SubmitRequirementInfo;
+import com.google.gerrit.extensions.common.LegacySubmitRequirementInfo;
 import com.google.gerrit.extensions.restapi.RawInput;
 import com.googlesource.gerrit.plugins.simplesubmitrules.api.CommentsRules;
 import com.googlesource.gerrit.plugins.simplesubmitrules.api.LabelDefinition;
@@ -81,8 +80,8 @@ public class PluginIT extends LightweightPluginDaemonTest {
 
     ChangeInfo changeInfo = gApi.changes().id(r.getChangeId()).get();
     assertThat(changeInfo.submittable).isFalse();
-    SubmitRequirementInfo noUnresolveComments =
-        new SubmitRequirementInfo("NOT_READY", "Resolve all comments", "unresolved_comments");
+    LegacySubmitRequirementInfo noUnresolveComments =
+        new LegacySubmitRequirementInfo("NOT_READY", "Resolve all comments", "unresolved_comments");
     assertThat(changeInfo.requirements).containsExactly(noUnresolveComments);
   }
 
@@ -99,8 +98,8 @@ public class PluginIT extends LightweightPluginDaemonTest {
 
     ChangeInfo changeInfo = gApi.changes().id(r.getChangeId()).get();
     assertThat(changeInfo.submittable).isFalse();
-    SubmitRequirementInfo noSelfApproval =
-        new SubmitRequirementInfo(
+    LegacySubmitRequirementInfo noSelfApproval =
+        new LegacySubmitRequirementInfo(
             "NOT_READY", "Approval from non-uploader required", "non_uploader_approval");
     assertThat(changeInfo.requirements).containsExactly(noSelfApproval);
   }
@@ -141,7 +140,8 @@ public class PluginIT extends LightweightPluginDaemonTest {
 
     // Check that the label has the same configs besides the function, which we changed
     LabelType allProjectsCR = projectCache.getAllProjects().getLabelTypes().byLabel("Code-Review");
-    assertThat(localCR.toBuilder().setFunction(allProjectsCR.getFunction()).build()).isEqualTo(allProjectsCR);
+    assertThat(localCR.toBuilder().setFunction(allProjectsCR.getFunction()).build())
+        .isEqualTo(allProjectsCR);
   }
 
   @Test
