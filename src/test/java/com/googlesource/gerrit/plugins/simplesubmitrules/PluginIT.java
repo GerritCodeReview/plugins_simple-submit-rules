@@ -139,7 +139,8 @@ public class PluginIT extends LightweightPluginDaemonTest {
     assertThat(localCR.getFunction()).isEqualTo(LabelFunction.MAX_NO_BLOCK);
 
     // Check that the label has the same configs besides the function, which we changed
-    LabelType allProjectsCR = projectCache.getAllProjects().getLabelTypes().byLabel("Code-Review");
+    LabelType allProjectsCR =
+        projectCache.getAllProjects().getLabelTypes().byLabel("Code-Review").get();
     assertThat(localCR.toBuilder().setFunction(allProjectsCR.getFunction()).build())
         .isEqualTo(allProjectsCR);
   }

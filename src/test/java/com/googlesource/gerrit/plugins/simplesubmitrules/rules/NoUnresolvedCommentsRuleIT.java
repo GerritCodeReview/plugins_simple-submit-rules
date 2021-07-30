@@ -113,8 +113,11 @@ public class NoUnresolvedCommentsRuleIT extends LightweightPluginDaemonTest {
   private void enableRule(boolean newState) throws Exception {
     try (ProjectConfigUpdate u = updateProject(project)) {
       u.getConfig()
-          .updatePluginConfig(plugin.getName(), cfg ->
-          cfg.setBoolean(SimpleSubmitRulesConfig.KEY_BLOCK_IF_UNRESOLVED_COMMENTS, newState));
+          .updatePluginConfig(
+              plugin.getName(),
+              cfg ->
+                  cfg.setBoolean(
+                      SimpleSubmitRulesConfig.KEY_BLOCK_IF_UNRESOLVED_COMMENTS, newState));
       u.save();
     }
   }

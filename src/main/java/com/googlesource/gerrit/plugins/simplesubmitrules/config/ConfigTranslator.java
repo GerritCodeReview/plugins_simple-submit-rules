@@ -202,13 +202,16 @@ public final class ConfigTranslator {
     labelDefinition.ignoreSelfApproval = labelType.isIgnoreSelfApproval();
   }
 
-  private static void applyCommentRulesTo(@Nullable CommentsRules comments,
-      ProjectConfig projectConfig, String pluginName) {
+  private static void applyCommentRulesTo(
+      @Nullable CommentsRules comments, ProjectConfig projectConfig, String pluginName) {
     if (comments == null) {
       return;
     }
-    projectConfig.updatePluginConfig(pluginName, cfg -> cfg.setBoolean(
-        SimpleSubmitRulesConfig.KEY_BLOCK_IF_UNRESOLVED_COMMENTS,
-        comments.blockIfUnresolvedComments));
+    projectConfig.updatePluginConfig(
+        pluginName,
+        cfg ->
+            cfg.setBoolean(
+                SimpleSubmitRulesConfig.KEY_BLOCK_IF_UNRESOLVED_COMMENTS,
+                comments.blockIfUnresolvedComments));
   }
 }
