@@ -88,7 +88,7 @@ public class ConfigServlet
       ProjectConfig projectConfig = projectConfigFactory.read(md);
       configTranslator.applyTo(inConfig, projectConfig);
       projectConfig.commit(md);
-      projectCache.evict(projectName);
+      projectCache.evictAndReindex(projectName);
     }
 
     ProjectState projectState =
