@@ -35,6 +35,7 @@ import org.slf4j.LoggerFactory;
 @Singleton
 public class NoUnresolvedCommentsRule implements SubmitRule {
   private static final Logger log = LoggerFactory.getLogger(NoUnresolvedCommentsRule.class);
+  public static final String RULE_NAME = "No-Unresolved-Comments";
   private static final LegacySubmitRequirement REQUIREMENT =
       LegacySubmitRequirement.builder()
           .setType("unresolved_comments")
@@ -78,6 +79,7 @@ public class NoUnresolvedCommentsRule implements SubmitRule {
     }
 
     SubmitRecord sr = new SubmitRecord();
+    sr.ruleName = RULE_NAME;
     sr.requirements = Collections.singletonList(REQUIREMENT);
     sr.status =
         unresolvedComments == null || unresolvedComments > 0
