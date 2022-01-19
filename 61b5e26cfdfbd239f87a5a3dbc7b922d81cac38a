@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a18065cc_b6834042",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/simplesubmitrules/rules/NoUnresolvedCommentsRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003935
+      },
+      "writtenOn": "2022-01-19T14:24:34Z",
+      "side": 1,
+      "message": "Set the rule name here too?",
+      "revId": "61b5e26cfdfbd239f87a5a3dbc7b922d81cac38a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
