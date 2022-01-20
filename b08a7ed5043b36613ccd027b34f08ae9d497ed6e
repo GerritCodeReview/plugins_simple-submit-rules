@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdd280ca_c925523f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1091982
+      },
+      "writtenOn": "2022-01-20T11:30:35Z",
+      "side": 1,
+      "message": "Verified by running the tests locally.\n\nTarget //plugins/simple-submit-rules:tests up-to-date:\n  bazel-bin/plugins/simple-submit-rules/tests.jar\n  bazel-bin/plugins/simple-submit-rules/tests\nINFO: Elapsed time: 14.346s, Critical Path: 13.57s\nINFO: 1 process: 1 linux-sandbox.\nINFO: Build completed successfully, 2 total actions\n//plugins/simple-submit-rules:tests                                      PASSED in 13.5s\n\nExecuted 1 out of 1 test: 1 test passes.\nINFO: Build completed successfully, 2 total actions\n",
+      "revId": "b08a7ed5043b36613ccd027b34f08ae9d497ed6e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
