@@ -14,6 +14,7 @@
 
 package com.googlesource.gerrit.plugins.simplesubmitrules.rules;
 
+import com.google.common.flogger.FluentLogger;
 import com.google.gerrit.entities.LegacySubmitRequirement;
 import com.google.gerrit.entities.SubmitRecord;
 import com.google.gerrit.exceptions.StorageException;
@@ -28,13 +29,11 @@ import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.simplesubmitrules.SimpleSubmitRulesConfig;
 import java.util.Collections;
 import java.util.Optional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /** Simple rule: block submission when unresolved comments are present. */
 @Singleton
 public class NoUnresolvedCommentsRule implements SubmitRule {
-  private static final Logger log = LoggerFactory.getLogger(NoUnresolvedCommentsRule.class);
+  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
   public static final String RULE_NAME = "No-Unresolved-Comments";
   private static final LegacySubmitRequirement REQUIREMENT =
       LegacySubmitRequirement.builder()
@@ -57,7 +56,8 @@ public class NoUnresolvedCommentsRule implements SubmitRule {
     try {
       config = pluginConfigFactory.getFromProjectConfig(cd.project(), pluginName);
     } catch (NoSuchProjectException e) {
-      log.error("Error when fetching config of change {}'s project", cd.getId(), e);
+      logger.atSevere().withCause(e).log(
+          "Error when fetching config of change %s's project", cd.getId());
 
       return error("Error when fetching configuration");
     }
@@ -73,7 +73,8 @@ public class NoUnresolvedCommentsRule implements SubmitRule {
     try {
       unresolvedComments = cd.unresolvedCommentCount();
     } catch (StorageException e) {
-      log.error("Error when counting unresolved comments for change {}", cd.getId(), e);
+      logger.atSevere().withCause(e).log(
+          "Error when counting unresolved comments for change %s", cd.getId());
 
       return error("Error when counting unresolved comments");
     }
